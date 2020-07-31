@@ -1,0 +1,4 @@
+{
+   "LevelSettings" : ["LevelData/level1.txt", "LevelData/level2.txt"],
+   "MaxLevels" : "3"
+}
