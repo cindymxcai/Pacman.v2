@@ -1,8 +1,8 @@
 namespace Pacman2
-
 {
-    public class PelletTile : ITileType
+    public class PelletTile : ITile
     {
         public string Display { get; } = " . ";
+
     }
 }

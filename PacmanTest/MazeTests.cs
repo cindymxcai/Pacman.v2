@@ -1,3 +1,6 @@
+using System;
+using System.IO;
+using Pacman2;
 using Xunit;
 
 namespace PacmanTest
@@ -7,7 +10,11 @@ namespace PacmanTest
         [Fact]
         public void GivenMazeDataShouldGetSizeOfMaze()
         {
-            
+            var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
+            var maze = new Maze();
+            maze.CreateMaze(mazeData);
+            Assert.Equal(21, maze.Height);
+            Assert.Equal(19, maze.Width);
         }
     }
 }

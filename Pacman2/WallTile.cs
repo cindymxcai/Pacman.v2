@@ -1,6 +1,6 @@
 namespace Pacman2
 {
-    public class WallTile : ITileType
+    public class WallTile : ITile
     {
         public string Display { get; } = " * ";
     }
