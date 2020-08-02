@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -23,11 +24,23 @@ namespace Pacman2
                 x++;
             }
         }
+        
+        public void Render()
+        {
+            for (var i = 0; i < Height; i++)
+            {
+                for (var j = 0; j < Width; j++)
+                {
+                    Console.Write(MazeArray[i,j].Display);
+                }
+                Console.WriteLine();
+            }
+        }
 
-        public ITile[,] MazeArray { get; set; }
+        public ITile[,] MazeArray { get; private set; }
 
-        public int Width { get; set; }
+        public int Width { get; private set; }
 
-        public int Height { get; set; }
+        public int Height { get; private set; }
     }
 }
