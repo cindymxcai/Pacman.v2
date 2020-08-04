@@ -32,16 +32,14 @@ namespace Pacman2
             {
                 maze.Render();
                 
-                var newPosition = ghost.GetNewPosition(maze);
-                var tileDisplay = maze.Tiles[newPosition.Item1, newPosition.Item2].Display;
-                var tileColour = maze.Tiles[newPosition.Item1, newPosition.Item2].Colour;
-
-                ghost.UpdatePosition(newPosition, maze);
-                maze.UpdateArray( ghost.PrevX, ghost.PrevY, tileDisplay, tileColour);
-                maze.UpdateArray( ghost.X, ghost.Y, ghost.Display, ghost.Colour);
+                var tileDisplay = maze.Tiles[ghost.PrevX, ghost.PrevY].TileType;
+                
+                ghost.UpdatePosition(ghost.GetNewPosition(maze), maze);
+                maze.UpdateArray( ghost.PrevX, ghost.PrevY, tileDisplay);
+                maze.UpdateArray( ghost.X, ghost.Y, ghost.TileType);
                 ghost.UpdateDirection();
-              
                 Thread.Sleep(100);
+                Console.Clear();
             }
         }
     }

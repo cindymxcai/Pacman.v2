@@ -1,5 +1,3 @@
-using System;
-
 namespace Pacman2
 {
     public class TileTypeFactory : ITileTypeFactory
@@ -15,13 +13,6 @@ namespace Pacman2
             Wall = wall;
             Empty = empty;
             Pellet = pellet;
-        }
-        
-        public void DisplayTile(ITile tile)
-        {
-            Console.ForegroundColor = tile.Colour;
-            Console.Write(tile.Display);
-            Console.ResetColor();        
         }
     }
 }

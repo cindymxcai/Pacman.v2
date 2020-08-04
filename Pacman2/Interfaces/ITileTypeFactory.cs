@@ -6,6 +6,5 @@ namespace Pacman2
         ITileType Empty { get; }
         ITileType Pellet { get; }
         ITileType Ghost { get; set; }
-        void DisplayTile(ITile tile);
     }
 }

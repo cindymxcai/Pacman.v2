@@ -6,8 +6,6 @@ namespace Pacman2
     {
         int X { get; }
         int Y { get; }
-        string Display { get; }
-        ConsoleColor Colour { get; }
         Direction CurrentDirection { get; }
         void UpdateDirection();
         void UpdatePosition((int, int) newPosition, Maze maze);

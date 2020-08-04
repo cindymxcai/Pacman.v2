@@ -45,18 +45,17 @@ namespace Pacman2
             {
                 for (var col = 0; col < Column; col++)
                 {
-                    Console.ForegroundColor = Tiles[row, col].Colour;
-                    Console.Write(Tiles[row,col].Display);
+                    Console.ForegroundColor = Tiles[row, col].TileType.Colour;
+                    Console.Write(Tiles[row,col].TileType.Display);
                     Console.ResetColor();
                 }
                 Console.WriteLine();
             }
         }
         
-        public void UpdateArray(int row, int col, string tileDisplay, ConsoleColor tileColour)
+        public void UpdateArray(int row, int col, ITileType tileType)
         {
-            Tiles[row, col].Display = tileDisplay;
-            Tiles[row, col].Colour = tileColour;
+            Tiles[row, col].TileType = tileType;
         }
     }
 }

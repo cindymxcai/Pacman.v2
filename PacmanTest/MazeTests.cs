@@ -41,9 +41,10 @@ namespace PacmanTest
             var tileTypeFactory = SetUp();
             var mazeData = new []{".* "};
             var maze = new Maze(mazeData, parser);
-            Assert.Equal(tileTypeFactory.Pellet.Display, maze.Tiles[0,0].Display);
-            Assert.Equal(tileTypeFactory.Wall.Display, maze.Tiles[0,1].Display);
-            Assert.Equal(tileTypeFactory.Empty.Display, maze.Tiles[0,2].Display);
+            Assert.Equal(tileTypeFactory.Pellet.Display, maze.Tiles[0,0].TileType.Display);
+            Assert.Equal(tileTypeFactory.Wall.Display, maze.Tiles[0,1].TileType.Display);
+            Assert.Equal(tileTypeFactory.Empty.Display, maze.Tiles[0,2].TileType.Display);
+            Assert.Equal(tileTypeFactory.Empty.Colour, maze.Tiles[0,2].TileType.Colour);
         }
         
         [Fact]
@@ -55,8 +56,11 @@ namespace PacmanTest
             var ghost = new Ghost(0,1, new RandomMovement(rng), SetUp());
             var mazeData = new []{"..."};
             var maze = new Maze(mazeData, parser);
-            maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);
-            Assert.Equal(ghost.Display, maze.Tiles[0,1].Display);
+            maze.UpdateArray(ghost.X, ghost.Y, ghost.TileType);
+            Assert.Equal(ghost.TileType, maze.Tiles[0,1].TileType);
+            Assert.Equal(ghost.TileType.Colour, maze.Tiles[0,1].TileType.Colour);
+            Assert.Equal(ghost.TileType.Display, maze.Tiles[0,1].TileType.Display);
+
         }
     }
 }

@@ -57,7 +57,7 @@ namespace PacmanTest
             ghost.UpdateDirection();
             var newPosition = ghost.GetNewPosition(maze);
             ghost.UpdatePosition(newPosition, maze);
-            maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);
+            maze.UpdateArray(ghost.X, ghost.Y, ghost.TileType);
             Assert.Equal(x,ghost.X);
             Assert.Equal(y,ghost.Y);
         }
@@ -75,7 +75,7 @@ namespace PacmanTest
             ghost.UpdateDirection();
             var newPosition = ghost.GetNewPosition(maze);
             ghost.UpdatePosition(newPosition, maze);
-            maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);
+            maze.UpdateArray(ghost.X, ghost.Y, ghost.TileType);
             Assert.Equal(0,ghost.PrevX);
             Assert.Equal(0,ghost.PrevY);
         }
@@ -88,13 +88,13 @@ namespace PacmanTest
             var ghost = new Ghost(0,1, mockRandom.Object, SetUp());
             
             var parser = new Parser();
-            var mazeData = new []{"..*","...","*.."};
+            var mazeData = new []{"..*",".*.","*.."};
             var maze = new Maze(mazeData, parser);
             
             ghost.UpdateDirection();
             var newPosition = ghost.GetNewPosition(maze);
             ghost.UpdatePosition(newPosition, maze);
-            maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);
+            maze.UpdateArray(ghost.X, ghost.Y, ghost.TileType);
             Assert.Equal(0,ghost.X);
             Assert.Equal(1,ghost.Y);
         }

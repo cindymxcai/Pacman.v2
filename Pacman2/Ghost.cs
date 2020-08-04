@@ -10,10 +10,9 @@ namespace Pacman2
         private IMovementBehaviour MovementBehaviour { get; }
         public int X { get; private set; }
         public int Y { get; private set; }
-        public string Display { get; } 
-        public ConsoleColor Colour { get; } 
 
         public Direction CurrentDirection { get; private set; }
+        public ITileType TileType { get; }
 
         public Ghost(int x, int y, IMovementBehaviour randomMovement, ITileTypeFactory tileTypeFactory)
         {
@@ -22,9 +21,7 @@ namespace Pacman2
             X = x;
             Y = y;
             CurrentDirection = randomMovement.GetNewDirection();
-            Display = tileTypeFactory.Ghost.Display;
-            Colour = tileTypeFactory.Ghost.Colour;
-
+            TileType = tileTypeFactory.Ghost;
         }
         
         public void UpdateDirection()
@@ -61,7 +58,7 @@ namespace Pacman2
         private bool HasCollisionWithWall((int, int) newPosition, Maze maze)
         {
             var (x, y) = newPosition;
-            return maze.Tiles[x, y].Display == _tileTypeFactory.Wall.Display;
+            return maze.Tiles[x, y].TileType.Display == _tileTypeFactory.Wall.Display;
         }
     }
 }
