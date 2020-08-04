@@ -8,9 +8,9 @@ namespace Pacman2
     {
         public ITile[,] Tiles { get; private set; }
 
-        public int Width { get; private set; }
+        public int Columns { get; private set; }
 
-        public int Height { get; private set; }
+        public int Row { get; private set; }
 
         public Maze(IReadOnlyList<string> mazeData)
         {
@@ -19,42 +19,41 @@ namespace Pacman2
 
         private void CreateMaze(IReadOnlyList<string> rowData)
         {
-            Height = rowData.Count;
-            Width = rowData[0].Length;
-            Tiles = new ITile[Height, Width];
+            Row = rowData.Count;
+            Columns = rowData[0].Length;
+            Tiles = new ITile[Row, Columns];
 
-            var x = 0;
+            var row = 0;
             foreach (var lineData in rowData)
             {
-                var y = 0;
+                var col = 0;
                 foreach (var tile in lineData.Select(Parser.GetTileType))
                 {
-                    Tiles[x, y] = tile;
-                    y++;
+                    Tiles[row, col] = tile;
+                    col++;
                 }
-                x++;
+                row++;
             }
         }
         
         public void Render()
         {
-            for (var x = 0; x < Height; x++)
+            for (var row = 0; row < Row; row++)
             {
-                for (var y = 0; y < Width; y++)
+                for (var col = 0; col < Columns; col++)
                 {
-                    Console.ForegroundColor = Tiles[x, y].Colour;
-                    Console.Write(Tiles[x,y].Display);
+                    Console.ForegroundColor = Tiles[row, col].Colour;
+                    Console.Write(Tiles[row,col].Display);
                     Console.ResetColor();
                 }
                 Console.WriteLine();
             }
         }
         
-        public void UpdateArray(int x, int y, string tileDisplay, ConsoleColor colour)
+        public void UpdateArray(int row, int col, string tileDisplay, ConsoleColor tileColour)
         {
-            Tiles[x, y].Display = tileDisplay;
-            Tiles[x, y].Colour = colour;
+            Tiles[row, col].Display = tileDisplay;
+            Tiles[row, col].Colour = tileColour;
         }
-        
     }
 }

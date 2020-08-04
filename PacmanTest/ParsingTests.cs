@@ -16,9 +16,9 @@ namespace PacmanTest
 
         public static IEnumerable<object[]> TestData()
         {
-            yield return new object[] {'.', Constants.PelletDisplay};
-            yield return new object[] {'*', Constants.WallDisplay};
-            yield return new object[] {' ', Constants.EmptyDisplay,};
+            yield return new object[] {'.', PelletTileType.Display};
+            yield return new object[] {'*', WallTileType.Display};
+            yield return new object[] {' ', EmptyTileType.Display,};
         }
         
     }

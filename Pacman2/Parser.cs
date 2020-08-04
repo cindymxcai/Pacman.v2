@@ -1,4 +1,6 @@
 using System;
+using Microsoft.VisualBasic;
+using PacmanTest;
 
 namespace Pacman2
 {
@@ -8,9 +10,9 @@ namespace Pacman2
         {
             return inputChar switch
             {
-                '*' =>  new Tile(Constants.WallDisplay, Constants.WallColour),
-                '.' => new Tile(Constants.PelletDisplay, Constants.PelletColour),
-                ' ' => new Tile(Constants.EmptyDisplay, Constants.EmptyColour),
+                '*' =>  new Tile(WallTileType.Display, WallTileType.Colour),
+                '.' => new Tile(PelletTileType.Display, PelletTileType.Colour),
+                ' ' => new Tile(EmptyTileType.Display, EmptyTileType.Colour),
             _ => throw new Exception()
             };
         }
