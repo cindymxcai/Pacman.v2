@@ -8,6 +8,7 @@ namespace PacmanTest
         [Theory]
         [InlineData('.', " . ")]
         [InlineData('*', " * ")]
+        [InlineData(' ', "   ")]
         public void GivenCharacterShouldParseToTile(char input, string tileDisplay)
         {
             var inputData  = Parser.GetTileType(input);

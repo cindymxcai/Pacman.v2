@@ -10,7 +10,8 @@ namespace Pacman2
             {
                 '*' =>  new WallTile(),
                 '.' => new PelletTile(),
-                _ => throw new Exception()
+                ' ' => new EmptyTile(),
+            _ => throw new Exception()
             };
         }
     }
