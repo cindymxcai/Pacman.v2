@@ -1,3 +1,5 @@
+using Pacman2;
+
 namespace PacmanTest
 {
     public class Ghost
@@ -10,5 +12,6 @@ namespace PacmanTest
 
         public int X { get; }
         public int Y { get; }
+        public string Display { get; } = " \u1571 ";
     }
 }

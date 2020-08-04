@@ -11,8 +11,7 @@ namespace PacmanTest
         public void GivenMazeDataShouldGetSizeOfMaze()
         {
             var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
-            var maze = new Maze();
-            maze.CreateMaze(mazeData);
+            var maze = new Maze(mazeData);
             Assert.Equal(21, maze.Height);
             Assert.Equal(19, maze.Width);
         }
@@ -21,8 +20,7 @@ namespace PacmanTest
         public void GivenMazeSizeShouldCreateArrayOfTiles()
         {
             var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
-            var maze = new Maze();
-            maze.CreateMaze(mazeData);
+            var maze = new Maze(mazeData);
             Assert.Equal(399, maze.MazeArray.Length);
         }
 
@@ -30,8 +28,7 @@ namespace PacmanTest
         public void GivenSizeAndDataShouldPopulateMazeArray()
         {
             var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
-            var maze = new Maze();
-            maze.CreateMaze(mazeData);
+            var maze = new Maze(mazeData);
             Assert.Equal(" . ", maze.MazeArray[0,0].Display);
             Assert.Equal(" * ", maze.MazeArray[0,6].Display);
 

@@ -6,6 +6,11 @@ namespace Pacman2
 {
     public class Maze
     {
+        public Maze(IReadOnlyList<string> mazeData)
+        {
+            CreateMaze(mazeData);
+        }
+        
         public void CreateMaze(IReadOnlyList<string> mazeData)
         {
             Height = mazeData.Count;
@@ -42,5 +47,10 @@ namespace Pacman2
         public int Width { get; private set; }
 
         public int Height { get; private set; }
+
+        public void UpdateArray(int x, int y, string tileDisplay)
+        {
+            MazeArray[x, y].Display = tileDisplay;
+        }
     }
 }
