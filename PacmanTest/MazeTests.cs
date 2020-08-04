@@ -21,7 +21,7 @@ namespace PacmanTest
         {
             var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
             var maze = new Maze(mazeData);
-            Assert.Equal(399, maze.MazeArray.Length);
+            Assert.Equal(399, maze.Tiles.Length);
         }
 
         [Fact]
@@ -29,9 +29,18 @@ namespace PacmanTest
         {
             var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
             var maze = new Maze(mazeData);
-            Assert.Equal(Constants.PelletDisplay, maze.MazeArray[0,0].Display);
-            Assert.Equal(Constants.WallDisplay, maze.MazeArray[0,6].Display);
-
+            Assert.Equal(Constants.PelletDisplay, maze.Tiles[0,0].Display);
+            Assert.Equal(Constants.WallDisplay, maze.Tiles[0,6].Display);
+        }
+        
+        [Fact]
+        public void GivenGhostPositionMazeShouldDisplayGhostTile()
+        {
+            var ghost = new Ghost(0,1);
+            var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
+            var maze = new Maze(mazeData);
+            maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);
+            Assert.Equal(ghost.Display, maze.Tiles[0,1].Display);
         }
     }
 }

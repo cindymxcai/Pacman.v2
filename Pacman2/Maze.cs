@@ -6,24 +6,30 @@ namespace Pacman2
 {
     public class Maze
     {
+        public ITile[,] Tiles { get; private set; }
+
+        public int Width { get; private set; }
+
+        public int Height { get; private set; }
+
         public Maze(IReadOnlyList<string> mazeData)
         {
             CreateMaze(mazeData);
         }
 
-        private void CreateMaze(IReadOnlyList<string> mazeData)
+        private void CreateMaze(IReadOnlyList<string> rowData)
         {
-            Height = mazeData.Count;
-            Width = mazeData[0].Length;
-            MazeArray = new ITile[Height, Width];
+            Height = rowData.Count;
+            Width = rowData[0].Length;
+            Tiles = new ITile[Height, Width];
 
             var x = 0;
-            foreach (var lineData in mazeData)
+            foreach (var lineData in rowData)
             {
                 var y = 0;
-                foreach (var tileType in lineData.Select(Parser.GetTileType))
+                foreach (var tile in lineData.Select(Parser.GetTileType))
                 {
-                    MazeArray[x, y] = tileType;
+                    Tiles[x, y] = tile;
                     y++;
                 }
                 x++;
@@ -32,28 +38,22 @@ namespace Pacman2
         
         public void Render()
         {
-            for (var i = 0; i < Height; i++)
+            for (var x = 0; x < Height; x++)
             {
-                for (var j = 0; j < Width; j++)
+                for (var y = 0; y < Width; y++)
                 {
-                    Console.ForegroundColor = MazeArray[i, j].Colour;
-                    Console.Write(MazeArray[i,j].Display);
+                    Console.ForegroundColor = Tiles[x, y].Colour;
+                    Console.Write(Tiles[x,y].Display);
                     Console.ResetColor();
                 }
                 Console.WriteLine();
             }
         }
-
-        public ITile[,] MazeArray { get; private set; }
-
-        public int Width { get; private set; }
-
-        public int Height { get; private set; }
-
+        
         public void UpdateArray(int x, int y, string tileDisplay, ConsoleColor colour)
         {
-            MazeArray[x, y].Display = tileDisplay;
-            MazeArray[x, y].Colour = colour;
+            Tiles[x, y].Display = tileDisplay;
+            Tiles[x, y].Colour = colour;
         }
         
     }
