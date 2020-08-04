@@ -1,22 +1,19 @@
-﻿using System;
+using System;
 using System.IO;
-using PacmanTest;
+using Pacman2;
+using Xunit;
 
-namespace Pacman2
+namespace PacmanTest
 {
-    class Program
+    public class TileTests
     {
-        static void Main(string[] args)
+        [Fact]
+        public void GivenConsoleColourShouldChangeTilesColour()
         {
-            Console.WriteLine("Hello World!");
+            var ghost = new Ghost(0,1);
             var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
-
             var maze = new Maze(mazeData);
-            maze.Render();
-            
-            var ghost = new Ghost(2,2);
             maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);
-            maze.Render();
         }
     }
 }

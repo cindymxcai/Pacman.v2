@@ -10,8 +10,8 @@ namespace Pacman2
         {
             CreateMaze(mazeData);
         }
-        
-        public void CreateMaze(IReadOnlyList<string> mazeData)
+
+        private void CreateMaze(IReadOnlyList<string> mazeData)
         {
             Height = mazeData.Count;
             Width = mazeData[0].Length;
@@ -36,7 +36,9 @@ namespace Pacman2
             {
                 for (var j = 0; j < Width; j++)
                 {
+                    Console.ForegroundColor = MazeArray[i, j].Colour;
                     Console.Write(MazeArray[i,j].Display);
+                    Console.ResetColor();
                 }
                 Console.WriteLine();
             }
@@ -48,9 +50,11 @@ namespace Pacman2
 
         public int Height { get; private set; }
 
-        public void UpdateArray(int x, int y, string tileDisplay)
+        public void UpdateArray(int x, int y, string tileDisplay, ConsoleColor colour)
         {
             MazeArray[x, y].Display = tileDisplay;
+            MazeArray[x, y].Colour = colour;
         }
+        
     }
 }
