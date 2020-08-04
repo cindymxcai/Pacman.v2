@@ -35,6 +35,7 @@ namespace PacmanTest
             var maze = new Maze(mazeData, parser);
             Assert.Equal(PelletTileType.Display, maze.Tiles[0,0].Display);
             Assert.Equal(WallTileType.Display, maze.Tiles[0,6].Display);
+            Assert.Equal(PelletTileType.Colour, maze.Tiles[0,0].Colour);
         }
         
         [Fact]
@@ -42,7 +43,8 @@ namespace PacmanTest
         {
             var parser = new Parser();
 
-            var ghost = new Ghost(0,1, new RandomMovement());
+            var rng = new Rng();
+            var ghost = new Ghost(0,1, new RandomMovement(rng));
             var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
             var maze = new Maze(mazeData, parser);
             maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);

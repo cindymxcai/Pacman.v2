@@ -14,7 +14,8 @@ namespace Pacman2
             var maze = new Maze(mazeData, parser);
             maze.Render();
 
-            var randomMovement = new RandomMovement();
+            var rng = new Rng();
+            var randomMovement = new RandomMovement(rng);
             var ghost = new Ghost(2,1, randomMovement);
             maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);
             maze.Render();

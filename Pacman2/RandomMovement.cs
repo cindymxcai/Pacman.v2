@@ -2,11 +2,11 @@ namespace Pacman2
 {
     public class RandomMovement : IMovementBehaviour
     {
-        private IRng Rng;
+        private readonly IRng Rng;
 
-        public RandomMovement()
+        public RandomMovement(IRng random)
         {
-            Rng = new Rng();
+            Rng = random;
         }
         
         public Direction GetNewDirection()
