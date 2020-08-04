@@ -36,7 +36,7 @@ namespace PacmanTest
         [Fact]
         public void GivenGhostPositionMazeShouldDisplayGhostTile()
         {
-            var ghost = new Ghost(0,1);
+            var ghost = new Ghost(0,1, new RandomMovement());
             var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
             var maze = new Maze(mazeData);
             maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);

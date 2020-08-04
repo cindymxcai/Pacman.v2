@@ -1,18 +1,29 @@
 using System;
-using Pacman2;
 
-namespace PacmanTest
+namespace Pacman2
 {
     public class Ghost
     {
+        private IMovementBehaviour MovementBehaviour { get; }
         public int X { get; }
         public int Y { get; }
         public string Display { get; } = " \u1571 ";
         public ConsoleColor Colour { get; } = ConsoleColor.Red;
-        public Ghost(int x, int y)
+        
+        public Direction CurrentDirection { get; set; }
+
+        public Ghost(int x, int y, IMovementBehaviour randomMovement)
         {
+            MovementBehaviour = randomMovement;
             X = x;
-            Y = y; 
+            Y = y;
+            CurrentDirection = randomMovement.GetNewDirection();
         }
+        
+        public void UpdateDirection()
+        {
+            CurrentDirection = MovementBehaviour.GetNewDirection();
+        }
+
     }
 }

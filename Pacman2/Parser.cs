@@ -1,6 +1,4 @@
 using System;
-using Microsoft.VisualBasic;
-using PacmanTest;
 
 namespace Pacman2
 {
