@@ -8,7 +8,7 @@ namespace Pacman2
     {
         public ITile[,] Tiles { get; private set; }
 
-        public int Columns { get; private set; }
+        public int Column { get; private set; }
 
         public int Row { get; private set; }
 
@@ -20,8 +20,8 @@ namespace Pacman2
         private void CreateMaze(IReadOnlyList<string> rowData)
         {
             Row = rowData.Count;
-            Columns = rowData[0].Length;
-            Tiles = new ITile[Row, Columns];
+            Column = rowData[0].Length;
+            Tiles = new ITile[Row, Column];
 
             var row = 0;
             foreach (var lineData in rowData)
@@ -40,7 +40,7 @@ namespace Pacman2
         {
             for (var row = 0; row < Row; row++)
             {
-                for (var col = 0; col < Columns; col++)
+                for (var col = 0; col < Column; col++)
                 {
                     Console.ForegroundColor = Tiles[row, col].Colour;
                     Console.Write(Tiles[row,col].Display);

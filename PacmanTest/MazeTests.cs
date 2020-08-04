@@ -13,11 +13,11 @@ namespace PacmanTest
             var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
             var maze = new Maze(mazeData);
             Assert.Equal(21, maze.Row);
-            Assert.Equal(19, maze.Columns);
+            Assert.Equal(19, maze.Column);
         }
 
         [Fact]
-        public void GivenMazeSizeShouldCreateArrayOfTiles()
+        public void GivenMazeDataShouldCreateArrayOfTiles()
         {
             var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
             var maze = new Maze(mazeData);
