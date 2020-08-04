@@ -27,9 +27,9 @@ namespace Pacman2
             CurrentDirection = MovementBehaviour.GetNewDirection();
         }
 
-        public void UpdatePosition(Maze maze)
+        public void UpdatePosition((int, int) newPosition, Maze maze)
         {
-            var (x, y) = GetNewPosition(maze);
+            var (x, y) = newPosition;
             if (HasCollisionWithWall((x,y), maze)) return;
             PrevX = X;
             PrevY = Y;
@@ -37,7 +37,7 @@ namespace Pacman2
             Y = y;
         }
 
-        private (int, int) GetNewPosition(Maze maze)
+        public (int, int) GetNewPosition(Maze maze)
         {
             return CurrentDirection switch
             {

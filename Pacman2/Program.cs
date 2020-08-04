@@ -24,11 +24,15 @@ namespace Pacman2
             {
                 maze.Render();
                 
-                ghost.UpdateDirection();
-                ghost.UpdatePosition(maze);
-                
+                var newPosition = ghost.GetNewPosition(maze);
+                var tileDisplay = maze.Tiles[newPosition.Item1, newPosition.Item2].Display;
+                var tileColour = maze.Tiles[newPosition.Item1, newPosition.Item2].Colour;
+
+                ghost.UpdatePosition(newPosition, maze);
+                maze.UpdateArray( ghost.PrevX, ghost.PrevY, tileDisplay, tileColour);
                 maze.UpdateArray( ghost.X, ghost.Y, ghost.Display, ghost.Colour);
-               
+                ghost.UpdateDirection();
+              
                 Thread.Sleep(100);
             }
         }
