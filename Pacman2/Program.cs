@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Threading;
 
 namespace Pacman2
 {
@@ -17,8 +18,19 @@ namespace Pacman2
             var rng = new Rng();
             var randomMovement = new RandomMovement(rng);
             var ghost = new Ghost(2,1, randomMovement);
-            maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);
-            maze.Render();
+
+            
+            while (true)
+            {
+                maze.Render();
+                
+                ghost.UpdateDirection();
+                ghost.UpdatePosition(maze);
+                
+                maze.UpdateArray( ghost.X, ghost.Y, ghost.Display, ghost.Colour);
+               
+                Thread.Sleep(100);
+            }
         }
     }
 }

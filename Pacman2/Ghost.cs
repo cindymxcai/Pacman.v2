@@ -4,6 +4,8 @@ namespace Pacman2
 {
     public class Ghost : IGhost
     {
+        public int PrevX;
+        public int PrevY;
         private IMovementBehaviour MovementBehaviour { get; }
         public int X { get; private set; }
         public int Y { get; private set; }
@@ -29,6 +31,8 @@ namespace Pacman2
         {
             var (x, y) = GetNewPosition(maze);
             if (HasCollisionWithWall((x,y), maze)) return;
+            PrevX = X;
+            PrevY = Y;
             X = x;
             Y = y;
         }

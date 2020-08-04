@@ -52,6 +52,23 @@ namespace PacmanTest
             Assert.Equal(x,ghost.X);
             Assert.Equal(y,ghost.Y);
         }
+        
+        [Fact]
+        public void GivenGhostMovesShouldKeepTrackOfPreviousPosition()
+        {
+            var mockRandom = new Mock<IMovementBehaviour>();
+            mockRandom.Setup(m => m.GetNewDirection()).Returns(Direction.Up);
+            var ghost = new Ghost(0,0, mockRandom.Object);
+            var parser = new Parser();
+            var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
+            var maze = new Maze(mazeData,parser);
+            
+            ghost.UpdateDirection();
+            ghost.UpdatePosition(maze);
+            maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);
+            Assert.Equal(0,ghost.PrevX);
+            Assert.Equal(0,ghost.PrevY);
+        }
 
         [Fact]
         public void GivenCollisionWithWallGhostShouldNotMoveToPosition()
