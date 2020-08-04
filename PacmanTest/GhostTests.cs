@@ -32,9 +32,9 @@ namespace PacmanTest
         }
 
         [Theory]
-        [InlineData(Direction.Up, 20, 0)]
-        [InlineData(Direction.Down, 0, 0)]
-        [InlineData(Direction.Left, 0, 18)]
+        [InlineData(Direction.Up, 2, 0)]
+        [InlineData(Direction.Down, 1, 0)]
+        [InlineData(Direction.Left, 0, 2)]
         [InlineData(Direction.Right, 0, 1)]
 
         public void GivenDirectionGhostShouldMovePosition(Direction direction, int x, int y)
@@ -43,7 +43,7 @@ namespace PacmanTest
             mockRandom.Setup(m => m.GetNewDirection()).Returns(direction);
             var ghost = new Ghost(0,0, mockRandom.Object);
             var parser = new Parser();
-            var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
+            var mazeData = new []{"...","...","..."};
             var maze = new Maze(mazeData,parser);
             
             ghost.UpdateDirection();
@@ -61,7 +61,7 @@ namespace PacmanTest
             mockRandom.Setup(m => m.GetNewDirection()).Returns(Direction.Up);
             var ghost = new Ghost(0,0, mockRandom.Object);
             var parser = new Parser();
-            var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
+            var mazeData = new[] {"...", "...", "..."};
             var maze = new Maze(mazeData,parser);
             
             ghost.UpdateDirection();
@@ -77,17 +77,17 @@ namespace PacmanTest
         {
             var mockRandom = new Mock<IMovementBehaviour>();
             mockRandom.Setup(m => m.GetNewDirection()).Returns(Direction.Right);
-            var ghost = new Ghost(2,1, mockRandom.Object);
+            var ghost = new Ghost(0,1, mockRandom.Object);
             
             var parser = new Parser();
-            var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
+            var mazeData = new []{"..*","...","*.."};
             var maze = new Maze(mazeData, parser);
             
             ghost.UpdateDirection();
             var newPosition = ghost.GetNewPosition(maze);
             ghost.UpdatePosition(newPosition, maze);
             maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);
-            Assert.Equal(2,ghost.X);
+            Assert.Equal(0,ghost.X);
             Assert.Equal(1,ghost.Y);
         }
     }

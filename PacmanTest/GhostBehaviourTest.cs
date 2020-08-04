@@ -17,7 +17,8 @@ namespace PacmanTest
             var random = new Mock<IRng>();
             random.Setup(r => r.Next(0, 4)).Returns(number);
             var randomMovement = new RandomMovement(random.Object);
-            Assert.Equal(direction, randomMovement.GetNewDirection());
+            var newDirection = randomMovement.GetNewDirection();
+            Assert.Equal(direction, newDirection);
         }
     }
 }
