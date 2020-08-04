@@ -6,14 +6,17 @@ namespace Pacman2
 {
     public class Maze
     {
+        private readonly IParser _parser;
+        
         public ITile[,] Tiles { get; private set; }
 
         public int Column { get; private set; }
 
         public int Row { get; private set; }
 
-        public Maze(IReadOnlyList<string> mazeData)
+        public Maze(IReadOnlyList<string> mazeData, IParser parser)
         {
+            _parser = parser;
             CreateMaze(mazeData);
         }
 
@@ -27,7 +30,7 @@ namespace Pacman2
             foreach (var lineData in rowData)
             {
                 var col = 0;
-                foreach (var tile in lineData.Select(Parser.GetTileType))
+                foreach (var tile in lineData.Select(_parser.GetTileType))
                 {
                     Tiles[row, col] = tile;
                     col++;

@@ -32,7 +32,7 @@ namespace PacmanTest
 
         [Theory]
         [InlineData(Direction.Up, 20, 0)]
-        [InlineData(Direction.Down, 1, 0)]
+        [InlineData(Direction.Down, 0, 0)]
         [InlineData(Direction.Left, 0, 18)]
         [InlineData(Direction.Right, 0, 1)]
 
@@ -41,15 +41,33 @@ namespace PacmanTest
             var mockRandom = new Mock<IMovementBehaviour>();
             mockRandom.Setup(m => m.GetNewDirection()).Returns(direction);
             var ghost = new Ghost(0,0, mockRandom.Object);
-            
+            var parser = new Parser();
             var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
-            var maze = new Maze(mazeData);
+            var maze = new Maze(mazeData,parser);
             
             ghost.UpdateDirection();
             ghost.UpdatePosition(maze);
             maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);
             Assert.Equal(x,ghost.X);
             Assert.Equal(y,ghost.Y);
+        }
+
+        [Fact]
+        public void GivenCollisionWithWallGhostShouldNotMoveToPosition()
+        {
+            var mockRandom = new Mock<IMovementBehaviour>();
+            mockRandom.Setup(m => m.GetNewDirection()).Returns(Direction.Right);
+            var ghost = new Ghost(2,1, mockRandom.Object);
+            
+            var parser = new Parser();
+            var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
+            var maze = new Maze(mazeData, parser);
+            
+            ghost.UpdateDirection();
+            ghost.UpdatePosition(maze);
+            maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);
+            Assert.Equal(2,ghost.X);
+            Assert.Equal(1,ghost.Y);
         }
     }
 }

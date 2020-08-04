@@ -10,9 +10,11 @@ namespace PacmanTest
         [Fact]
         public void GivenConsoleColourShouldChangeTilesColour()
         {
+            var parser = new Parser();
+
             var ghost = new Ghost(0,1, new RandomMovement());
             var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
-            var maze = new Maze(mazeData);
+            var maze = new Maze(mazeData, parser);
             maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);
         }
     }

@@ -10,7 +10,8 @@ namespace PacmanTest
         [MemberData (nameof(TestData))]
         public void GivenCharacterShouldParseToTile(char input, string tileDisplay)
         {
-            var inputData = Parser.GetTileType(input);
+            var parser = new Parser();
+            var inputData = parser.GetTileType(input);
             Assert.Equal(tileDisplay, inputData.Display);
         }
 

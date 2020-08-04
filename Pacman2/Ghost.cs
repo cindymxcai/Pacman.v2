@@ -2,7 +2,7 @@ using System;
 
 namespace Pacman2
 {
-    public class Ghost
+    public class Ghost : IGhost
     {
         private IMovementBehaviour MovementBehaviour { get; }
         public int X { get; private set; }
@@ -26,9 +26,10 @@ namespace Pacman2
         }
 
         public void UpdatePosition(Maze maze)
-        { 
-            var (x, y) = GetNewPosition(maze); 
-            X = x; 
+        {
+            var (x, y) = GetNewPosition(maze);
+            if (HasCollisionWithWall((x,y), maze)) return;
+            X = x;
             Y = y;
         }
 
@@ -46,6 +47,12 @@ namespace Pacman2
                 Direction.Right => (X, Y + 1),
                 _ => throw new ArgumentOutOfRangeException()
             };
+        }
+
+        private bool HasCollisionWithWall((int, int) newPosition, Maze maze)
+        {
+            var (x, y) = newPosition;
+            return maze.Tiles[x, y].Display == WallTileType.Display;
         }
     }
 }

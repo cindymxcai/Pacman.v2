@@ -2,9 +2,9 @@ using System;
 
 namespace Pacman2
 {
-    public class Parser
+    public class Parser : IParser
     {
-        public static ITile GetTileType(char inputChar)
+        public ITile GetTileType(char inputChar)
         {
             return inputChar switch
             {
