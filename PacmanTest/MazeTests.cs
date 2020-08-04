@@ -29,8 +29,8 @@ namespace PacmanTest
         {
             var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
             var maze = new Maze(mazeData);
-            Assert.Equal(" . ", maze.MazeArray[0,0].Display);
-            Assert.Equal(" * ", maze.MazeArray[0,6].Display);
+            Assert.Equal(Constants.PelletDisplay, maze.MazeArray[0,0].Display);
+            Assert.Equal(Constants.WallDisplay, maze.MazeArray[0,6].Display);
 
         }
     }

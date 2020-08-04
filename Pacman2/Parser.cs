@@ -8,9 +8,9 @@ namespace Pacman2
         {
             return inputChar switch
             {
-                '*' =>  new WallTile(),
-                '.' => new PelletTile(),
-                ' ' => new EmptyTile(),
+                '*' =>  new Tile(Constants.WallDisplay),
+                '.' => new Tile(Constants.PelletDisplay),
+                ' ' => new Tile(Constants.EmptyDisplay),
             _ => throw new Exception()
             };
         }
