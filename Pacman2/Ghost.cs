@@ -4,22 +4,27 @@ namespace Pacman2
 {
     public class Ghost : IGhost
     {
+        private readonly ITileTypeFactory _tileTypeFactory;
         public int PrevX;
         public int PrevY;
         private IMovementBehaviour MovementBehaviour { get; }
         public int X { get; private set; }
         public int Y { get; private set; }
-        public string Display { get; } = " \u1571 ";
-        public ConsoleColor Colour { get; } = ConsoleColor.Red;
-        
+        public string Display { get; } 
+        public ConsoleColor Colour { get; } 
+
         public Direction CurrentDirection { get; private set; }
 
-        public Ghost(int x, int y, IMovementBehaviour randomMovement)
+        public Ghost(int x, int y, IMovementBehaviour randomMovement, ITileTypeFactory tileTypeFactory)
         {
+            _tileTypeFactory = tileTypeFactory;
             MovementBehaviour = randomMovement;
             X = x;
             Y = y;
             CurrentDirection = randomMovement.GetNewDirection();
+            Display = tileTypeFactory.Ghost.Display;
+            Colour = tileTypeFactory.Ghost.Colour;
+
         }
         
         public void UpdateDirection()
@@ -56,7 +61,7 @@ namespace Pacman2
         private bool HasCollisionWithWall((int, int) newPosition, Maze maze)
         {
             var (x, y) = newPosition;
-            return maze.Tiles[x, y].Display == WallTileType.Display;
+            return maze.Tiles[x, y].Display == _tileTypeFactory.Wall.Display;
         }
     }
 }

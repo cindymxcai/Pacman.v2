@@ -1,18 +1,26 @@
-using System;
-using System.IO;
 using Moq;
 using Pacman2;
 using Xunit;
 
 namespace PacmanTest
 {
+    
     public class GhostTests
     {
+        private ITileTypeFactory SetUp()
+        {
+            var wall = new WallTileType();
+            var empty = new EmptyTileType();
+            var pellet = new PelletTileType();
+            var ghost = new GhostTileType();
+            return new TileTypeFactory(wall, empty, pellet, ghost);
+        }
+        
         [Fact]
         public void GivenAPositionAGhostShouldHoldXAndYCoordinates()
         {
             var rng = new Rng();
-            var ghost = new Ghost(0,1, new RandomMovement(rng));
+            var ghost = new Ghost(0,1, new RandomMovement(rng), SetUp());
             Assert.Equal(0, ghost.X);
             Assert.Equal(1, ghost.Y);
         }
@@ -26,7 +34,7 @@ namespace PacmanTest
         {
             var mockRandom = new Mock<IMovementBehaviour>();
             mockRandom.Setup(m => m.GetNewDirection()).Returns(direction);
-            var ghost = new Ghost(0,1, mockRandom.Object);
+            var ghost = new Ghost(0,1, mockRandom.Object, SetUp());
             ghost.UpdateDirection();
             Assert.Equal(direction, ghost.CurrentDirection );
         }
@@ -41,7 +49,7 @@ namespace PacmanTest
         {
             var mockRandom = new Mock<IMovementBehaviour>();
             mockRandom.Setup(m => m.GetNewDirection()).Returns(direction);
-            var ghost = new Ghost(0,0, mockRandom.Object);
+            var ghost = new Ghost(0,0, mockRandom.Object, SetUp());
             var parser = new Parser();
             var mazeData = new []{"...","...","..."};
             var maze = new Maze(mazeData,parser);
@@ -59,7 +67,7 @@ namespace PacmanTest
         {
             var mockRandom = new Mock<IMovementBehaviour>();
             mockRandom.Setup(m => m.GetNewDirection()).Returns(Direction.Up);
-            var ghost = new Ghost(0,0, mockRandom.Object);
+            var ghost = new Ghost(0,0, mockRandom.Object, SetUp());
             var parser = new Parser();
             var mazeData = new[] {"...", "...", "..."};
             var maze = new Maze(mazeData,parser);
@@ -77,7 +85,7 @@ namespace PacmanTest
         {
             var mockRandom = new Mock<IMovementBehaviour>();
             mockRandom.Setup(m => m.GetNewDirection()).Returns(Direction.Right);
-            var ghost = new Ghost(0,1, mockRandom.Object);
+            var ghost = new Ghost(0,1, mockRandom.Object, SetUp());
             
             var parser = new Parser();
             var mazeData = new []{"..*","...","*.."};

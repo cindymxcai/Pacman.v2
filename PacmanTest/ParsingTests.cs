@@ -6,6 +6,15 @@ namespace PacmanTest
 {
     public class ParsingTests
     {
+        private static ITileTypeFactory SetUp()
+        {
+            var wall = new WallTileType();
+            var empty = new EmptyTileType();
+            var pellet = new PelletTileType();
+            var ghost = new GhostTileType();
+            return new TileTypeFactory(wall, empty, pellet, ghost);
+        }
+        
         [Theory]
         [MemberData (nameof(TestData))]
         public void GivenCharacterShouldParseToTile(char input, string tileDisplay)
@@ -17,9 +26,10 @@ namespace PacmanTest
 
         public static IEnumerable<object[]> TestData()
         {
-            yield return new object[] {'.', PelletTileType.Display};
-            yield return new object[] {'*', WallTileType.Display};
-            yield return new object[] {' ', EmptyTileType.Display,};
+            var tileTypeFactory = SetUp();
+            yield return new object[] {'.', tileTypeFactory.Pellet.Display};
+            yield return new object[] {'*', tileTypeFactory.Wall.Display};
+            yield return new object[] {' ', tileTypeFactory.Empty.Display,};
         }
         
     }

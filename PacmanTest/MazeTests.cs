@@ -1,4 +1,3 @@
-
 using Pacman2;
 using Xunit;
 
@@ -6,6 +5,15 @@ namespace PacmanTest
 {
     public class MazeTests
     {
+        private static ITileTypeFactory SetUp()
+        {
+            var wall = new WallTileType();
+            var empty = new EmptyTileType();
+            var pellet = new PelletTileType();
+            var ghost = new GhostTileType();
+            return new TileTypeFactory(wall, empty, pellet, ghost);
+        }
+        
         [Fact]
         public void GivenMazeDataShouldGetSizeOfMaze()
         {
@@ -30,11 +38,12 @@ namespace PacmanTest
         {
             var parser = new Parser();
 
+            var tileTypeFactory = SetUp();
             var mazeData = new []{".* "};
             var maze = new Maze(mazeData, parser);
-            Assert.Equal(PelletTileType.Display, maze.Tiles[0,0].Display);
-            Assert.Equal(WallTileType.Display, maze.Tiles[0,1].Display);
-            Assert.Equal(EmptyTileType.Colour, maze.Tiles[0,2].Colour);
+            Assert.Equal(tileTypeFactory.Pellet.Display, maze.Tiles[0,0].Display);
+            Assert.Equal(tileTypeFactory.Wall.Display, maze.Tiles[0,1].Display);
+            Assert.Equal(tileTypeFactory.Empty.Display, maze.Tiles[0,2].Display);
         }
         
         [Fact]
@@ -43,7 +52,7 @@ namespace PacmanTest
             var parser = new Parser();
 
             var rng = new Rng();
-            var ghost = new Ghost(0,1, new RandomMovement(rng));
+            var ghost = new Ghost(0,1, new RandomMovement(rng), SetUp());
             var mazeData = new []{"..."};
             var maze = new Maze(mazeData, parser);
             maze.UpdateArray(ghost.X, ghost.Y, ghost.Display, ghost.Colour);

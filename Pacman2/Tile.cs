@@ -6,10 +6,10 @@ namespace Pacman2
     {
         public string Display { get; set; }
         public ConsoleColor Colour { get; set; }
-        public Tile(string display, ConsoleColor colour)
+        public Tile(ITileType tileType)
         {
-            Display = display;
-            Colour = colour;
+            Display = tileType.Display;
+            Colour = tileType.Colour;
         }
     }
 }

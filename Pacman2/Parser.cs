@@ -8,9 +8,9 @@ namespace Pacman2
         {
             return inputChar switch
             {
-                '*' =>  new Tile(WallTileType.Display, WallTileType.Colour),
-                '.' => new Tile(PelletTileType.Display, PelletTileType.Colour),
-                ' ' => new Tile(EmptyTileType.Display, EmptyTileType.Colour),
+                '*' =>  new Tile(new WallTileType()),
+                '.' => new Tile(new PelletTileType()),
+                ' ' => new Tile(new EmptyTileType()),
             _ => throw new Exception()
             };
         }
