@@ -52,15 +52,14 @@ namespace PacmanTest
         public void GivenSpriteMovesShouldKeepTrackOfPreviousPosition()
         {
             var mockRandom = new Mock<IMovementBehaviour>();
-            mockRandom.Setup(m => m.GetNewDirection()).Returns(Direction.Up);
+            mockRandom.Setup(m => m.GetNewDirection()).Returns(Direction.Right);
             var sprite = new Sprite(0,0, mockRandom.Object, SetUp());
             var parser = new Parser();
             var mazeData = new[] {"...", "...", "..."};
             var maze = new Maze(mazeData,parser);
             
             sprite.UpdateDirection();
-            var newPosition = sprite.GetNewPosition(maze);
-            sprite.UpdatePosition(newPosition, maze);
+            sprite.UpdatePosition(sprite.GetNewPosition(maze), maze);
             maze.UpdateArray(sprite.CurrentPosition, sprite.TileType);
             Assert.Equal(0,sprite.PreviousPosition.X);
             Assert.Equal(0,sprite.PreviousPosition.Y);

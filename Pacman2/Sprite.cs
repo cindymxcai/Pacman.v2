@@ -31,7 +31,9 @@ namespace Pacman2
         {
             var (x, y) = newPosition;
             if (HasCollisionWithWall((x, y), maze)) return;
-            PreviousPosition = CurrentPosition;
+            PreviousPosition.X = CurrentPosition.X;
+            PreviousPosition.Y = CurrentPosition.Y;
+
             CurrentPosition.X = x;
             CurrentPosition.Y = y;
         }
