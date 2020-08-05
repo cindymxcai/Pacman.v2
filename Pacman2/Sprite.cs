@@ -1,4 +1,5 @@
 using System;
+using Pacman2.Interfaces;
 
 namespace Pacman2
 {
@@ -6,13 +7,10 @@ namespace Pacman2
     {
         private readonly ITileTypeFactory _tileTypeFactory;
         private IMovementBehaviour MovementBehaviour { get; }
-
         public IPosition PreviousPosition = new Position();
-        
+        public IPosition CurrentPosition { get; } = new Position();
         public Direction CurrentDirection { get; private set; }
         public ITileType TileType { get; }
-
-        public IPosition CurrentPosition { get; set; } = new Position();
 
         public Sprite(int x, int y, IMovementBehaviour randomMovement, ITileTypeFactory tileTypeFactory)
         {
@@ -23,7 +21,7 @@ namespace Pacman2
             CurrentDirection = randomMovement.GetNewDirection();
             TileType = tileTypeFactory.Ghost; //todo move to behavior
         }
-        
+
         public void UpdateDirection()
         {
             CurrentDirection = MovementBehaviour.GetNewDirection();
@@ -32,7 +30,7 @@ namespace Pacman2
         public void UpdatePosition((int, int) newPosition, Maze maze)
         {
             var (x, y) = newPosition;
-            if (HasCollisionWithWall((x,y), maze)) return;
+            if (HasCollisionWithWall((x, y), maze)) return;
             PreviousPosition = CurrentPosition;
             CurrentPosition.X = x;
             CurrentPosition.Y = y;

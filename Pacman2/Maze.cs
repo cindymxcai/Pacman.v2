@@ -1,17 +1,15 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Pacman2.Interfaces;
 
 namespace Pacman2
 {
     public class Maze
     {
         private readonly IParser _parser;
-        
         public ITile[,] Tiles { get; private set; }
-
         public int Column { get; private set; }
-
         public int Row { get; private set; }
 
         public Maze(IReadOnlyList<string> mazeData, IParser parser)
@@ -25,7 +23,6 @@ namespace Pacman2
             Row = rowData.Count;
             Column = rowData[0].Length;
             Tiles = new ITile[Row, Column];
-
             var row = 0;
             foreach (var lineData in rowData)
             {
@@ -35,10 +32,11 @@ namespace Pacman2
                     Tiles[row, col] = tile;
                     col++;
                 }
+
                 row++;
             }
         }
-        
+
         public void Render()
         {
             for (var row = 0; row < Row; row++)
@@ -46,13 +44,14 @@ namespace Pacman2
                 for (var col = 0; col < Column; col++)
                 {
                     Console.ForegroundColor = Tiles[row, col].TileType.Colour;
-                    Console.Write(Tiles[row,col].TileType.Display);
+                    Console.Write(Tiles[row, col].TileType.Display);
                     Console.ResetColor();
                 }
+
                 Console.WriteLine();
             }
         }
-        
+
         public void UpdateArray(IPosition position, ITileType tileType)
         {
             Tiles[position.X, position.Y].TileType = tileType;

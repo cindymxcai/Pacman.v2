@@ -1,3 +1,5 @@
+using Pacman2.Interfaces;
+
 namespace Pacman2
 {
     public class Position : IPosition

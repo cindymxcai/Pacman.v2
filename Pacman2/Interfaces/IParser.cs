@@ -1,4 +1,4 @@
-namespace Pacman2
+namespace Pacman2.Interfaces
 {
     public interface IParser
     {

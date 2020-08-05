@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using Pacman2;
+using Pacman2.Interfaces;
 using Xunit;
 
 namespace PacmanTest
