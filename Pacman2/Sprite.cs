@@ -21,7 +21,7 @@ namespace Pacman2
             X = x;
             Y = y;
             CurrentDirection = randomMovement.GetNewDirection();
-            TileType = tileTypeFactory.Ghost;
+            TileType = tileTypeFactory.Ghost; //todo move to behavior
         }
         
         public void UpdateDirection()

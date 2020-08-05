@@ -60,7 +60,6 @@ namespace PacmanTest
             Assert.Equal(ghost.TileType, maze.Tiles[0,1].TileType);
             Assert.Equal(ghost.TileType.Colour, maze.Tiles[0,1].TileType.Colour);
             Assert.Equal(ghost.TileType.Display, maze.Tiles[0,1].TileType.Display);
-
         }
     }
 }
