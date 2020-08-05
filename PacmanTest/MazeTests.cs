@@ -53,10 +53,10 @@ namespace PacmanTest
             var parser = new Parser();
 
             var rng = new Rng();
-            var ghost = new Ghost(0,1, new RandomMovement(rng), SetUp());
+            var ghost = new Sprite(0,1, new RandomMovement(rng), SetUp());
             var mazeData = new []{"..."};
             var maze = new Maze(mazeData, parser);
-            maze.UpdateArray(ghost.X, ghost.Y, ghost.TileType);
+            maze.UpdateArray(ghost.CurrentPosition, ghost.TileType);
             Assert.Equal(ghost.TileType, maze.Tiles[0,1].TileType);
             Assert.Equal(ghost.TileType.Colour, maze.Tiles[0,1].TileType.Colour);
             Assert.Equal(ghost.TileType.Display, maze.Tiles[0,1].TileType.Display);

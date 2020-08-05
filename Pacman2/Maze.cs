@@ -53,9 +53,9 @@ namespace Pacman2
             }
         }
         
-        public void UpdateArray(int row, int col, ITileType tileType)
+        public void UpdateArray(IPosition position, ITileType tileType)
         {
-            Tiles[row, col].TileType = tileType;
+            Tiles[position.X, position.Y].TileType = tileType;
         }
     }
 }

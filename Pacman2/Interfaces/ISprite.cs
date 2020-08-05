@@ -2,12 +2,12 @@ using System;
 
 namespace Pacman2
 {
-    public interface IGhost
+    public interface ISprite
     {
-        int X { get; }
-        int Y { get; }
         Direction CurrentDirection { get; }
+        ITileType TileType { get; }
         void UpdateDirection();
         void UpdatePosition((int, int) newPosition, Maze maze);
+        (int, int) GetNewPosition(Maze maze);
     }
 }
