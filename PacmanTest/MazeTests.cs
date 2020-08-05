@@ -55,7 +55,7 @@ namespace PacmanTest
             var parser = new Parser();
 
             var rng = new Rng();
-            var ghost = new Sprite(0,1, new RandomMovement(rng), SetUp());
+            var ghost = new Sprite(new Position(0,1), new RandomMovement(rng), new GhostTileType());
             var mazeData = new []{"..."};
             var maze = new Maze(mazeData, parser);
             maze.UpdateTileTypeForTile(ghost.CurrentPosition, ghost.TileType);

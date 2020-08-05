@@ -12,20 +12,18 @@ namespace Pacman2
             Console.WriteLine("Hello World!");
             var mazeData = File.ReadAllLines(Path.Combine(Environment.CurrentDirectory, "mazeData.txt"));
             var ghostTile = new GhostTileType();
-            var wallTile = new WallTileType();
-            var emptyTile = new EmptyTileType();
-            var pelletTile = new PelletTileType();
             var parser = new Parser();
             var maze = new Maze(mazeData, parser);
-            var tileTypeFactory = new TileTypeFactory(wallTile, emptyTile, pelletTile, ghostTile);
             var rng = new Rng();
             var randomMovement = new RandomMovement(rng);
-            var ghost = new Sprite(new Position(2,1), randomMovement, tileTypeFactory);
+            var ghost = new Sprite(new Position(2,1), randomMovement, ghostTile);
             while (true)
             {
                 maze.Render();
-                var tileDisplay = maze.Tiles[ghost.PreviousPosition.Row, ghost.PreviousPosition.Col].TileType; //todo encapsulate 
-                ghost.UpdatePosition(ghost.GetNewPosition(maze), maze); //todo encapsulate 
+                var newPosition =  ghost.GetNewPosition(maze);
+                var tileDisplay = maze.GetTileDisplayAtPosition(newPosition); //todo encapsulate 
+                
+                ghost.UpdatePosition(newPosition, maze);
                 maze.UpdateTileTypeForTile(ghost.PreviousPosition, tileDisplay);
                 maze.UpdateTileTypeForTile(ghost.CurrentPosition, ghost.TileType);
                 ghost.UpdateDirection();

@@ -8,7 +8,6 @@ namespace Pacman2
         {
             Row = row;
             Col = col;
-            throw new System.NotImplementedException();
         }
 
         public int Row { get; set; } 

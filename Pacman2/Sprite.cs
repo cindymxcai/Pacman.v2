@@ -8,16 +8,16 @@ namespace Pacman2
         private readonly WallTileType _wallTileType = new WallTileType();
         private IMovementBehaviour MovementBehaviour { get; }
         public IPosition PreviousPosition;
-        public IPosition CurrentPosition { get; }
+        public IPosition CurrentPosition { get; private set; }
         public Direction CurrentDirection { get; private set; }
         public ITileType TileType { get; }
 
-        public Sprite(IPosition position, IMovementBehaviour randomMovement, ITileTypeFactory tileTypeFactory)
+        public Sprite(IPosition position, IMovementBehaviour randomMovement, ITileType tileType)
         {
             CurrentPosition = position;
             MovementBehaviour = randomMovement;
             CurrentDirection = randomMovement.GetNewDirection();
-            TileType = tileTypeFactory.Ghost; //todo move to behavior
+            TileType = tileType; //todo move to behavior
         }
 
         public void UpdateDirection()
@@ -25,36 +25,32 @@ namespace Pacman2
             CurrentDirection = MovementBehaviour.GetNewDirection();
         }
 
-        public void UpdatePosition((int, int) newPosition, Maze maze)
+        public void UpdatePosition(IPosition newPosition, Maze maze)
         {
-            var (x, y) = newPosition;
-            if (HasCollisionWithWall((x, y), maze)) return;
+            if (HasCollisionWithWall(newPosition, maze)) return;
             PreviousPosition = CurrentPosition;
-
-            CurrentPosition.Row = x;
-            CurrentPosition.Col = y;
+            CurrentPosition = newPosition;
         }
 
-        public (int, int) GetNewPosition(Maze maze)
+        public IPosition GetNewPosition(Maze maze)
         {
             return CurrentDirection switch
             {
-                Direction.Up when CurrentPosition.Row - 1 < 0 => (maze.Rows - 1, CurrentPosition.Col), //todo extract out to code and move to maze
-                Direction.Up => (CurrentPosition.Row - 1, CurrentPosition.Col),
-                Direction.Down when CurrentPosition.Row + 1 > maze.Rows - 1 => (0, CurrentPosition.Col),
-                Direction.Down => (CurrentPosition.Row + 1, CurrentPosition.Col),
-                Direction.Left when CurrentPosition.Col - 1 < 0 => (CurrentPosition.Row, maze.Columns - 1),
-                Direction.Left => (CurrentPosition.Row, CurrentPosition.Col - 1),
-                Direction.Right when CurrentPosition.Col + 1 > maze.Columns - 1 => (CurrentPosition.Row, 0),
-                Direction.Right => (CurrentPosition.Row, CurrentPosition.Col + 1),
+                Direction.Up when CurrentPosition.Row - 1 < 0 => new Position(maze.Rows - 1, CurrentPosition.Col),
+                Direction.Up => new Position(CurrentPosition.Row - 1, CurrentPosition.Col),
+                Direction.Down when CurrentPosition.Row + 1 > maze.Rows - 1 => new Position(0, CurrentPosition.Col),
+                Direction.Down => new Position(CurrentPosition.Row + 1, CurrentPosition.Col),
+                Direction.Left when CurrentPosition.Col - 1 < 0 => new Position(CurrentPosition.Row, maze.Columns - 1),
+                Direction.Left => new Position(CurrentPosition.Row, CurrentPosition.Col - 1),
+                Direction.Right when CurrentPosition.Col + 1 > maze.Columns - 1 => new Position(CurrentPosition.Row, 0),
+                Direction.Right => new Position(CurrentPosition.Row, CurrentPosition.Col + 1),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
 
-        private bool HasCollisionWithWall((int, int) newPosition, Maze maze) //todo maze
+        private bool HasCollisionWithWall(IPosition newPosition, Maze maze) //todo maze
         {
-            var (x, y) = newPosition;
-            return maze.Tiles[x, y].TileType.Display == _wallTileType.Display;
+            return maze.Tiles[newPosition.Row, newPosition.Col].TileType.Display == _wallTileType.Display;
         }
     }
 }

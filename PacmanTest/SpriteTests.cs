@@ -1,27 +1,17 @@
 using Moq;
 using Pacman2;
 using Pacman2.Interfaces;
-using Pacman2.Tiles;
 using Xunit;
 
 namespace PacmanTest
 {
     public class SpriteTests
     {
-        private ITileTypeFactory SetUp()
-        {
-            var wall = new WallTileType();
-            var empty = new EmptyTileType();
-            var pellet = new PelletTileType();
-            var sprite = new GhostTileType();
-            return new TileTypeFactory(wall, empty, pellet, sprite);
-        } 
-        
         [Fact]
         public void GivenAPositionASpriteShouldHoldXAndYCoordinates()
         {
             var rng = new Rng();
-            var sprite = new Sprite(0,1, new RandomMovement(rng), SetUp());
+            var sprite = new Sprite(new Position(0,1), new RandomMovement(rng), new GhostTileType());
             Assert.Equal(0, sprite.CurrentPosition.Row);
             Assert.Equal(1, sprite.CurrentPosition.Col);
         }
@@ -36,7 +26,7 @@ namespace PacmanTest
         {
             var mockRandom = new Mock<IMovementBehaviour>();
             mockRandom.Setup(m => m.GetNewDirection()).Returns(direction);
-            var sprite = new Sprite(0,0, mockRandom.Object, SetUp());
+            var sprite = new Sprite(new Position(0,0), mockRandom.Object, new GhostTileType());
             var parser = new Parser();
             var mazeData = new []{"...","...","..."};
             var maze = new Maze(mazeData,parser);
@@ -54,7 +44,7 @@ namespace PacmanTest
         {
             var mockRandom = new Mock<IMovementBehaviour>();
             mockRandom.Setup(m => m.GetNewDirection()).Returns(Direction.Right);
-            var sprite = new Sprite(0,0, mockRandom.Object, SetUp());
+            var sprite = new Sprite(new Position(0,0), mockRandom.Object, new GhostTileType());
             var parser = new Parser();
             var mazeData = new[] {"...", "...", "..."};
             var maze = new Maze(mazeData,parser);
@@ -71,7 +61,7 @@ namespace PacmanTest
         {
             var mockRandom = new Mock<IMovementBehaviour>();
             mockRandom.Setup(m => m.GetNewDirection()).Returns(Direction.Right);
-            var sprite = new Sprite(0,1, mockRandom.Object, SetUp());
+            var sprite = new Sprite(new Position(0,1), mockRandom.Object, new GhostTileType());
             
             var parser = new Parser();
             var mazeData = new []{"..*",".*.","*.."};

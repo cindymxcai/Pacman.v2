@@ -55,5 +55,10 @@ namespace Pacman2
         {
             Tiles[position.Row, position.Col].TileType = tileType;
         }
+
+        public ITileType GetTileDisplayAtPosition(IPosition position)
+        {
+            return Tiles[position.Row, position.Col].TileType;
+        }
     }
 }

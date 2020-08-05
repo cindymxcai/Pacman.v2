@@ -1,7 +1,6 @@
 using Moq;
 using Pacman2;
 using Pacman2.Interfaces;
-using Pacman2.Tiles;
 using Xunit;
 
 namespace PacmanTest
@@ -9,15 +8,6 @@ namespace PacmanTest
     
     public class GhostTests
     {
-        private static ITileTypeFactory SetUp()
-        {
-            var wall = new WallTileType();
-            var empty = new EmptyTileType();
-            var pellet = new PelletTileType();
-            var ghost = new GhostTileType();
-            return new TileTypeFactory(wall, empty, pellet, ghost);
-        }
-
         [Theory]
         [InlineData(Direction.Up)]
         [InlineData(Direction.Down)]
@@ -27,7 +17,7 @@ namespace PacmanTest
         {
             var mockRandom = new Mock<IMovementBehaviour>();
             mockRandom.Setup(m => m.GetNewDirection()).Returns(direction);
-            var ghost = new Sprite(0,1, mockRandom.Object, SetUp());
+            var ghost = new Sprite(new Position(0,1), mockRandom.Object, new GhostTileType());
             ghost.UpdateDirection();
             Assert.Equal(direction, ghost.CurrentDirection );
         }
