@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using Pacman2;
 using Pacman2.Interfaces;
+using Pacman2.Tiles;
 using Xunit;
 
 namespace PacmanTest
@@ -21,7 +22,7 @@ namespace PacmanTest
         public void GivenCharacterShouldParseToTile(char input, ITileType tileDisplay)
         {
             var parser = new Parser();
-            var inputData = parser.GetTileType(input);
+            var inputData = parser.GetTile(input);
             Assert.Equal(tileDisplay.Display, inputData.TileType.Display);
             Assert.Equal(tileDisplay.Colour, inputData.TileType.Colour);
         }

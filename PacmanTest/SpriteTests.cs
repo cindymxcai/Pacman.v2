@@ -1,6 +1,7 @@
 using Moq;
 using Pacman2;
 using Pacman2.Interfaces;
+using Pacman2.Tiles;
 using Xunit;
 
 namespace PacmanTest
@@ -21,8 +22,8 @@ namespace PacmanTest
         {
             var rng = new Rng();
             var sprite = new Sprite(0,1, new RandomMovement(rng), SetUp());
-            Assert.Equal(0, sprite.CurrentPosition.X);
-            Assert.Equal(1, sprite.CurrentPosition.Y);
+            Assert.Equal(0, sprite.CurrentPosition.Row);
+            Assert.Equal(1, sprite.CurrentPosition.Col);
         }
         
         [Theory]
@@ -43,9 +44,9 @@ namespace PacmanTest
             sprite.UpdateDirection();
             var newPosition = sprite.GetNewPosition(maze);
             sprite.UpdatePosition(newPosition, maze);
-            maze.UpdateArray(sprite.CurrentPosition, sprite.TileType);
-            Assert.Equal(x,sprite.CurrentPosition.X);
-            Assert.Equal(y,sprite.CurrentPosition.Y);
+            maze.UpdateTileTypeForTile(sprite.CurrentPosition, sprite.TileType);
+            Assert.Equal(x,sprite.CurrentPosition.Row);
+            Assert.Equal(y,sprite.CurrentPosition.Col);
         }
         
         [Fact]
@@ -60,9 +61,9 @@ namespace PacmanTest
             
             sprite.UpdateDirection();
             sprite.UpdatePosition(sprite.GetNewPosition(maze), maze);
-            maze.UpdateArray(sprite.CurrentPosition, sprite.TileType);
-            Assert.Equal(0,sprite.PreviousPosition.X);
-            Assert.Equal(0,sprite.PreviousPosition.Y);
+            maze.UpdateTileTypeForTile(sprite.CurrentPosition, sprite.TileType);
+            Assert.Equal(0,sprite.PreviousPosition.Row);
+            Assert.Equal(0,sprite.PreviousPosition.Col);
         }
 
         [Fact]
@@ -79,9 +80,9 @@ namespace PacmanTest
             sprite.UpdateDirection();
             var newPosition = sprite.GetNewPosition(maze);
             sprite.UpdatePosition(newPosition, maze);
-            maze.UpdateArray(sprite.CurrentPosition, sprite.TileType);
-            Assert.Equal(0,sprite.CurrentPosition.X);
-            Assert.Equal(1,sprite.CurrentPosition.Y);
+            maze.UpdateTileTypeForTile(sprite.CurrentPosition, sprite.TileType);
+            Assert.Equal(0,sprite.CurrentPosition.Row);
+            Assert.Equal(1,sprite.CurrentPosition.Col);
         }
     }
 }

@@ -1,6 +1,7 @@
 using Moq;
 using Pacman2;
 using Pacman2.Interfaces;
+using Pacman2.Tiles;
 using Xunit;
 
 namespace PacmanTest
@@ -8,7 +9,7 @@ namespace PacmanTest
     
     public class GhostTests
     {
-        private ITileTypeFactory SetUp()
+        private static ITileTypeFactory SetUp()
         {
             var wall = new WallTileType();
             var empty = new EmptyTileType();

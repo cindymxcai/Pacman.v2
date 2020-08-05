@@ -9,8 +9,8 @@ namespace Pacman2
     {
         private readonly IParser _parser;
         public ITile[,] Tiles { get; private set; }
-        public int Column { get; private set; }
-        public int Row { get; private set; }
+        public int Columns { get; private set; }
+        public int Rows { get; private set; }
 
         public Maze(IReadOnlyList<string> mazeData, IParser parser)
         {
@@ -18,43 +18,42 @@ namespace Pacman2
             CreateMaze(mazeData);
         }
 
-        private void CreateMaze(IReadOnlyList<string> rowData)
+        private void CreateMaze(IReadOnlyList<string> rows)
         {
-            Row = rowData.Count;
-            Column = rowData[0].Length;
-            Tiles = new ITile[Row, Column];
-            var row = 0;
-            foreach (var lineData in rowData)
+            Rows = rows.Count;
+            Columns = rows[0].Length;
+            Tiles = new ITile[Rows, Columns];
+            
+            var rowIndex = 0;
+            foreach (var row in rows)
             {
-                var col = 0;
-                foreach (var tile in lineData.Select(_parser.GetTileType))
+                var colIndex = 0;
+                foreach (var tile in row.Select(_parser.GetTile))
                 {
-                    Tiles[row, col] = tile;
-                    col++;
+                    Tiles[rowIndex, colIndex] = tile;
+                    colIndex++;
                 }
-
-                row++;
+                rowIndex++;
             }
         }
 
         public void Render()
         {
-            for (var row = 0; row < Row; row++)
+            for (var rowIndex = 0; rowIndex < Rows; rowIndex++)
             {
-                for (var col = 0; col < Column; col++)
+                for (var colIndex = 0; colIndex < Columns; colIndex++)
                 {
-                    Console.ForegroundColor = Tiles[row, col].TileType.Colour;
-                    Console.Write(Tiles[row, col].TileType.Display);
+                    Console.ForegroundColor = Tiles[rowIndex, colIndex].TileType.Colour;
+                    Console.Write(Tiles[rowIndex, colIndex].TileType.Display);
                     Console.ResetColor();
                 }
-
                 Console.WriteLine();
             }
         }
 
-        public void UpdateArray(IPosition position, ITileType tileType)
+        public void UpdateTileTypeForTile(IPosition position, ITileType tileType)
         {
-            Tiles[position.X, position.Y].TileType = tileType;
+            Tiles[position.Row, position.Col].TileType = tileType;
         }
     }
 }

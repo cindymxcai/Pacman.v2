@@ -1,5 +1,6 @@
 using Pacman2;
 using Pacman2.Interfaces;
+using Pacman2.Tiles;
 using Xunit;
 
 namespace PacmanTest
@@ -21,8 +22,8 @@ namespace PacmanTest
             var parser = new Parser();
             var mazeData = new []{"...","..."};
             var maze = new Maze(mazeData, parser);
-            Assert.Equal(2, maze.Row);
-            Assert.Equal(3, maze.Column);
+            Assert.Equal(2, maze.Rows);
+            Assert.Equal(3, maze.Columns);
         }
 
         [Fact]
@@ -57,7 +58,7 @@ namespace PacmanTest
             var ghost = new Sprite(0,1, new RandomMovement(rng), SetUp());
             var mazeData = new []{"..."};
             var maze = new Maze(mazeData, parser);
-            maze.UpdateArray(ghost.CurrentPosition, ghost.TileType);
+            maze.UpdateTileTypeForTile(ghost.CurrentPosition, ghost.TileType);
             Assert.Equal(ghost.TileType, maze.Tiles[0,1].TileType);
             Assert.Equal(ghost.TileType.Colour, maze.Tiles[0,1].TileType.Colour);
             Assert.Equal(ghost.TileType.Display, maze.Tiles[0,1].TileType.Display);
