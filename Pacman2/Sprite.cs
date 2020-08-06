@@ -16,7 +16,7 @@ namespace Pacman2
         {
             CurrentPosition = position;
             MovementBehaviour = randomMovement;
-            CurrentDirection = randomMovement.GetNewDirection();
+            CurrentDirection = Direction.Up;
             TileType = tileType; //todo move to behavior
         }
 

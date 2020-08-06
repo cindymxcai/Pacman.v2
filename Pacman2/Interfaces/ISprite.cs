@@ -5,7 +5,7 @@ namespace Pacman2.Interfaces
         Direction CurrentDirection { get; }
         ITileType TileType { get; }
         void UpdateDirection();
-        void UpdatePosition( IPosition newPosition, Maze maze);
+        void UpdatePosition(IPosition position, Maze maze);
         IPosition GetNewPosition(Maze maze);
     }
 }

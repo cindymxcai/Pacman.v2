@@ -1,21 +1,10 @@
 using Pacman2;
-using Pacman2.Interfaces;
-using Pacman2.Tiles;
 using Xunit;
 
 namespace PacmanTest
 {
     public class MazeTests
     {
-        private static ITileTypeFactory SetUp()
-        {
-            var wall = new WallTileType();
-            var empty = new EmptyTileType();
-            var pellet = new PelletTileType();
-            var ghost = new GhostTileType();
-            return new TileTypeFactory(wall, empty, pellet, ghost);
-        }
-        
         [Fact]
         public void GivenMazeDataShouldGetSizeOfMaze()
         {
@@ -40,13 +29,12 @@ namespace PacmanTest
         {
             var parser = new Parser();
 
-            var tileTypeFactory = SetUp();
             var mazeData = new []{".* "};
             var maze = new Maze(mazeData, parser);
-            Assert.Equal(tileTypeFactory.Pellet.Display, maze.Tiles[0,0].TileType.Display);
-            Assert.Equal(tileTypeFactory.Wall.Display, maze.Tiles[0,1].TileType.Display);
-            Assert.Equal(tileTypeFactory.Empty.Display, maze.Tiles[0,2].TileType.Display);
-            Assert.Equal(tileTypeFactory.Empty.Colour, maze.Tiles[0,2].TileType.Colour);
+            Assert.Equal(new PelletTileType().Display, maze.Tiles[0,0].TileType.Display);
+            Assert.Equal(new WallTileType().Display, maze.Tiles[0,1].TileType.Display);
+            Assert.Equal(new EmptyTileType().Display, maze.Tiles[0,2].TileType.Display);
+            Assert.Equal(new EmptyTileType().Colour, maze.Tiles[0,2].TileType.Colour);
         }
         
         [Fact]
