@@ -43,6 +43,7 @@ namespace Pacman2
             {
                 for (var colIndex = 0; colIndex < Columns; colIndex++)
                 {
+                    // todo Display tile display from List of TileTypes on given tile according to highest priority
                     Console.ForegroundColor = Tiles[rowIndex, colIndex].TileType.Colour;
                     Console.Write(Tiles[rowIndex, colIndex].TileType.Display);
                     Console.ResetColor();

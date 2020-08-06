@@ -7,5 +7,6 @@ namespace Pacman2
     {
         public string Display { get; } = "   ";
         public ConsoleColor Colour { get; } = ConsoleColor.Black;
+        public int DisplayPriority { get; } = 2;
     }
 }

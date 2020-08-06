@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 using System.Threading;
-using Pacman2.Tiles;
 
 namespace Pacman2
 {
@@ -17,15 +16,17 @@ namespace Pacman2
             var rng = new Rng();
             var randomMovement = new RandomMovement(rng);
             var ghost = new Sprite(new Position(2,1), randomMovement, ghostTile);
+            
             while (true)
             {
+                /// ...
+                /// ...
+                /// .O.
+                maze.UpdateTileTypeForTile(ghost.CurrentPosition, ghost.TileType); //todo, rename to add tile type to tile, or similar to represent new logic
                 maze.Render();
                 var newPosition =  ghost.GetNewPosition(maze);
-                var tileDisplay = maze.GetTileDisplayAtPosition(newPosition); //todo encapsulate 
                 
                 ghost.UpdatePosition(newPosition, maze);
-                maze.UpdateTileTypeForTile(ghost.PreviousPosition, tileDisplay);
-                maze.UpdateTileTypeForTile(ghost.CurrentPosition, ghost.TileType);
                 ghost.UpdateDirection();
                 Thread.Sleep(100);
                 Console.Clear();

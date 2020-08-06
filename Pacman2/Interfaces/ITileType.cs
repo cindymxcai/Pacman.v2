@@ -6,5 +6,6 @@ namespace Pacman2.Interfaces
     {
         public string Display { get;  }
         public ConsoleColor Colour { get;  }
+        public int DisplayPriority { get; }
     }
 }
