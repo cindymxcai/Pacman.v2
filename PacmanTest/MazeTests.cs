@@ -67,7 +67,7 @@ namespace PacmanTest
             position =  maze.GetTileTypeAtPosition(ghost.CurrentPosition);
             Assert.Equal( ghost.TileType.Display, position.Display);
 
-            ghost.UpdatePosition(ghost.GetNewPosition(maze), maze );
+            ghost.UpdatePosition(maze );
             maze.RemoveTileTypeFromTile(ghost.PreviousPosition, ghost.TileType);
 
             var previousPosition = maze.GetTileTypeAtPosition(ghost.PreviousPosition);

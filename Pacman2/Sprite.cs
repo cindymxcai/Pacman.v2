@@ -26,13 +26,13 @@ namespace Pacman2
             CurrentDirection = MovementBehaviour.GetNewDirection();
         }
 
-        public void UpdatePosition(IPosition newPosition, Maze maze)
+        public void UpdatePosition(Maze maze)
         {
+            var newPosition = GetNewPosition(maze);
             if (HasCollisionWithWall(newPosition, maze)) return;
             PreviousPosition = CurrentPosition;
-
             CurrentPosition = newPosition;
-           //maze.Tiles[CurrentPosition.Row, CurrentPosition.Col].SpritesOnTile.Add(TileType);
+            maze.Tiles[CurrentPosition.Row, CurrentPosition.Col].SpritesOnTile.Add(TileType);
         }
 
         public IPosition GetNewPosition(Maze maze)
@@ -51,7 +51,7 @@ namespace Pacman2
             };
         }
 
-        private bool HasCollisionWithWall(IPosition newPosition, Maze maze) //todo maze
+        private bool HasCollisionWithWall(IPosition newPosition, Maze maze) //todo move to maze
         {
             return maze.Tiles[newPosition.Row, newPosition.Col].SpritesOnTile.Any(d => d.Display == _wallTileType.Display);
         }

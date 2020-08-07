@@ -43,7 +43,6 @@ namespace Pacman2
             {
                 for (var colIndex = 0; colIndex < Columns; colIndex++)
                 {
-                    // todo Display tile display from List of TileTypes on given tile according to highest priority
                     Console.ForegroundColor = GetTileTypeAtPosition(new Position(rowIndex, colIndex)).Colour;
                     Console.Write(GetTileTypeAtPosition(new Position(rowIndex, colIndex)).Display);
                     Console.ResetColor();
@@ -60,7 +59,6 @@ namespace Pacman2
         public void RemoveTileTypeFromTile(IPosition position, ITileType tileType)
         {
             Tiles[position.Row, position.Col].SpritesOnTile.Remove(tileType);
-
         }
 
         public ITileType GetTileTypeAtPosition(IPosition position)
