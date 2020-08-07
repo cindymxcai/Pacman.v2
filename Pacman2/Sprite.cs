@@ -6,7 +6,6 @@ namespace Pacman2
 {
     public class Sprite : ISprite
     {
-        private readonly WallTileType _wallTileType = new WallTileType();
         private IMovementBehaviour MovementBehaviour { get; }
         public IPosition PreviousPosition;
         public IPosition CurrentPosition { get; private set; }
@@ -29,13 +28,13 @@ namespace Pacman2
         public void UpdatePosition(Maze maze)
         {
             var newPosition = GetNewPosition(maze);
-            if (HasCollisionWithWall(newPosition, maze)) return;
+            if (maze.SpriteHasCollisionWithWall(newPosition)) return;
             PreviousPosition = CurrentPosition;
             CurrentPosition = newPosition;
-            maze.Tiles[CurrentPosition.Row, CurrentPosition.Col].SpritesOnTile.Add(TileType);
+            maze.AddTileTypeToTile(CurrentPosition, TileType);
         }
 
-        public IPosition GetNewPosition(Maze maze)
+        public IPosition GetNewPosition(Maze maze) //todo make this more readable
         {
             return CurrentDirection switch
             {
@@ -50,10 +49,6 @@ namespace Pacman2
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
-
-        private bool HasCollisionWithWall(IPosition newPosition, Maze maze) //todo move to maze
-        {
-            return maze.Tiles[newPosition.Row, newPosition.Col].SpritesOnTile.Any(d => d.Display == _wallTileType.Display);
-        }
+        
     }
 }

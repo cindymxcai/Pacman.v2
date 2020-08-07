@@ -7,6 +7,8 @@ namespace Pacman2
 {
     public class Maze
     {
+        private readonly WallTileType _wallTileType = new WallTileType();
+
         private readonly IParser _parser;
         public ITile[,] Tiles { get; private set; }
         public int Columns { get; private set; }
@@ -65,6 +67,11 @@ namespace Pacman2
         {
             var toDisplay = Tiles[position.Row, position.Col].SpritesOnTile.OrderBy(t => t.DisplayPriority).First();
             return toDisplay;
+        }
+        
+        public bool SpriteHasCollisionWithWall(IPosition newPosition)
+        {
+            return Tiles[newPosition.Row, newPosition.Col].SpritesOnTile.Any(d => d.Display == _wallTileType.Display);
         }
     }
 }

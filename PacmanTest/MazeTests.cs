@@ -1,5 +1,7 @@
 using System.Linq;
+using Moq;
 using Pacman2;
+using Pacman2.Interfaces;
 using Xunit;
 
 namespace PacmanTest
@@ -58,18 +60,19 @@ namespace PacmanTest
         {
             var parser = new Parser();
 
-            var mazeData = new []{".* "};
+            var mazeData = new []{". *"};
             var maze = new Maze(mazeData, parser);
-            var position =  maze.GetTileTypeAtPosition(new Position(0, 0));
-            Assert.Equal(position.Display, new PelletTileType().Display);
-            var ghost = new Sprite(new Position(0,0), new RandomMovement(new Rng()), new GhostTileType());
+            var mockRandom = new Mock<IMovementBehaviour>();
+            mockRandom.Setup(m => m.GetNewDirection()).Returns(Direction.Right);
+            
+            var ghost = new Sprite(new Position(0,0), mockRandom.Object, new GhostTileType());
+            ghost.UpdateDirection();
             maze.AddTileTypeToTile(ghost.CurrentPosition, ghost.TileType);
-            position =  maze.GetTileTypeAtPosition(ghost.CurrentPosition);
+            var position =  maze.GetTileTypeAtPosition(ghost.CurrentPosition);
             Assert.Equal( ghost.TileType.Display, position.Display);
 
             ghost.UpdatePosition(maze );
             maze.RemoveTileTypeFromTile(ghost.PreviousPosition, ghost.TileType);
-
             var previousPosition = maze.GetTileTypeAtPosition(ghost.PreviousPosition);
             Assert.Equal(new PelletTileType().Display, previousPosition.Display);
         }
