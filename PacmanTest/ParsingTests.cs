@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using Pacman2;
 using Pacman2.Interfaces;
 using Pacman2.Tiles;
@@ -14,8 +15,8 @@ namespace PacmanTest
         {
             var parser = new Parser();
             var inputData = parser.GetTile(input);
-            Assert.Equal(tileDisplay.Display, inputData.TileType.Display);
-            Assert.Equal(tileDisplay.Colour, inputData.TileType.Colour);
+            Assert.Equal(tileDisplay.Display, inputData.SpritesOnTile.First().Display);
+            Assert.Equal(tileDisplay.Colour, inputData.SpritesOnTile.First().Colour);
         }
 
         public static IEnumerable<object[]> TestData()

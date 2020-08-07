@@ -5,13 +5,10 @@ namespace Pacman2.Tiles
 {
     public class Tile : ITile
     {
-        //todo list of current sprites 
-
-        public List<ITileType> SpritesOnTile = new List<ITileType>{};
+        public List<ITileType> SpritesOnTile { get; } = new List<ITileType>();
         public Tile(ITileType tileType)
         {
-            TileType = tileType;
+            SpritesOnTile.Add(tileType); 
         }
-        public ITileType TileType { get; set; }
     }
 }

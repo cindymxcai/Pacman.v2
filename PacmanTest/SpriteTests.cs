@@ -34,7 +34,7 @@ namespace PacmanTest
             sprite.UpdateDirection();
             var newPosition = sprite.GetNewPosition(maze);
             sprite.UpdatePosition(newPosition, maze);
-            maze.UpdateTileTypeForTile(sprite.CurrentPosition, sprite.TileType);
+            maze.AddTileTypeToTile(sprite.CurrentPosition, sprite.TileType);
             Assert.Equal(x,sprite.CurrentPosition.Row);
             Assert.Equal(y,sprite.CurrentPosition.Col);
         }
@@ -51,7 +51,7 @@ namespace PacmanTest
             
             sprite.UpdateDirection();
             sprite.UpdatePosition(sprite.GetNewPosition(maze), maze);
-            maze.UpdateTileTypeForTile(sprite.CurrentPosition, sprite.TileType);
+            maze.AddTileTypeToTile(sprite.CurrentPosition, sprite.TileType);
             Assert.Equal(0,sprite.PreviousPosition.Row);
             Assert.Equal(0,sprite.PreviousPosition.Col);
         }
@@ -70,7 +70,7 @@ namespace PacmanTest
             sprite.UpdateDirection();
             var newPosition = sprite.GetNewPosition(maze);
             sprite.UpdatePosition(newPosition, maze);
-            maze.UpdateTileTypeForTile(sprite.CurrentPosition, sprite.TileType);
+            maze.AddTileTypeToTile(sprite.CurrentPosition, sprite.TileType);
             Assert.Equal(0,sprite.CurrentPosition.Row);
             Assert.Equal(1,sprite.CurrentPosition.Col);
         }

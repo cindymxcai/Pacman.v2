@@ -44,22 +44,29 @@ namespace Pacman2
                 for (var colIndex = 0; colIndex < Columns; colIndex++)
                 {
                     // todo Display tile display from List of TileTypes on given tile according to highest priority
-                    Console.ForegroundColor = Tiles[rowIndex, colIndex].TileType.Colour;
-                    Console.Write(Tiles[rowIndex, colIndex].TileType.Display);
+                    Console.ForegroundColor = GetTileTypeAtPosition(new Position(rowIndex, colIndex)).Colour;
+                    Console.Write(GetTileTypeAtPosition(new Position(rowIndex, colIndex)).Display);
                     Console.ResetColor();
                 }
                 Console.WriteLine();
             }
         }
 
-        public void UpdateTileTypeForTile(IPosition position, ITileType tileType)
+        public void AddTileTypeToTile(IPosition position, ITileType tileType)
         {
-            Tiles[position.Row, position.Col].TileType = tileType;
+            Tiles[position.Row, position.Col].SpritesOnTile.Add(tileType);
         }
 
-        public ITileType GetTileDisplayAtPosition(IPosition position)
+        public void RemoveTileTypeFromTile(IPosition position, ITileType tileType)
         {
-            return Tiles[position.Row, position.Col].TileType;
+            Tiles[position.Row, position.Col].SpritesOnTile.Remove(tileType);
+
+        }
+
+        public ITileType GetTileTypeAtPosition(IPosition position)
+        {
+            var toDisplay = Tiles[position.Row, position.Col].SpritesOnTile.OrderBy(t => t.DisplayPriority).First();
+            return toDisplay;
         }
     }
 }

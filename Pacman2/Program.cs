@@ -22,14 +22,17 @@ namespace Pacman2
                 /// ...
                 /// ...
                 /// .O.
-                maze.UpdateTileTypeForTile(ghost.CurrentPosition, ghost.TileType); //todo, rename to add tile type to tile, or similar to represent new logic
+                maze.AddTileTypeToTile(ghost.CurrentPosition, ghost.TileType); //todo, rename to add tile type to tile, or similar to represent new logic
                 maze.Render();
                 var newPosition =  ghost.GetNewPosition(maze);
                 
                 ghost.UpdatePosition(newPosition, maze);
                 ghost.UpdateDirection();
+                maze.RemoveTileTypeFromTile(ghost.PreviousPosition, ghost.TileType);
+
                 Thread.Sleep(100);
                 Console.Clear();
+
             }
         }
     }

@@ -7,6 +7,6 @@ namespace Pacman2
     { 
         public  string Display { get; } = "\u2588\u2588\u2588";
         public  ConsoleColor Colour { get; } = ConsoleColor.Blue;
-        public int DisplayPriority { get; } = 0;
+        public int DisplayPriority { get; } = 2;
     }
 }

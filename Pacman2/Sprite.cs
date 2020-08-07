@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Pacman2.Interfaces;
 
 namespace Pacman2
@@ -29,7 +30,9 @@ namespace Pacman2
         {
             if (HasCollisionWithWall(newPosition, maze)) return;
             PreviousPosition = CurrentPosition;
+
             CurrentPosition = newPosition;
+           //maze.Tiles[CurrentPosition.Row, CurrentPosition.Col].SpritesOnTile.Add(TileType);
         }
 
         public IPosition GetNewPosition(Maze maze)
@@ -50,7 +53,7 @@ namespace Pacman2
 
         private bool HasCollisionWithWall(IPosition newPosition, Maze maze) //todo maze
         {
-            return maze.Tiles[newPosition.Row, newPosition.Col].TileType.Display == _wallTileType.Display;
+            return maze.Tiles[newPosition.Row, newPosition.Col].SpritesOnTile.Any(d => d.Display == _wallTileType.Display);
         }
     }
 }
