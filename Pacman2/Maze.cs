@@ -59,9 +59,8 @@ namespace Pacman2
             var newPosition = GetNewPosition(sprite.CurrentDirection,  sprite.CurrentPosition);
             if (SpriteHasCollisionWithWall(newPosition)) return;
             sprite.UpdatePosition(newPosition);
-            
-            AddSpriteToCurrentTile(sprite);
-            RemoveSpriteFromPreviousTile(sprite);
+
+            MoveSpriteToNewTile(sprite);
         }
 
         private bool SpriteHasCollisionWithWall(IPosition newPosition)
@@ -100,20 +99,16 @@ namespace Pacman2
             return newPosition > boundary -1 ;
         }
         
-        public void AddSpriteToCurrentTile(IMovingSprite sprite)
+        public void MoveSpriteToNewTile(IMovingSprite sprite)
         {
             Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].SpritesOnTile.Add(sprite);
-        }
-
-        public void RemoveSpriteFromPreviousTile(IMovingSprite sprite)
-        {
             Tiles[sprite.PreviousPosition.Row, sprite.PreviousPosition.Col].SpritesOnTile.Remove(sprite);
         }
+        
 
         public ISprite GetSpriteAtPosition(IPosition position)
         {
-            var toDisplay = Tiles[position.Row, position.Col].SpritesOnTile.OrderBy(t => t.Display.DisplayPriority).First();
-            return toDisplay;
+            return Tiles[position.Row, position.Col].SpritesOnTile.OrderBy(t => t.Display.DisplayPriority).First();
         }
     }
 }

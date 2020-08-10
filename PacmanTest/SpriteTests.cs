@@ -34,7 +34,7 @@ namespace PacmanTest
             
             sprite.UpdateDirection();
             maze.UpdateSpritePosition(sprite);    
-            maze.AddSpriteToCurrentTile(sprite);
+            maze.MoveSpriteToNewTile(sprite);
             Assert.Equal(x,sprite.CurrentPosition.Row);
             Assert.Equal(y,sprite.CurrentPosition.Col);
         }
@@ -51,7 +51,7 @@ namespace PacmanTest
             
             sprite.UpdateDirection();
             maze.UpdateSpritePosition(sprite);
-            maze.AddSpriteToCurrentTile(sprite);
+            maze.MoveSpriteToNewTile(sprite);
             Assert.Equal(0,sprite.PreviousPosition.Row);
             Assert.Equal(0,sprite.PreviousPosition.Col);
         }
@@ -66,10 +66,10 @@ namespace PacmanTest
             var parser = new Parser();
             var mazeData = new []{"..*",".*.","*.."};
             var maze = new Maze(mazeData, parser);
-            maze.AddSpriteToCurrentTile(sprite);
 
             sprite.UpdateDirection();
             maze.UpdateSpritePosition(sprite);
+
             Assert.Equal(0,sprite.CurrentPosition.Row);
             Assert.Equal(1,sprite.CurrentPosition.Col);
         }

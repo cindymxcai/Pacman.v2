@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Threading;
+using System.Threading.Tasks;
 using Pacman2.Interfaces;
 using Pacman2.SpriteDisplays;
 
@@ -34,8 +34,8 @@ namespace Pacman2
                     maze.UpdateSpritePosition(ghostSprite);
                     ghostSprite.UpdateDirection();
                 }
-                
-                Thread.Sleep(100);
+
+                Task.Delay(100).Wait();
                 Console.Clear();
             }
         }
