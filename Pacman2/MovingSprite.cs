@@ -2,7 +2,7 @@ using Pacman2.Interfaces;
 
 namespace Pacman2
 {
-    public class MovingMovingSprite : IMovingSprite
+    public class MovingSprite : IMovingSprite
     {
         private IMovementBehaviour MovementBehaviour { get; }
         public IPosition CurrentPosition { get; set; }
@@ -10,7 +10,7 @@ namespace Pacman2
         public ISpriteDisplay Display { get; }
         public IPosition PreviousPosition { get; private set; }
 
-        public MovingMovingSprite(IPosition position, IMovementBehaviour randomMovement, ISpriteDisplay display)
+        public MovingSprite(IPosition position, IMovementBehaviour randomMovement, ISpriteDisplay display)
         {
             CurrentPosition = position;
             MovementBehaviour = randomMovement;
@@ -23,13 +23,10 @@ namespace Pacman2
             CurrentDirection = MovementBehaviour.GetNewDirection();
         }
 
-        public void UpdatePosition(Maze maze)
+        public void UpdatePosition(IPosition newPosition)
         {
-            var newPosition = maze.GetNewPosition(CurrentDirection, CurrentPosition);
-            if (maze.SpriteHasCollisionWithWall(newPosition)) return;
             PreviousPosition = CurrentPosition;
             CurrentPosition = newPosition;
-            maze.AddSpriteToCurrentTile(this);
         }
     }
 }

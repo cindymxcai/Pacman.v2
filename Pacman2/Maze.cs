@@ -46,8 +46,9 @@ namespace Pacman2
             {
                 for (var colIndex = 0; colIndex < Columns; colIndex++)
                 {
-                    Console.ForegroundColor = GetSpriteAtPosition(new Position(rowIndex, colIndex)).Display.Colour;
-                    Console.Write(GetSpriteAtPosition(new Position(rowIndex, colIndex)).Display.Icon);
+                    var sprite = GetSpriteAtPosition(new Position(rowIndex, colIndex));
+                    Console.ForegroundColor = sprite.Display.Colour;
+                    Console.Write(sprite.Display.Icon);
                     Console.ResetColor();
                 }
 
@@ -107,5 +108,15 @@ namespace Pacman2
             return newPosition > boundary -1 ;
         }
         
+        
+        public void UpdateSpritePosition(IMovingSprite sprite)
+        {
+            var newPosition = GetNewPosition(sprite.CurrentDirection,  sprite.CurrentPosition);
+            if (SpriteHasCollisionWithWall(newPosition)) return;
+            sprite.UpdatePosition(newPosition);
+            
+            AddSpriteToCurrentTile(sprite);
+            RemoveSpriteFromPreviousTile(sprite);
+        }
     }
 }

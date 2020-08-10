@@ -17,7 +17,7 @@ namespace PacmanTest
         {
             var mockRandom = new Mock<IMovementBehaviour>();
             mockRandom.Setup(m => m.GetNewDirection()).Returns(direction);
-            var ghost = new MovingMovingSprite(new Position(0,1), mockRandom.Object, new GhostSpriteDisplay());
+            var ghost = new MovingSprite(new Position(0,1), mockRandom.Object, new GhostSpriteDisplay());
             ghost.UpdateDirection();
             Assert.Equal(direction, ghost.CurrentDirection );
         }

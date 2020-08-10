@@ -46,7 +46,7 @@ namespace PacmanTest
             var parser = new Parser();
 
             var rng = new Rng();
-            var ghost = new MovingMovingSprite(new Position(0,1), new RandomMovement(rng), new GhostSpriteDisplay());
+            var ghost = new MovingSprite(new Position(0,1), new RandomMovement(rng), new GhostSpriteDisplay());
             var mazeData = new []{"..."};
             var maze = new Maze(mazeData, parser);
             maze.AddSpriteToCurrentTile( ghost);
@@ -65,13 +65,13 @@ namespace PacmanTest
             var mockRandom = new Mock<IMovementBehaviour>();
             mockRandom.Setup(m => m.GetNewDirection()).Returns(Direction.Right);
             
-            var ghost = new MovingMovingSprite(new Position(0,0), mockRandom.Object, new GhostSpriteDisplay());
+            var ghost = new MovingSprite(new Position(0,0), mockRandom.Object, new GhostSpriteDisplay());
             ghost.UpdateDirection();
             maze.AddSpriteToCurrentTile(ghost);
             var position =  maze.GetSpriteAtPosition(ghost.CurrentPosition);
             Assert.Equal( ghost.Display.Icon, position.Display.Icon);
 
-            ghost.UpdatePosition(maze);
+            maze.UpdateSpritePosition(ghost);
             maze.RemoveSpriteFromPreviousTile(ghost);
             var previousPosition = maze.GetSpriteAtPosition(ghost.PreviousPosition);
             Assert.Equal(new PelletSpriteDisplay().Icon, previousPosition.Display.Icon);

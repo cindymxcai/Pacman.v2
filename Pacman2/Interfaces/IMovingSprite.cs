@@ -5,9 +5,8 @@ namespace Pacman2.Interfaces
     {
         IPosition CurrentPosition { get; set; }
         Direction CurrentDirection { get; }
-        ISpriteDisplay Display { get; }
         IPosition PreviousPosition { get; }
         void UpdateDirection();
-        void UpdatePosition(Maze maze);
+        void UpdatePosition(IPosition newPosition);
     }
 }

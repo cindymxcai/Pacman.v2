@@ -11,7 +11,7 @@ namespace PacmanTest
         public void GivenAPositionASpriteShouldHoldXAndYCoordinates()
         {
             var rng = new Rng();
-            var sprite = new MovingMovingSprite(new Position(0,1), new RandomMovement(rng), new GhostSpriteDisplay());
+            var sprite = new MovingSprite(new Position(0,1), new RandomMovement(rng), new GhostSpriteDisplay());
             Assert.Equal(0, sprite.CurrentPosition.Row);
             Assert.Equal(1, sprite.CurrentPosition.Col);
         }
@@ -26,13 +26,13 @@ namespace PacmanTest
         {
             var mockRandom = new Mock<IMovementBehaviour>();
             mockRandom.Setup(m => m.GetNewDirection()).Returns(direction);
-            var sprite = new MovingMovingSprite(new Position(0,0), mockRandom.Object, new GhostSpriteDisplay());
+            var sprite = new MovingSprite(new Position(0,0), mockRandom.Object, new GhostSpriteDisplay());
             var parser = new Parser();
             var mazeData = new []{"...","...","..."};
             var maze = new Maze(mazeData,parser);
             
             sprite.UpdateDirection();
-            sprite.UpdatePosition(maze);
+            maze.UpdateSpritePosition(sprite);    
             maze.AddSpriteToCurrentTile(sprite);
             Assert.Equal(x,sprite.CurrentPosition.Row);
             Assert.Equal(y,sprite.CurrentPosition.Col);
@@ -43,13 +43,13 @@ namespace PacmanTest
         {
             var mockRandom = new Mock<IMovementBehaviour>();
             mockRandom.Setup(m => m.GetNewDirection()).Returns(Direction.Right);
-            var sprite = new MovingMovingSprite(new Position(0,0), mockRandom.Object, new GhostSpriteDisplay());
+            var sprite = new MovingSprite(new Position(0,0), mockRandom.Object, new GhostSpriteDisplay());
             var parser = new Parser();
             var mazeData = new[] {"...", "...", "..."};
             var maze = new Maze(mazeData,parser);
             
             sprite.UpdateDirection();
-            sprite.UpdatePosition( maze);
+            maze.UpdateSpritePosition(sprite);
             maze.AddSpriteToCurrentTile(sprite);
             Assert.Equal(0,sprite.PreviousPosition.Row);
             Assert.Equal(0,sprite.PreviousPosition.Col);
@@ -60,7 +60,7 @@ namespace PacmanTest
         {
             var mockRandom = new Mock<IMovementBehaviour>();
             mockRandom.Setup(m => m.GetNewDirection()).Returns(Direction.Right);
-            var sprite = new MovingMovingSprite(new Position(0,1), mockRandom.Object, new GhostSpriteDisplay());
+            var sprite = new MovingSprite(new Position(0,1), mockRandom.Object, new GhostSpriteDisplay());
             
             var parser = new Parser();
             var mazeData = new []{"..*",".*.","*.."};
@@ -68,7 +68,7 @@ namespace PacmanTest
             maze.AddSpriteToCurrentTile(sprite);
 
             sprite.UpdateDirection();
-            sprite.UpdatePosition(maze);
+            maze.UpdateSpritePosition(sprite);
             Assert.Equal(0,sprite.CurrentPosition.Row);
             Assert.Equal(1,sprite.CurrentPosition.Col);
         }

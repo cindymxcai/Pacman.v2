@@ -20,8 +20,8 @@ namespace Pacman2
 
             var ghosts = new List<IMovingSprite>
             {
-                new MovingMovingSprite(new Position(4, 1), randomMovement, ghostDisplay),
-                new MovingMovingSprite(new Position(2, 1), randomMovement, ghostDisplay)
+                new MovingSprite(new Position(4, 1), randomMovement, ghostDisplay),
+                new MovingSprite(new Position(2, 1), randomMovement, ghostDisplay)
             };
 
             while (true)
@@ -30,9 +30,8 @@ namespace Pacman2
 
                 foreach (var ghostSprite in ghosts)
                 {
-                    ghostSprite.UpdatePosition(maze);
+                    maze.UpdateSpritePosition(ghostSprite);
                     ghostSprite.UpdateDirection();
-                    maze.RemoveSpriteFromPreviousTile(ghostSprite);
                 }
                 
                 Thread.Sleep(100);
