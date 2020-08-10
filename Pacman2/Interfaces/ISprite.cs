@@ -1,7 +1,9 @@
+using System;
+
 namespace Pacman2.Interfaces
 {
     public interface ISprite
     {
-        ITileType Display { get; }
+        public ISpriteDisplay Display { get; }
     }
 }

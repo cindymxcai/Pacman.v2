@@ -10,7 +10,7 @@ namespace Pacman2
             Col = col;
         }
 
-        public int Row { get; set; } 
-        public int Col { get; set; }
+        public int Row { get; } 
+        public int Col { get; }
     }
 }

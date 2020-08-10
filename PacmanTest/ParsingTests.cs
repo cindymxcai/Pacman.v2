@@ -11,19 +11,19 @@ namespace PacmanTest
     {
         [Theory]
         [MemberData (nameof(TestData))]
-        public void GivenCharacterShouldParseToTile(char input, ITileType tileDisplay)
+        public void GivenCharacterShouldParseToTile(char input, ISpriteDisplay tileDisplay)
         {
             var parser = new Parser();
             var inputData = parser.GetTile(input);
-            Assert.Equal(tileDisplay.Display, inputData.SpritesOnTile.First().Display);
-            Assert.Equal(tileDisplay.Colour, inputData.SpritesOnTile.First().Colour);
+            Assert.Equal(tileDisplay.Icon, inputData.SpritesOnTile.First().Display.Icon);
+            Assert.Equal(tileDisplay.Colour, inputData.SpritesOnTile.First().Display.Colour);
         }
 
         public static IEnumerable<object[]> TestData()
         {
-            yield return new object[] {'.', new PelletTileType()};
-            yield return new object[] {'*', new WallTileType()};
-            yield return new object[] {' ', new EmptyTileType()};
+            yield return new object[] {'.', new PelletSpriteDisplay()};
+            yield return new object[] {'*', new WallSpriteDisplay()};
+            yield return new object[] {' ', new EmptySpriteDisplay()};
         }
         
     }

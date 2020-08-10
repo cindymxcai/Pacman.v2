@@ -7,7 +7,7 @@ namespace Pacman2
 {
     public class Maze
     {
-        private readonly WallTileType _wallTileType = new WallTileType();
+        private readonly WallSpriteDisplay _wallSpriteDisplay = new WallSpriteDisplay();
 
         private readonly IParser _parser;
         public ITile[,] Tiles { get; private set; }
@@ -46,8 +46,8 @@ namespace Pacman2
             {
                 for (var colIndex = 0; colIndex < Columns; colIndex++)
                 {
-                    Console.ForegroundColor = GetTileTypeAtPosition(new Position(rowIndex, colIndex)).Colour;
-                    Console.Write(GetTileTypeAtPosition(new Position(rowIndex, colIndex)).Display);
+                    Console.ForegroundColor = GetSpriteAtPosition(new Position(rowIndex, colIndex)).Display.Colour;
+                    Console.Write(GetSpriteAtPosition(new Position(rowIndex, colIndex)).Display.Icon);
                     Console.ResetColor();
                 }
 
@@ -55,51 +55,46 @@ namespace Pacman2
             }
         }
 
-        public void AddTileTypeToTile(IPosition position, ITileType tileType)
+        public void AddSpriteToCurrentTile(IMovingSprite sprite)
         {
-            Tiles[position.Row, position.Col].SpritesOnTile.Add(tileType);
+            Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].SpritesOnTile.Add(sprite);
         }
 
-        public void RemoveTileTypeFromTile(IPosition position, ITileType tileType)
+        public void RemoveSpriteFromPreviousTile(IMovingSprite sprite)
         {
-            Tiles[position.Row, position.Col].SpritesOnTile.Remove(tileType);
+            Tiles[sprite.PreviousPosition.Row, sprite.PreviousPosition.Col].SpritesOnTile.Remove(sprite);
         }
 
-        public ITileType GetTileTypeAtPosition(IPosition position)
+        public ISprite GetSpriteAtPosition(IPosition position)
         {
-            var toDisplay = Tiles[position.Row, position.Col].SpritesOnTile.OrderBy(t => t.DisplayPriority).First();
+            var toDisplay = Tiles[position.Row, position.Col].SpritesOnTile.OrderBy(t => t.Display.DisplayPriority).First();
             return toDisplay;
         }
 
         public bool SpriteHasCollisionWithWall(IPosition newPosition)
         {
-            return Tiles[newPosition.Row, newPosition.Col].SpritesOnTile.Any(d => d.Display == _wallTileType.Display);
+            return Tiles[newPosition.Row, newPosition.Col].SpritesOnTile.Any(d => d.Display.Icon == _wallSpriteDisplay.Icon);
         }
 
         public IPosition GetNewPosition(Direction currentDirection, IPosition currentPosition)
         {
-            switch (currentDirection)
+            return currentDirection switch
             {
-                case Direction.Up when IsOutOfLowerBounds(currentPosition.Row - 1 ):
-                    return new Position(Rows - 1, currentPosition.Col);
-                case Direction.Down when IsOutOfUpperBounds(currentPosition.Row + 1,Rows):
-                    return new Position(0, currentPosition.Col);
-                case Direction.Left when IsOutOfLowerBounds(currentPosition.Col - 1 ):
-                    return new Position(currentPosition.Row, Columns - 1);
-                case Direction.Right when IsOutOfUpperBounds( currentPosition.Col + 1 ,Columns):
-                    return new Position(currentPosition.Row, 0);
+                Direction.Up when IsOutOfLowerBounds(currentPosition.Row - 1) 
+                => new Position(Rows - 1, currentPosition.Col),
+                Direction.Down when IsOutOfUpperBounds(currentPosition.Row + 1, Rows) 
+                => new Position(0, currentPosition.Col),
+                Direction.Left when IsOutOfLowerBounds(currentPosition.Col - 1) 
+                => new Position(currentPosition.Row, Columns - 1),
+                Direction.Right when IsOutOfUpperBounds(currentPosition.Col + 1, Columns) 
+                => new Position(currentPosition.Row, 0), 
                 
-                case Direction.Up:
-                    return new Position(currentPosition.Row - 1, currentPosition.Col);
-                case Direction.Down:
-                    return new Position(currentPosition.Row + 1, currentPosition.Col);
-                case Direction.Left:
-                    return new Position(currentPosition.Row, currentPosition.Col - 1);
-                case Direction.Right:
-                    return new Position(currentPosition.Row, currentPosition.Col + 1);
-                default:
-                    throw new ArgumentOutOfRangeException();
-            }
+                Direction.Up => new Position(currentPosition.Row - 1, currentPosition.Col),
+                Direction.Down => new Position(currentPosition.Row + 1, currentPosition.Col),
+                Direction.Left => new Position(currentPosition.Row, currentPosition.Col - 1),
+                Direction.Right => new Position(currentPosition.Row, currentPosition.Col + 1),
+                _ => throw new ArgumentOutOfRangeException()
+            };
         }
 
         private static bool IsOutOfLowerBounds(int newPosition)

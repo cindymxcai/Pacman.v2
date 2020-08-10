@@ -10,9 +10,9 @@ namespace Pacman2
         {
             return inputChar switch
             {
-                '*' => new Tile(new WallTileType()),
-                '.' => new Tile(new PelletTileType()),
-                ' ' => new Tile(new EmptyTileType()),
+                '*' => new Tile(new StaticSprite(new WallSpriteDisplay())),
+                '.' => new Tile(new StaticSprite(new PelletSpriteDisplay())),
+                ' ' => new Tile(new StaticSprite(new EmptySpriteDisplay())),
             _ => throw new Exception()
             };
         }

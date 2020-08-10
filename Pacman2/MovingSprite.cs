@@ -2,15 +2,15 @@ using Pacman2.Interfaces;
 
 namespace Pacman2
 {
-    public class Sprite : ISprite
+    public class MovingMovingSprite : IMovingSprite
     {
         private IMovementBehaviour MovementBehaviour { get; }
-        public IPosition CurrentPosition { get; private set; }
+        public IPosition CurrentPosition { get; set; }
         public Direction CurrentDirection { get; private set; }
-        public ITileType Display { get; }
+        public ISpriteDisplay Display { get; }
         public IPosition PreviousPosition { get; private set; }
 
-        public Sprite(IPosition position, IMovementBehaviour randomMovement, ITileType display)
+        public MovingMovingSprite(IPosition position, IMovementBehaviour randomMovement, ISpriteDisplay display)
         {
             CurrentPosition = position;
             MovementBehaviour = randomMovement;
@@ -29,7 +29,7 @@ namespace Pacman2
             if (maze.SpriteHasCollisionWithWall(newPosition)) return;
             PreviousPosition = CurrentPosition;
             CurrentPosition = newPosition;
-            maze.AddTileTypeToTile(CurrentPosition, Display);
+            maze.AddSpriteToCurrentTile(this);
         }
     }
 }

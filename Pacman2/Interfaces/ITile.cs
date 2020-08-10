@@ -4,6 +4,6 @@ namespace Pacman2.Interfaces
 {
     public interface ITile
     {
-        List<ITileType> SpritesOnTile { get; }
+        List<ISprite> SpritesOnTile { get; }
     }
 }

@@ -2,7 +2,7 @@ using System;
 
 namespace Pacman2.Interfaces
 {
-    public interface ITileType
+    public interface ISpriteDisplay
     {
         public string Icon { get;  }
         public ConsoleColor Colour { get;  }

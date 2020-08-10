@@ -16,12 +16,12 @@ namespace Pacman2
             
             var rng = new Rng();
             var randomMovement = new RandomMovement(rng);
-            var ghostTile = new GhostTileType();
+            var ghostDisplay = new GhostSpriteDisplay();
 
-            var ghosts = new List<ISprite>
+            var ghosts = new List<IMovingSprite>
             {
-                new Sprite(new Position(4, 1), randomMovement, ghostTile),
-                new Sprite(new Position(2, 1), randomMovement, ghostTile)
+                new MovingMovingSprite(new Position(4, 1), randomMovement, ghostDisplay),
+                new MovingMovingSprite(new Position(2, 1), randomMovement, ghostDisplay)
             };
 
             while (true)
@@ -32,7 +32,7 @@ namespace Pacman2
                 {
                     ghostSprite.UpdatePosition(maze);
                     ghostSprite.UpdateDirection();
-                    maze.RemoveTileTypeFromTile(ghostSprite.PreviousPosition, ghostSprite.Display);
+                    maze.RemoveSpriteFromPreviousTile(ghostSprite);
                 }
                 
                 Thread.Sleep(100);
