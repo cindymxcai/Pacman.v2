@@ -1,5 +1,3 @@
-using System;
-using System.Linq;
 using Pacman2.Interfaces;
 
 namespace Pacman2
@@ -7,17 +5,17 @@ namespace Pacman2
     public class Sprite : ISprite
     {
         private IMovementBehaviour MovementBehaviour { get; }
-        public IPosition PreviousPosition;
         public IPosition CurrentPosition { get; private set; }
         public Direction CurrentDirection { get; private set; }
-        public ITileType TileType { get; }
+        public ITileType Display { get; }
+        public IPosition PreviousPosition { get; private set; }
 
-        public Sprite(IPosition position, IMovementBehaviour randomMovement, ITileType tileType)
+        public Sprite(IPosition position, IMovementBehaviour randomMovement, ITileType display)
         {
             CurrentPosition = position;
             MovementBehaviour = randomMovement;
             CurrentDirection = Direction.Up;
-            TileType = tileType; //todo move to behavior
+            Display = display; //todo move to behavior
         }
 
         public void UpdateDirection()
@@ -27,28 +25,11 @@ namespace Pacman2
 
         public void UpdatePosition(Maze maze)
         {
-            var newPosition = GetNewPosition(maze);
+            var newPosition = maze.GetNewPosition(CurrentDirection, CurrentPosition);
             if (maze.SpriteHasCollisionWithWall(newPosition)) return;
             PreviousPosition = CurrentPosition;
             CurrentPosition = newPosition;
-            maze.AddTileTypeToTile(CurrentPosition, TileType);
+            maze.AddTileTypeToTile(CurrentPosition, Display);
         }
-
-        public IPosition GetNewPosition(Maze maze) //todo make this more readable
-        {
-            return CurrentDirection switch
-            {
-                Direction.Up when CurrentPosition.Row - 1 < 0 => new Position(maze.Rows - 1, CurrentPosition.Col),
-                Direction.Up => new Position(CurrentPosition.Row - 1, CurrentPosition.Col),
-                Direction.Down when CurrentPosition.Row + 1 > maze.Rows - 1 => new Position(0, CurrentPosition.Col),
-                Direction.Down => new Position(CurrentPosition.Row + 1, CurrentPosition.Col),
-                Direction.Left when CurrentPosition.Col - 1 < 0 => new Position(CurrentPosition.Row, maze.Columns - 1),
-                Direction.Left => new Position(CurrentPosition.Row, CurrentPosition.Col - 1),
-                Direction.Right when CurrentPosition.Col + 1 > maze.Columns - 1 => new Position(CurrentPosition.Row, 0),
-                Direction.Right => new Position(CurrentPosition.Row, CurrentPosition.Col + 1),
-                _ => throw new ArgumentOutOfRangeException()
-            };
-        }
-        
     }
 }
