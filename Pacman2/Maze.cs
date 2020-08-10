@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Pacman2.Interfaces;
+using Pacman2.SpriteDisplays;
 
 namespace Pacman2
 {
@@ -47,37 +48,28 @@ namespace Pacman2
                 for (var colIndex = 0; colIndex < Columns; colIndex++)
                 {
                     var sprite = GetSpriteAtPosition(new Position(rowIndex, colIndex));
-                    Console.ForegroundColor = sprite.Display.Colour;
-                    Console.Write(sprite.Display.Icon);
-                    Console.ResetColor();
+                    sprite.Render();
                 }
-
                 Console.WriteLine();
             }
         }
 
-        public void AddSpriteToCurrentTile(IMovingSprite sprite)
+        public void UpdateSpritePosition(IMovingSprite sprite)
         {
-            Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].SpritesOnTile.Add(sprite);
+            var newPosition = GetNewPosition(sprite.CurrentDirection,  sprite.CurrentPosition);
+            if (SpriteHasCollisionWithWall(newPosition)) return;
+            sprite.UpdatePosition(newPosition);
+            
+            AddSpriteToCurrentTile(sprite);
+            RemoveSpriteFromPreviousTile(sprite);
         }
 
-        public void RemoveSpriteFromPreviousTile(IMovingSprite sprite)
-        {
-            Tiles[sprite.PreviousPosition.Row, sprite.PreviousPosition.Col].SpritesOnTile.Remove(sprite);
-        }
-
-        public ISprite GetSpriteAtPosition(IPosition position)
-        {
-            var toDisplay = Tiles[position.Row, position.Col].SpritesOnTile.OrderBy(t => t.Display.DisplayPriority).First();
-            return toDisplay;
-        }
-
-        public bool SpriteHasCollisionWithWall(IPosition newPosition)
+        private bool SpriteHasCollisionWithWall(IPosition newPosition)
         {
             return Tiles[newPosition.Row, newPosition.Col].SpritesOnTile.Any(d => d.Display.Icon == _wallSpriteDisplay.Icon);
         }
 
-        public IPosition GetNewPosition(Direction currentDirection, IPosition currentPosition)
+        private IPosition GetNewPosition(Direction currentDirection, IPosition currentPosition)
         {
             return currentDirection switch
             {
@@ -108,15 +100,20 @@ namespace Pacman2
             return newPosition > boundary -1 ;
         }
         
-        
-        public void UpdateSpritePosition(IMovingSprite sprite)
+        public void AddSpriteToCurrentTile(IMovingSprite sprite)
         {
-            var newPosition = GetNewPosition(sprite.CurrentDirection,  sprite.CurrentPosition);
-            if (SpriteHasCollisionWithWall(newPosition)) return;
-            sprite.UpdatePosition(newPosition);
-            
-            AddSpriteToCurrentTile(sprite);
-            RemoveSpriteFromPreviousTile(sprite);
+            Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].SpritesOnTile.Add(sprite);
+        }
+
+        public void RemoveSpriteFromPreviousTile(IMovingSprite sprite)
+        {
+            Tiles[sprite.PreviousPosition.Row, sprite.PreviousPosition.Col].SpritesOnTile.Remove(sprite);
+        }
+
+        public ISprite GetSpriteAtPosition(IPosition position)
+        {
+            var toDisplay = Tiles[position.Row, position.Col].SpritesOnTile.OrderBy(t => t.Display.DisplayPriority).First();
+            return toDisplay;
         }
     }
 }

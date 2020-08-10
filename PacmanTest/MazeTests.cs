@@ -2,6 +2,7 @@ using System.Linq;
 using Moq;
 using Pacman2;
 using Pacman2.Interfaces;
+using Pacman2.SpriteDisplays;
 using Xunit;
 
 namespace PacmanTest

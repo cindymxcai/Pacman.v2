@@ -1,3 +1,4 @@
+using System;
 using Pacman2.Interfaces;
 
 namespace Pacman2
@@ -27,6 +28,13 @@ namespace Pacman2
         {
             PreviousPosition = CurrentPosition;
             CurrentPosition = newPosition;
+        }
+
+        public void Render()
+        {
+            Console.ForegroundColor = Display.Colour;
+            Console.Write(Display.Icon);
+            Console.ResetColor();
         }
     }
 }

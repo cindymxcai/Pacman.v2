@@ -1,5 +1,6 @@
 using System;
 using Pacman2.Interfaces;
+using Pacman2.SpriteDisplays;
 using Pacman2.Tiles;
 
 namespace Pacman2

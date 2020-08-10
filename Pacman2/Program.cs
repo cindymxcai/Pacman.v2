@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Threading;
 using Pacman2.Interfaces;
+using Pacman2.SpriteDisplays;
 
 namespace Pacman2
 {
