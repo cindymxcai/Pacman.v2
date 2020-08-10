@@ -4,8 +4,8 @@ namespace Pacman2.Interfaces
 {
     public interface ITileType
     {
-        public string Display { get;  }
+        public string Icon { get;  }
         public ConsoleColor Colour { get;  }
-        public int DisplayPriority { get; }
+        int DisplayPriority { get; }
     }
 }

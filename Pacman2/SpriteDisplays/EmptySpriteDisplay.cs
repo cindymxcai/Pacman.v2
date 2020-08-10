@@ -3,9 +3,9 @@ using Pacman2.Interfaces;
 
 namespace Pacman2
 {
-    public class EmptyTileType : ITileType
+    public class EmptySpriteDisplay : ISpriteDisplay
     {
-        public string Display { get; } = "   ";
+        public string Icon { get; } = "   ";
         public ConsoleColor Colour { get; } = ConsoleColor.Black;
         public int DisplayPriority { get; } = 2;
     }
