@@ -9,7 +9,6 @@ namespace Pacman2
         public IPosition CurrentPosition { get; set; }
         public Direction CurrentDirection { get; private set; }
         public ISpriteDisplay Display { get; }
-        public IPosition PreviousPosition { get; private set; }
 
         public MovingSprite(IPosition position, IMovementBehaviour randomMovement, ISpriteDisplay display)
         {
@@ -26,7 +25,6 @@ namespace Pacman2
 
         public void UpdatePosition(IPosition newPosition)
         {
-            PreviousPosition = CurrentPosition;
             CurrentPosition = newPosition;
         }
 

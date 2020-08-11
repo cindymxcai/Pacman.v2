@@ -51,7 +51,7 @@ namespace PacmanTest
             var mazeData = new []{"..."};
             var maze = new Maze(mazeData, parser);
             ghost.UpdatePosition(new Position(0,1));
-            maze.MoveSpriteToNewTile( ghost);
+            maze.UpdateSpritePosition(ghost);
             Assert.Equal(ghost.Display.Icon, maze.Tiles[0,1].SpritesOnTile[1].Display.Icon);
             Assert.Equal(ghost.Display.Colour, maze.Tiles[0,1].SpritesOnTile[1].Display.Colour);
             Assert.Equal(ghost.Display.Icon, maze.Tiles[0,1].SpritesOnTile[1].Display.Icon);
@@ -70,9 +70,8 @@ namespace PacmanTest
             var ghost = new MovingSprite(new Position(0,0), mockRandom.Object, new GhostSpriteDisplay());
             ghost.UpdateDirection();
 
+            var previousPosition = maze.GetSpriteAtPosition(ghost.CurrentPosition);
             maze.UpdateSpritePosition(ghost);
-            maze.MoveSpriteToNewTile(ghost);
-            var previousPosition = maze.GetSpriteAtPosition(ghost.PreviousPosition);
             Assert.Equal(new PelletSpriteDisplay().Icon, previousPosition.Display.Icon);
             Assert.Equal(ghost.Display, maze.GetSpriteAtPosition(ghost.CurrentPosition).Display);
         }
