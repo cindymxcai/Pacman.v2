@@ -5,16 +5,10 @@ namespace Pacman2
 {
     public class PlayerControlMovement : IMovementBehaviour
     {
-        private readonly IPlayerInput _playerInput;
 
-        public PlayerControlMovement(IPlayerInput playerInput)
+        public Direction GetNewDirection(Direction currentDirection, ConsoleKey consoleKey)
         {
-            _playerInput = playerInput;
-        }
-
-        public Direction GetNewDirection(Direction currentDirection)
-        {
-            var newDirection = _playerInput.TakeInput() switch
+            var newDirection = consoleKey switch
             {
                 ConsoleKey.UpArrow => Direction.Up,
                 ConsoleKey.DownArrow => Direction.Down,
@@ -25,6 +19,6 @@ namespace Pacman2
             
             return newDirection;
         }
-
+        
     }
 }

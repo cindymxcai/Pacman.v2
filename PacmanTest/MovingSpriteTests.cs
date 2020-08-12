@@ -1,3 +1,4 @@
+using System;
 using Moq;
 using Pacman2;
 using Pacman2.Interfaces;
@@ -17,9 +18,9 @@ namespace PacmanTest
         public void GivenABehaviourSpriteShouldBeAbleToChangeDirection(Direction direction)
         {
             var mockRandom = new Mock<IMovementBehaviour>();
-            mockRandom.Setup(m => m.GetNewDirection(Direction.Up)).Returns(direction);
+            mockRandom.Setup(m => m.GetNewDirection(Direction.Up, ConsoleKey.UpArrow)).Returns(direction);
             var sprite = new MovingSprite(new Position(0,1), mockRandom.Object, new GhostSpriteDisplay());
-            sprite.UpdateDirection();
+            sprite.UpdateDirection(ConsoleKey.UpArrow);
             Assert.Equal(direction, sprite.CurrentDirection);
         }
     }

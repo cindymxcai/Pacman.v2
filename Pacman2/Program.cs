@@ -22,32 +22,40 @@ namespace Pacman2
             var randomMovement = new RandomMovement(rng);
             
             var playerInput = new PlayerInput();
-            var playerMovement = new PlayerControlMovement(playerInput);
+            var playerMovement = new PlayerControlMovement();
             
 
-            var ghosts = new List<IMovingSprite>
+            var movingSprites = new List<IMovingSprite>
             {
                 new MovingSprite(new Position(4, 1), randomMovement, ghostDisplay),
                 new MovingSprite(new Position(2, 1), playerMovement, pacmanDisplay)
             };
-            foreach (var sprite in ghosts)
+            foreach (var sprite in movingSprites)
             {
                 maze.UpdateSpritePosition(sprite);
             }
 
             while (true)
             {
-                maze.Render();
-
-                foreach (var ghostSprite in ghosts)
+                var input = playerInput.TakeInput();
+                
+                while (!Console.KeyAvailable)
                 {
-                    ghostSprite.UpdateDirection();
-                    maze.UpdateSpritePosition(ghostSprite);
+                    maze.Render();
+
+                    foreach (var sprite in movingSprites)
+                    {
+                        sprite.UpdateDirection(input);
+                        maze.UpdateSpritePosition(sprite);
+
+                    }
+
+                    Task.Delay(200).Wait();
+                    Console.Clear();
                 }
 
-                Task.Delay(100).Wait();
-                Console.Clear();
             }
+            
         }
     }
 }

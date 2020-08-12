@@ -18,8 +18,8 @@ namespace PacmanTest
         {
             var playerInput = new Mock<IPlayerInput>();
             playerInput.Setup(p => p.TakeInput()).Returns(consoleKey);
-            var playerMovement = new PlayerControlMovement(playerInput.Object);
-            var newDirection = playerMovement.GetNewDirection(Direction.Up);
+            var playerMovement = new PlayerControlMovement();
+            var newDirection = playerMovement.GetNewDirection(direction, playerInput.Object.TakeInput());
             Assert.Equal(direction, newDirection);
         }
     }

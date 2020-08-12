@@ -1,3 +1,4 @@
+using System;
 using Moq;
 using Pacman2;
 using Pacman2.Interfaces;
@@ -26,13 +27,13 @@ namespace PacmanTest
         public void GivenDirectionSpriteShouldMovePosition(Direction direction, int x, int y)
         {
             var mockRandom = new Mock<IMovementBehaviour>();
-            mockRandom.Setup(m => m.GetNewDirection(Direction.Up)).Returns(direction);
+            mockRandom.Setup(m => m.GetNewDirection(Direction.Up, ConsoleKey.UpArrow)).Returns(direction);
             var sprite = new MovingSprite(new Position(0,0), mockRandom.Object, new GhostSpriteDisplay());
             var parser = new Parser();
             var mazeData = new []{"...","...","..."};
             var maze = new Maze(mazeData,parser);
             
-            sprite.UpdateDirection();
+            sprite.UpdateDirection(ConsoleKey.UpArrow);
             maze.UpdateSpritePosition(sprite);    
             Assert.Equal(x,sprite.CurrentPosition.Row);
             Assert.Equal(y,sprite.CurrentPosition.Col);
@@ -42,14 +43,14 @@ namespace PacmanTest
         public void GivenCollisionWithWallSpriteShouldNotMoveToPosition()
         {
             var mockRandom = new Mock<IMovementBehaviour>();
-            mockRandom.Setup(m => m.GetNewDirection(Direction.Right)).Returns(Direction.Right);
+            mockRandom.Setup(m => m.GetNewDirection(Direction.Right, ConsoleKey.UpArrow)).Returns(Direction.Right);
             var sprite = new MovingSprite(new Position(0,1), mockRandom.Object, new PacmanSpriteDisplay());
             
             var parser = new Parser();
             var mazeData = new []{"..*",".*.","**."};
             var maze = new Maze(mazeData, parser);
             
-            sprite.UpdateDirection();
+            sprite.UpdateDirection(ConsoleKey.UpArrow);
             maze.UpdateSpritePosition(sprite);
 
             Assert.Equal(0,sprite.CurrentPosition.Row);

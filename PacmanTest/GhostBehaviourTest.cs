@@ -1,3 +1,4 @@
+using System;
 using Moq;
 using Pacman2;
 using Pacman2.Interfaces;
@@ -18,7 +19,7 @@ namespace PacmanTest
             var random = new Mock<IRng>();
             random.Setup(r => r.Next(0, 4)).Returns(number);
             var randomMovement = new RandomMovement(random.Object);
-            var newDirection = randomMovement.GetNewDirection(Direction.Down);
+            var newDirection = randomMovement.GetNewDirection(Direction.Down, ConsoleKey.DownArrow);
             Assert.Equal(direction, newDirection);
         }
     }

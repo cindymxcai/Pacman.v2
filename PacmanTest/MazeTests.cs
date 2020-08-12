@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 using Moq;
 using Pacman2;
@@ -63,7 +64,7 @@ namespace PacmanTest
             var parser = new Parser();
 
             var playerInput = new PlayerInput();
-            var pacman = new MovingSprite(new Position(0,0), new PlayerControlMovement(playerInput), new PacmanSpriteDisplay());
+            var pacman = new MovingSprite(new Position(0,0), new PlayerControlMovement(), new PacmanSpriteDisplay());
             var mazeData = new []{"..."};
             var maze = new Maze(mazeData, parser);
             pacman.UpdatePosition(new Position(0,1));
@@ -84,10 +85,10 @@ namespace PacmanTest
             var mazeData = new []{". *"};
             var maze = new Maze(mazeData, parser);
             var mockRandom = new Mock<IMovementBehaviour>();
-            mockRandom.Setup(m => m.GetNewDirection(Direction.Down)).Returns(Direction.Right);
+            mockRandom.Setup(m => m.GetNewDirection(Direction.Down, ConsoleKey.DownArrow)).Returns(Direction.Right);
             
             var ghost = new MovingSprite(new Position(0,0), mockRandom.Object, new GhostSpriteDisplay());
-            ghost.UpdateDirection();
+            ghost.UpdateDirection(ConsoleKey.DownArrow);
 
             var previousPosition = maze.GetSpriteAtPosition(ghost.CurrentPosition);
             maze.UpdateSpritePosition(ghost);

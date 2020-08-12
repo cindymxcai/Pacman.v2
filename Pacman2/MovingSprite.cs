@@ -19,9 +19,9 @@ namespace Pacman2
             Display = display; 
         }
 
-        public void UpdateDirection()
+        public void UpdateDirection(ConsoleKey consoleKey)
         {
-            CurrentDirection = MovementBehaviour.GetNewDirection(CurrentDirection);
+            CurrentDirection = MovementBehaviour.GetNewDirection(CurrentDirection, consoleKey);
             Display.SetSpriteDisplay(CurrentDirection);
         }
 
