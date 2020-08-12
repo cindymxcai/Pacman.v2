@@ -54,14 +54,19 @@ namespace Pacman2
             }
         }
 
-        //todo refactor this
         public void UpdateSpritePosition(IMovingSprite sprite)
         {
             var newPosition = GetNewPosition(sprite.CurrentDirection,  sprite.CurrentPosition);
+            
             if (SpriteHasCollisionWithWall(newPosition)) return;
-            Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].SpritesOnTile.Remove(sprite);
+            MoveSpriteToNewPosition(sprite, newPosition);
             sprite.UpdatePosition(newPosition);
-            Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].SpritesOnTile.Add(sprite);
+        }
+
+        private void MoveSpriteToNewPosition(IMovingSprite sprite, IPosition newPosition)
+        {
+            Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].SpritesOnTile.Remove(sprite);
+            Tiles[newPosition.Row, newPosition.Col].SpritesOnTile.Add(sprite);
         }
 
         private bool SpriteHasCollisionWithWall(IPosition newPosition)

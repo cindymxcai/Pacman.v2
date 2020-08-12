@@ -3,7 +3,6 @@ using System.Linq;
 using Pacman2;
 using Pacman2.Interfaces;
 using Pacman2.SpriteDisplays;
-using Pacman2.Tiles;
 using Xunit;
 
 namespace PacmanTest

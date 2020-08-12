@@ -34,29 +34,10 @@ namespace PacmanTest
             
             sprite.UpdateDirection();
             maze.UpdateSpritePosition(sprite);    
-           // maze.MoveSpriteToNewTile(sprite);
             Assert.Equal(x,sprite.CurrentPosition.Row);
             Assert.Equal(y,sprite.CurrentPosition.Col);
         }
-        
-        [Fact]
-        public void GivenSpriteMovesShouldKeepTrackOfPreviousPosition()
-        {
-            var mockRandom = new Mock<IMovementBehaviour>();
-            mockRandom.Setup(m => m.GetNewDirection()).Returns(Direction.Right);
-            var sprite = new MovingSprite(new Position(0,0), mockRandom.Object, new GhostSpriteDisplay());
-            var parser = new Parser();
-            var mazeData = new[] {"...", "...", "..."};
-            var maze = new Maze(mazeData,parser);
-            
-            sprite.UpdateDirection();
-            var previousPosition = sprite.CurrentPosition;
-            maze.UpdateSpritePosition(sprite);
-           // maze.MoveSpriteToNewTile(sprite);
-            Assert.Equal(0,previousPosition.Row);
-            Assert.Equal(0,previousPosition.Col);
-        }
-
+  
         [Fact]
         public void GivenCollisionWithWallSpriteShouldNotMoveToPosition()
         {
