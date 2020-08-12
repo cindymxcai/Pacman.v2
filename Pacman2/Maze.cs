@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Pacman2.Interfaces;
-using Pacman2.SpriteDisplays;
 
 namespace Pacman2
 {
-    public class Maze
+    public class Maze : IMaze
     {
-        private readonly WallSpriteDisplay _wallSpriteDisplay = new WallSpriteDisplay();
 
         private readonly IParser _parser;
         public ITile[,] Tiles { get; private set; }
@@ -32,11 +30,10 @@ namespace Pacman2
             {
                 var colIndex = 0;
                 foreach (var tile in row.Select(_parser.GetTile))
-                {
+                {//todo make new position 
                     Tiles[rowIndex, colIndex] = tile;
                     colIndex++;
                 }
-
                 rowIndex++;
             }
         }
@@ -47,16 +44,15 @@ namespace Pacman2
             {
                 for (var colIndex = 0; colIndex < Columns; colIndex++)
                 {
-                    try
+                    try //todo move to tile
                     {
-                        var sprite = GetSpriteAtPosition(new Position(rowIndex, colIndex));
+                        var sprite = GetSpriteAtPosition(new Position(rowIndex, colIndex)); 
                         sprite.Render();
                     }
                     catch (Exception)
                     {
                         Console.Write("   ");
                     }
-                    
                 }
                 Console.WriteLine();
             }
@@ -79,7 +75,7 @@ namespace Pacman2
 
         private bool SpriteHasCollisionWithWall(IPosition newPosition)
         {
-            return Tiles[newPosition.Row, newPosition.Col].SpritesOnTile.Any(d => d.Display.Icon == _wallSpriteDisplay.Icon);
+            return Tiles[newPosition.Row, newPosition.Col].IsWall(); 
         }
 
         private IPosition GetNewPosition(Direction currentDirection, IPosition currentPosition)
@@ -115,7 +111,7 @@ namespace Pacman2
 
         public ISprite GetSpriteAtPosition(IPosition position)
         {
-            return Tiles[position.Row, position.Col].SpritesOnTile.OrderBy(t => t.Display.Priority).First();
+            return Tiles[position.Row, position.Col].GetFirstSprite();
         }
     }
 }

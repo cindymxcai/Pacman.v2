@@ -1,7 +1,6 @@
 using System;
 using Pacman2.Interfaces;
 using Pacman2.SpriteDisplays;
-using Pacman2.Tiles;
 
 namespace Pacman2
 {
@@ -9,7 +8,7 @@ namespace Pacman2
     {
         public ITile GetTile(char inputChar)
         {
-            Tile tile;
+            ITile tile;
             StaticSprite sprite;
             switch (inputChar)
             {

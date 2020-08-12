@@ -4,8 +4,8 @@ namespace Pacman2.Interfaces
 {
     public interface ISpriteDisplay
     {
-        public string Icon { get;  }
-        public ConsoleColor Colour { get;  }
+        string Icon { get;  }
+        ConsoleColor Colour { get;  }
         int Priority { get; }
         void SetSpriteDisplay(Direction? direction);
     }

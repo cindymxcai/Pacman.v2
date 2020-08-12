@@ -7,12 +7,12 @@ namespace Pacman2
     {
         public StaticSprite(ISpriteDisplay spriteDisplay)
         {
-            spriteDisplay.SetSpriteDisplay(Direction.Up);
+            spriteDisplay.SetSpriteDisplay(null);
             Display = spriteDisplay;
         }
 
         public ISpriteDisplay Display { get; }
-        public void Render()
+        public void Render() //todo move to tile 
         {
             Console.ForegroundColor = Display.Colour;
             Console.Write(Display.Icon);
