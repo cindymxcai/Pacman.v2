@@ -17,12 +17,16 @@ namespace Pacman2
             
             var rng = new Rng();
             var randomMovement = new RandomMovement(rng);
+            
+            var playerInput = new PlayerInput();
+            var playerMovement = new PlayerControlMovement(playerInput);
+            
             var ghostDisplay = new GhostSpriteDisplay();
 
             var ghosts = new List<IMovingSprite>
             {
                 new MovingSprite(new Position(4, 1), randomMovement, ghostDisplay),
-                new MovingSprite(new Position(2, 1), randomMovement, ghostDisplay)
+                new MovingSprite(new Position(2, 1), playerMovement, ghostDisplay)
             };
 
             while (true)

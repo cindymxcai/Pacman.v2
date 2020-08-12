@@ -1,9 +1,9 @@
 using System;
-using PacmanTest;
+using Pacman2.Interfaces;
 
 namespace Pacman2
 {
-    public class PlayerControlMovement
+    public class PlayerControlMovement : IMovementBehaviour
     {
         private readonly IPlayerInput _playerInput;
 
