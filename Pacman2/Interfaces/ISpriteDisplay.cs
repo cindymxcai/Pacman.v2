@@ -6,6 +6,7 @@ namespace Pacman2.Interfaces
     {
         public string Icon { get;  }
         public ConsoleColor Colour { get;  }
-        int DisplayPriority { get; }
+        int Priority { get; }
+        void SetSpriteDisplay(Direction? direction);
     }
 }

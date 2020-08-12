@@ -12,7 +12,7 @@ namespace Pacman2
             _playerInput = playerInput;
         }
 
-        public Direction GetNewDirection()
+        public Direction GetNewDirection(Direction currentDirection)
         {
             var newDirection = _playerInput.TakeInput() switch
             {
@@ -20,10 +20,11 @@ namespace Pacman2
                 ConsoleKey.DownArrow => Direction.Down,
                 ConsoleKey.LeftArrow => Direction.Left,
                 ConsoleKey.RightArrow => Direction.Right,
-                _ => throw new Exception()
+                _ => currentDirection
             };
-
+            
             return newDirection;
         }
+
     }
 }

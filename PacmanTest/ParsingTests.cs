@@ -15,6 +15,7 @@ namespace PacmanTest
         {
             var parser = new Parser();
             var inputData = parser.GetTile(input);
+            inputData.SpritesOnTile.First().Display.SetSpriteDisplay(Direction.Up);
             Assert.Equal(tileDisplay.Icon, inputData.SpritesOnTile.First().Display.Icon);
             Assert.Equal(tileDisplay.Colour, inputData.SpritesOnTile.First().Display.Colour);
         }

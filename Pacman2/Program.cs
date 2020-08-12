@@ -15,19 +15,25 @@ namespace Pacman2
             var parser = new Parser();
             var maze = new Maze(mazeData, parser);
             
+            var ghostDisplay = new GhostSpriteDisplay();
+            var pacmanDisplay = new PacmanSpriteDisplay();
+
             var rng = new Rng();
             var randomMovement = new RandomMovement(rng);
             
             var playerInput = new PlayerInput();
             var playerMovement = new PlayerControlMovement(playerInput);
             
-            var ghostDisplay = new GhostSpriteDisplay();
 
             var ghosts = new List<IMovingSprite>
             {
                 new MovingSprite(new Position(4, 1), randomMovement, ghostDisplay),
-                new MovingSprite(new Position(2, 1), playerMovement, ghostDisplay)
+                new MovingSprite(new Position(2, 1), playerMovement, pacmanDisplay)
             };
+            foreach (var sprite in ghosts)
+            {
+                maze.UpdateSpritePosition(sprite);
+            }
 
             while (true)
             {
@@ -35,8 +41,8 @@ namespace Pacman2
 
                 foreach (var ghostSprite in ghosts)
                 {
-                    maze.UpdateSpritePosition(ghostSprite);
                     ghostSprite.UpdateDirection();
+                    maze.UpdateSpritePosition(ghostSprite);
                 }
 
                 Task.Delay(100).Wait();

@@ -2,6 +2,7 @@ using System;
 using Moq;
 using Pacman2;
 using Pacman2.Interfaces;
+using Pacman2.SpriteDisplays;
 using Xunit;
 
 namespace PacmanTest
@@ -18,7 +19,7 @@ namespace PacmanTest
             var playerInput = new Mock<IPlayerInput>();
             playerInput.Setup(p => p.TakeInput()).Returns(consoleKey);
             var playerMovement = new PlayerControlMovement(playerInput.Object);
-            var newDirection = playerMovement.GetNewDirection();
+            var newDirection = playerMovement.GetNewDirection(Direction.Up);
             Assert.Equal(direction, newDirection);
         }
     }

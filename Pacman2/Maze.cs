@@ -115,7 +115,7 @@ namespace Pacman2
 
         public ISprite GetSpriteAtPosition(IPosition position)
         {
-            return Tiles[position.Row, position.Col].SpritesOnTile.OrderBy(t => t.Display.DisplayPriority).First();
+            return Tiles[position.Row, position.Col].SpritesOnTile.OrderBy(t => t.Display.Priority).First();
         }
     }
 }

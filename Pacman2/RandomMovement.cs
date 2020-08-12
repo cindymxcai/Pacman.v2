@@ -12,9 +12,9 @@ namespace Pacman2
             _rng = random;
         }
 
-        public Direction GetNewDirection()
+        public Direction GetNewDirection(Direction currentDirection)
         {
-            var newDirection = _rng.Next(0, 4) switch
+             currentDirection = _rng.Next(0, 4) switch
             {
                 0 => Direction.Up,
                 1 => Direction.Down,
@@ -22,7 +22,7 @@ namespace Pacman2
                 3 => Direction.Right,
                 _ => throw new Exception()
             };
-            return newDirection;
+            return currentDirection;
         }
     }
 }

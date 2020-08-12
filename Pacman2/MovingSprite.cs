@@ -6,7 +6,7 @@ namespace Pacman2
     public class MovingSprite : IMovingSprite
     {
         private IMovementBehaviour MovementBehaviour { get; }
-        public IPosition CurrentPosition { get; set; }
+        public IPosition CurrentPosition { get; private set; }
         public Direction CurrentDirection { get; private set; }
         public ISpriteDisplay Display { get; }
 
@@ -15,12 +15,14 @@ namespace Pacman2
             CurrentPosition = position;
             MovementBehaviour = movementBehaviour;
             CurrentDirection = Direction.Up;
-            Display = display; //todo move to behavior
+            display.SetSpriteDisplay(CurrentDirection);
+            Display = display; 
         }
 
         public void UpdateDirection()
         {
-            CurrentDirection = MovementBehaviour.GetNewDirection();
+            CurrentDirection = MovementBehaviour.GetNewDirection(CurrentDirection);
+            Display.SetSpriteDisplay(CurrentDirection);
         }
 
         public void UpdatePosition(IPosition newPosition)

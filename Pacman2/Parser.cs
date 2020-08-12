@@ -10,15 +10,20 @@ namespace Pacman2
         public ITile GetTile(char inputChar)
         {
             Tile tile;
+            StaticSprite sprite;
             switch (inputChar)
             {
                 case '*':
                     tile = new Tile();
-                    tile.AddSprite(new StaticSprite(new WallSpriteDisplay()));
+                    sprite = new StaticSprite(new WallSpriteDisplay());
+                    sprite.Display.SetSpriteDisplay(null);
+                    tile.AddSprite(sprite);                    
                     return tile;
                 case '.':
                     tile = new Tile();
-                    tile.AddSprite(new StaticSprite(new PelletSpriteDisplay()));
+                    sprite = new StaticSprite(new PelletSpriteDisplay());
+                    sprite.Display.SetSpriteDisplay(null);
+                    tile.AddSprite(sprite);
                     return tile;
                 default:
                     return new Tile();
