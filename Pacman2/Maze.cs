@@ -47,8 +47,16 @@ namespace Pacman2
             {
                 for (var colIndex = 0; colIndex < Columns; colIndex++)
                 {
-                    var sprite = GetSpriteAtPosition(new Position(rowIndex, colIndex));
-                    sprite.Render();
+                    try
+                    {
+                        var sprite = GetSpriteAtPosition(new Position(rowIndex, colIndex));
+                        sprite.Render();
+                    }
+                    catch (Exception)
+                    {
+                        Console.Write("   ");
+                    }
+                    
                 }
                 Console.WriteLine();
             }

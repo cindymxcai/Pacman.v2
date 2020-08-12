@@ -9,13 +9,20 @@ namespace Pacman2
     {
         public ITile GetTile(char inputChar)
         {
-            return inputChar switch
+            Tile tile;
+            switch (inputChar)
             {
-                '*' => new Tile(new StaticSprite(new WallSpriteDisplay())),
-                '.' => new Tile(new StaticSprite(new PelletSpriteDisplay())),
-                ' ' => new Tile(new StaticSprite(new EmptySpriteDisplay())),
-            _ => throw new Exception()
-            };
+                case '*':
+                    tile = new Tile();
+                    tile.AddSprite(new StaticSprite(new WallSpriteDisplay()));
+                    return tile;
+                case '.':
+                    tile = new Tile();
+                    tile.AddSprite(new StaticSprite(new PelletSpriteDisplay()));
+                    return tile;
+                default:
+                    return new Tile();
+            }
         }
     }
 }

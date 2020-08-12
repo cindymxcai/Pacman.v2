@@ -23,8 +23,14 @@ namespace PacmanTest
         {
             yield return new object[] {'.', new PelletSpriteDisplay()};
             yield return new object[] {'*', new WallSpriteDisplay()};
-            yield return new object[] {' ', new EmptySpriteDisplay()};
         }
-        
+
+        [Fact]
+        public void GivenNoCharacterShouldParseToEmptyTile()
+        {
+            var parser = new Parser();
+            var inputData = parser.GetTile(' ');
+            Assert.Empty(inputData.SpritesOnTile);
+        }
     }
 }

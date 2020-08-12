@@ -37,8 +37,7 @@ namespace PacmanTest
             var maze = new Maze(mazeData, parser);
             Assert.Equal(new PelletSpriteDisplay().Icon, maze.Tiles[0,0].SpritesOnTile.First().Display.Icon);
             Assert.Equal(new WallSpriteDisplay().Icon, maze.Tiles[0,1].SpritesOnTile.First().Display.Icon);
-            Assert.Equal(new EmptySpriteDisplay().Icon, maze.Tiles[0,2].SpritesOnTile.First().Display.Icon);
-            Assert.Equal(new EmptySpriteDisplay().Colour, maze.Tiles[0,2].SpritesOnTile.First().Display.Colour);
+            Assert.Empty(maze.Tiles[0,2].SpritesOnTile);
         }
         
         [Fact]

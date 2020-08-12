@@ -6,9 +6,10 @@ namespace Pacman2.Tiles
     public class Tile : ITile
     {
         public List<ISprite> SpritesOnTile { get; } = new List<ISprite>();
-        public Tile(ISprite sprite)
+
+        public void AddSprite(ISprite sprite)
         {
-            SpritesOnTile.Add(sprite); 
+            SpritesOnTile.Add(sprite);
         }
     }
 }
