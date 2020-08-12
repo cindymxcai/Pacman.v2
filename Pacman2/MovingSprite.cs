@@ -10,10 +10,10 @@ namespace Pacman2
         public Direction CurrentDirection { get; private set; }
         public ISpriteDisplay Display { get; }
 
-        public MovingSprite(IPosition position, IMovementBehaviour randomMovement, ISpriteDisplay display)
+        public MovingSprite(IPosition position, IMovementBehaviour movementBehaviour, ISpriteDisplay display)
         {
             CurrentPosition = position;
-            MovementBehaviour = randomMovement;
+            MovementBehaviour = movementBehaviour;
             CurrentDirection = Direction.Up;
             Display = display; //todo move to behavior
         }
