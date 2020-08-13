@@ -39,10 +39,11 @@ namespace Pacman2
                         _maze.UpdateSpritePosition(sprite);
                         IsPacmanEaten(sprite);
                     }
-                    _maze.Render();
 
                     if (!IsPlaying)
                         break;
+                    
+                    _maze.Render();
 
                     Task.Delay(200).Wait();
                     Console.Clear();
@@ -54,10 +55,15 @@ namespace Pacman2
 
         public void IsPacmanEaten(IMovingSprite sprite)
         {
-            if (_maze.PacmanHasCollisionWithGhost(sprite))
-            {
-                IsPlaying = false;
-            }
+            if (!_maze.PacmanHasCollisionWithGhost(sprite)) return;
+            IsPlaying = false;
+            
+            Display.LostPrompt();
+
+            if (_playerInput.HasPressedQuit())
+                Display.GameEnd();
+            else
+                IsPlaying = true;
         }
     }
 }

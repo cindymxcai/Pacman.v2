@@ -114,7 +114,8 @@ namespace Pacman2
 
         public bool PacmanHasCollisionWithGhost(IMovingSprite sprite)
         {
-            return sprite.Display.Icon != _ghostSpriteDisplay.Icon && Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].HasGivenSprite(_ghostSpriteDisplay);
+            return sprite.Display.Icon != _ghostSpriteDisplay.Icon 
+                   && Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].HasGivenSprite(_ghostSpriteDisplay);
         }
         
         private bool SpriteHasCollisionWithWall(IPosition newPosition)

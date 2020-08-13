@@ -15,6 +15,8 @@ namespace PacmanTest
         { 
             var playerInput = new Mock<IPlayerInput>();
             playerInput.Setup(p => p.TakeInput()).Returns(ConsoleKey.RightArrow);
+            playerInput.Setup(p => p.HasPressedQuit()).Returns(true);
+
             var parser = new Parser();
 
             var mazeData = new []{". *"};
