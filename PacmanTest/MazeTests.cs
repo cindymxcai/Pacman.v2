@@ -62,8 +62,6 @@ namespace PacmanTest
         public void GivenPacmanPositionMazeShouldDisplayPacmanTile()
         {
             var parser = new Parser();
-
-            var playerInput = new PlayerInput();
             var pacman = new MovingSprite(new Position(0,0), new PlayerControlMovement(), new PacmanSpriteDisplay());
             var mazeData = new []{"..."};
             var maze = new Maze(mazeData, parser);
@@ -90,10 +88,10 @@ namespace PacmanTest
             var ghost = new MovingSprite(new Position(0,0), mockRandom.Object, new GhostSpriteDisplay());
             ghost.UpdateDirection(ConsoleKey.DownArrow);
 
-            var previousPosition = maze.GetSpriteAtPosition(ghost.CurrentPosition);
+            var previousPosition = maze.GetTileAtPosition(ghost.CurrentPosition);
+            Assert.Equal(" \u2022 ", previousPosition.GetFirstSprite().Display.Icon);
             maze.UpdateSpritePosition(ghost);
-            Assert.Equal(" \u2022 ", previousPosition.Display.Icon);
-            Assert.Equal(ghost.Display, maze.GetSpriteAtPosition(ghost.CurrentPosition).Display);
+            Assert.Equal(ghost.Display, maze.GetTileAtPosition(ghost.CurrentPosition).GetFirstSprite().Display);
         }
     }
 }

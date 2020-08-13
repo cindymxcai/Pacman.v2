@@ -12,11 +12,5 @@ namespace Pacman2
         }
 
         public ISpriteDisplay Display { get; }
-        public void Render() //todo move to tile 
-        {
-            Console.ForegroundColor = Display.Colour;
-            Console.Write(Display.Icon);
-            Console.ResetColor();
-        }
     }
 }

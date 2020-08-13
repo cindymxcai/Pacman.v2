@@ -8,5 +8,6 @@ namespace Pacman2.Interfaces
         void AddSprite(ISprite sprite);
         bool IsWall();
         ISprite GetFirstSprite();
+        void Render();
     }
 }

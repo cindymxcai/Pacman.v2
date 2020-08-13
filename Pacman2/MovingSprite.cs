@@ -29,12 +29,5 @@ namespace Pacman2
         {
             CurrentPosition = newPosition;
         }
-
-        public void Render()
-        {
-            Console.ForegroundColor = Display.Colour;
-            Console.Write(Display.Icon);
-            Console.ResetColor();
-        }
     }
 }

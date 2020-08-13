@@ -44,15 +44,10 @@ namespace Pacman2
             {
                 for (var colIndex = 0; colIndex < Columns; colIndex++)
                 {
-                    try //todo move to tile
-                    {
-                        var sprite = GetSpriteAtPosition(new Position(rowIndex, colIndex)); 
-                        sprite.Render();
-                    }
-                    catch (Exception)
-                    {
-                        Console.Write("   ");
-                    }
+                    
+                        var tile = GetTileAtPosition(new Position(rowIndex, colIndex)); 
+                        tile.Render();
+                   
                 }
                 Console.WriteLine();
             }
@@ -109,9 +104,9 @@ namespace Pacman2
             return newPosition > boundary -1 ;
         }
 
-        public ISprite GetSpriteAtPosition(IPosition position)
+        public ITile GetTileAtPosition(IPosition position)
         {
-            return Tiles[position.Row, position.Col].GetFirstSprite();
+            return Tiles[position.Row, position.Col];
         }
     }
 }
