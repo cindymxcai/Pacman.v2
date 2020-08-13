@@ -21,8 +21,8 @@ namespace Pacman2.SpriteDisplays
             Priority  = 1;
         }
 
-        public string Icon { get; private set; } = " \u15E2 ";
-        public ConsoleColor Colour { get; private set; } = ConsoleColor.Yellow;
-        public int Priority { get; private set; } = 1;
+        public string Icon { get; private set; }
+        public ConsoleColor Colour { get; private set; } 
+        public int Priority { get; private set; }
     }
 }

@@ -16,9 +16,14 @@ namespace Pacman2
         {
             SpritesOnTile.Add(sprite);
         }
+        public void RemoveSprite(IMovingSprite sprite)
+        {
+            SpritesOnTile.Remove(sprite);
+        }
 
         public bool IsWall()
         {
+            _wallSpriteDisplay.SetSpriteDisplay(null);
           return SpritesOnTile.Any(d => d.Display.Icon == _wallSpriteDisplay.Icon);
         }
 
@@ -40,7 +45,7 @@ namespace Pacman2
                 Console.Write(sprite.Display.Icon);
                 Console.ResetColor();
             }
-         
         }
+        
     }
 }

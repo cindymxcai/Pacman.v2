@@ -68,8 +68,8 @@ namespace Pacman2
 
         private void MoveSpriteToNewPosition(IMovingSprite sprite, IPosition newPosition)
         {
-            Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].SpritesOnTile.Remove(sprite);
-            Tiles[newPosition.Row, newPosition.Col].SpritesOnTile.Add(sprite);
+            Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].RemoveSprite(sprite);
+            Tiles[newPosition.Row, newPosition.Col].AddSprite(sprite);
         }
 
         private bool SpriteHasCollisionWithWall(IPosition newPosition)

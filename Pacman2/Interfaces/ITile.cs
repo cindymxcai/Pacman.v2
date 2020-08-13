@@ -10,5 +10,6 @@ namespace Pacman2.Interfaces
         bool IsWall();
         ISprite GetFirstSprite();
         void Render();
+        void RemoveSprite(IMovingSprite sprite);
     }
 }

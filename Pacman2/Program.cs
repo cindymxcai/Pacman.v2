@@ -30,6 +30,7 @@ namespace Pacman2
                 new MovingSprite(maze.GetTilePosition(4, 1), randomMovement, ghostDisplay),
                 new MovingSprite(maze.GetTilePosition(2, 1), playerMovement, pacmanDisplay)
             };
+            
             foreach (var sprite in movingSprites)
             {
                 maze.UpdateSpritePosition(sprite);
