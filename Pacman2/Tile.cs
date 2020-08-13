@@ -10,6 +10,7 @@ namespace Pacman2
     {
         private readonly WallSpriteDisplay _wallSpriteDisplay = new WallSpriteDisplay();
         public List<ISprite> SpritesOnTile { get; } = new List<ISprite>();
+        public Position Position { get; set; }
 
         public void AddSprite(ISprite sprite)
         {

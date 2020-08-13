@@ -27,8 +27,8 @@ namespace Pacman2
 
             var movingSprites = new List<IMovingSprite>
             {
-                new MovingSprite(new Position(4, 1), randomMovement, ghostDisplay),
-                new MovingSprite(new Position(2, 1), playerMovement, pacmanDisplay)
+                new MovingSprite(maze.GetTilePosition(4, 1), randomMovement, ghostDisplay),
+                new MovingSprite(maze.GetTilePosition(2, 1), playerMovement, pacmanDisplay)
             };
             foreach (var sprite in movingSprites)
             {
@@ -47,9 +47,7 @@ namespace Pacman2
                     {
                         sprite.UpdateDirection(input);
                         maze.UpdateSpritePosition(sprite);
-
                     }
-
                     Task.Delay(200).Wait();
                     Console.Clear();
                 }

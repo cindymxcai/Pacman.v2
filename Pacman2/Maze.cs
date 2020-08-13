@@ -30,8 +30,9 @@ namespace Pacman2
             {
                 var colIndex = 0;
                 foreach (var tile in row.Select(_parser.GetTile))
-                {//todo make new position 
+                {
                     Tiles[rowIndex, colIndex] = tile;
+                    tile.Position = new Position(rowIndex, colIndex);
                     colIndex++;
                 }
                 rowIndex++;
@@ -44,13 +45,16 @@ namespace Pacman2
             {
                 for (var colIndex = 0; colIndex < Columns; colIndex++)
                 {
-                    
-                        var tile = GetTileAtPosition(new Position(rowIndex, colIndex)); 
-                        tile.Render();
-                   
+                    var tile = GetTileAtPosition(GetTilePosition(rowIndex, colIndex));
+                    tile.Render();
                 }
                 Console.WriteLine();
             }
+        }
+
+        public IPosition GetTilePosition( int rowIndex, int colIndex)
+        {
+            return Tiles[rowIndex, colIndex].Position;
         }
 
         public void UpdateSpritePosition(IMovingSprite sprite)
@@ -78,18 +82,18 @@ namespace Pacman2
             return currentDirection switch
             {
                 Direction.Up when IsOutOfLowerBounds(currentPosition.Row - 1) 
-                => new Position(Rows - 1, currentPosition.Col),
+                => GetTilePosition(Rows-1, currentPosition.Col),
                 Direction.Down when IsOutOfUpperBounds(currentPosition.Row + 1, Rows) 
-                => new Position(0, currentPosition.Col),
+                => GetTilePosition(0, currentPosition.Col),
                 Direction.Left when IsOutOfLowerBounds(currentPosition.Col - 1) 
-                => new Position(currentPosition.Row, Columns - 1),
+                => GetTilePosition(currentPosition.Row, Columns - 1),
                 Direction.Right when IsOutOfUpperBounds(currentPosition.Col + 1, Columns) 
-                => new Position(currentPosition.Row, 0), 
+                => GetTilePosition(currentPosition.Row, 0), 
                 
-                Direction.Up => new Position(currentPosition.Row - 1, currentPosition.Col),
-                Direction.Down => new Position(currentPosition.Row + 1, currentPosition.Col),
-                Direction.Left => new Position(currentPosition.Row, currentPosition.Col - 1),
-                Direction.Right => new Position(currentPosition.Row, currentPosition.Col + 1),
+                Direction.Up => GetTilePosition(currentPosition.Row - 1, currentPosition.Col),
+                Direction.Down => GetTilePosition(currentPosition.Row + 1, currentPosition.Col),
+                Direction.Left =>GetTilePosition(currentPosition.Row, currentPosition.Col - 1),
+                Direction.Right => GetTilePosition(currentPosition.Row, currentPosition.Col + 1),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
