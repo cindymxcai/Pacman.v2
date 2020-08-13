@@ -14,7 +14,6 @@ namespace Pacman2.SpriteDisplays
             Icon = " \u1571 ";
             Colour  = ConsoleColor.Red;
             Priority = 1;
-                
         }
     }
 }

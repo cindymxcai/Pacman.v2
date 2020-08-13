@@ -71,8 +71,6 @@ namespace PacmanTest
             Assert.Equal(pacman.Display.Colour, maze.Tiles[0,1].SpritesOnTile[1].Display.Colour);
             Assert.Equal(pacman.Display.Icon, maze.Tiles[0,1].SpritesOnTile[1].Display.Icon);
             Assert.Equal(pacman.Display.Priority, maze.Tiles[0,1].SpritesOnTile[1].Display.Priority);
-
-            
         }
 
         [Fact]
@@ -88,10 +86,25 @@ namespace PacmanTest
             var ghost = new MovingSprite(new Position(0,0), mockRandom.Object, new GhostSpriteDisplay());
             ghost.UpdateDirection(ConsoleKey.DownArrow);
 
-            var previousPosition = maze.GetTileAtPosition(ghost.CurrentPosition);
+            var previousPosition = maze.GetTileAtPosition(ghost.CurrentPosition.Row, ghost.CurrentPosition.Col);
             Assert.Equal(" \u2022 ", previousPosition.GetFirstSprite().Display.Icon);
             maze.UpdateSpritePosition(ghost);
-            Assert.Equal(ghost.Display, maze.GetTileAtPosition(ghost.CurrentPosition).GetFirstSprite().Display);
+            Assert.Equal(ghost.Display, maze.GetTileAtPosition(ghost.CurrentPosition.Row, ghost.CurrentPosition.Col).GetFirstSprite().Display);
+        }
+
+        [Fact]
+        public void GivenPacmanAndGhostCollideShouldReturnTrue()
+        {
+            var parser = new Parser();
+
+            var mazeData = new []{". *"};
+            var maze = new Maze(mazeData, parser);
+            var ghost = new MovingSprite(new Position(0,0), new RandomMovement(new Rng()), new GhostSpriteDisplay());
+            var pacman = new MovingSprite(new Position(0,0), new PlayerControlMovement(), new PacmanSpriteDisplay());
+
+            maze.UpdateSpritePosition(ghost);
+            maze.UpdateSpritePosition(pacman);
+            Assert.True(maze.PacmanHasCollisionWithGhost(pacman));
         }
     }
 }

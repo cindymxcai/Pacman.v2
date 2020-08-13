@@ -8,6 +8,6 @@ namespace Pacman2.Interfaces
         void Render();
         void UpdateSpritePosition(IMovingSprite sprite);
 
-        ITile GetTileAtPosition(IPosition position);
+        ITile GetTileAtPosition(int row, int col);
     }
 }

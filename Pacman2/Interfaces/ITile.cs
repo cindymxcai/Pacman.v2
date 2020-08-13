@@ -7,9 +7,9 @@ namespace Pacman2.Interfaces
         List<ISprite> SpritesOnTile { get; }
         Position Position { get; set; }
         void AddSprite(ISprite sprite);
-        bool IsWall();
         ISprite GetFirstSprite();
         void Render();
         void RemoveSprite(IMovingSprite sprite);
+        bool HasGivenSprite(ISpriteDisplay spriteDisplay);
     }
 }

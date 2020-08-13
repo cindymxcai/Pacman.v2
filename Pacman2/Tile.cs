@@ -8,7 +8,7 @@ namespace Pacman2
 {
     public class Tile : ITile
     {
-        private readonly WallSpriteDisplay _wallSpriteDisplay = new WallSpriteDisplay();
+    
         public List<ISprite> SpritesOnTile { get; } = new List<ISprite>();
         public Position Position { get; set; }
 
@@ -21,11 +21,11 @@ namespace Pacman2
             SpritesOnTile.Remove(sprite);
         }
 
-        public bool IsWall()
+        public bool HasGivenSprite(ISpriteDisplay spriteDisplay)
         {
-            _wallSpriteDisplay.SetSpriteDisplay(null);
-          return SpritesOnTile.Any(d => d.Display.Icon == _wallSpriteDisplay.Icon);
+            return SpritesOnTile.Any(s => s.Display.Icon == spriteDisplay.Icon);
         }
+        
 
         public ISprite GetFirstSprite()
         {

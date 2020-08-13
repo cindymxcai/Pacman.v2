@@ -2,11 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Pacman2.Interfaces;
+using Pacman2.SpriteDisplays;
 
 namespace Pacman2
 {
     public class Maze : IMaze
     {
+        
+        private readonly GhostSpriteDisplay _ghostSpriteDisplay = new GhostSpriteDisplay();
+        private readonly WallSpriteDisplay _wallSpriteDisplay = new WallSpriteDisplay();
 
         private readonly IParser _parser;
         public ITile[,] Tiles { get; private set; }
@@ -45,13 +49,13 @@ namespace Pacman2
             {
                 for (var colIndex = 0; colIndex < Columns; colIndex++)
                 {
-                    var tile = GetTileAtPosition(GetTilePosition(rowIndex, colIndex));
+                    var tile = GetTileAtPosition(rowIndex, colIndex);
                     tile.Render();
                 }
                 Console.WriteLine();
             }
         }
-
+        
         public IPosition GetTilePosition( int rowIndex, int colIndex)
         {
             return Tiles[rowIndex, colIndex].Position;
@@ -70,11 +74,6 @@ namespace Pacman2
         {
             Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].RemoveSprite(sprite);
             Tiles[newPosition.Row, newPosition.Col].AddSprite(sprite);
-        }
-
-        private bool SpriteHasCollisionWithWall(IPosition newPosition)
-        {
-            return Tiles[newPosition.Row, newPosition.Col].IsWall(); 
         }
 
         private IPosition GetNewPosition(Direction currentDirection, IPosition currentPosition)
@@ -108,9 +107,21 @@ namespace Pacman2
             return newPosition > boundary -1 ;
         }
 
-        public ITile GetTileAtPosition(IPosition position)
+        public ITile GetTileAtPosition(int row, int col)
         {
-            return Tiles[position.Row, position.Col];
+            return Tiles[row, col];
+        }
+
+        public bool PacmanHasCollisionWithGhost(IMovingSprite sprite)
+        {
+            _ghostSpriteDisplay.SetSpriteDisplay(null);
+            return sprite.Display.Icon != _ghostSpriteDisplay.Icon && Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].HasGivenSprite(_ghostSpriteDisplay);
+        }
+        
+        private bool SpriteHasCollisionWithWall(IPosition newPosition)
+        {
+            _wallSpriteDisplay.SetSpriteDisplay(null);
+            return Tiles[newPosition.Row, newPosition.Col].HasGivenSprite(_wallSpriteDisplay); 
         }
     }
 }

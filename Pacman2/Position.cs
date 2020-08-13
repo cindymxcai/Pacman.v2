@@ -2,7 +2,7 @@ using Pacman2.Interfaces;
 
 namespace Pacman2
 {
-    public class Position : IPosition
+    public struct Position : IPosition
     {
         public Position(int row, int col)
         {
