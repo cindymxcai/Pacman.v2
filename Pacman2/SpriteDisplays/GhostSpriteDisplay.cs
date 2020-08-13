@@ -5,7 +5,7 @@ namespace Pacman2.SpriteDisplays
 {
     public class GhostSpriteDisplay : ISpriteDisplay
     {
-        public string Icon { get; private set; } 
+        public string Icon { get; private set; } =  " \u1571 ";
         public  ConsoleColor Colour { get; private set; } 
         public int Priority { get; private set; } 
 
