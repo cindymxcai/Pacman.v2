@@ -1,4 +1,5 @@
 using System;
+using System.Runtime.InteropServices;
 
 namespace Pacman2.Interfaces
 {
@@ -7,6 +8,6 @@ namespace Pacman2.Interfaces
         string Icon { get;  }
         ConsoleColor Colour { get;  }
         int Priority { get; }
-        void SetSpriteDisplay(Direction? direction);
+        void SetSpriteDisplay([Optional]Direction direction);
     }
 }

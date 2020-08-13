@@ -7,7 +7,7 @@ namespace Pacman2
     {
         public StaticSprite(ISpriteDisplay spriteDisplay)
         {
-            spriteDisplay.SetSpriteDisplay(null);
+            spriteDisplay.SetSpriteDisplay();
             Display = spriteDisplay;
         }
 

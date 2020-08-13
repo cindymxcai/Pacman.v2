@@ -9,7 +9,8 @@ namespace Pacman2.SpriteDisplays
         public ConsoleColor Colour { get; private set; } 
         public int Priority { get; private set; }
         private bool IsChomping { get; set; }
-        public void SetSpriteDisplay(Direction? direction)
+
+        public void SetSpriteDisplay(Direction direction = Direction.Up)
         {
             IsChomping = !IsChomping;
 
@@ -25,6 +26,8 @@ namespace Pacman2.SpriteDisplays
                 };
             Colour = ConsoleColor.Yellow;
             Priority  = 1;
-        }
+        }        
     }
+
+    
 }

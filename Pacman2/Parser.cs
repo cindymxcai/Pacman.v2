@@ -15,13 +15,13 @@ namespace Pacman2
                 case '*':
                     tile = new Tile();
                     sprite = new StaticSprite(new WallSpriteDisplay());
-                    sprite.Display.SetSpriteDisplay(null);
+                    sprite.Display.SetSpriteDisplay();
                     tile.AddSprite(sprite);                    
                     return tile;
                 case '.':
                     tile = new Tile();
                     sprite = new StaticSprite(new PelletSpriteDisplay());
-                    sprite.Display.SetSpriteDisplay(null);
+                    sprite.Display.SetSpriteDisplay();
                     tile.AddSprite(sprite);
                     return tile;
                 default:
