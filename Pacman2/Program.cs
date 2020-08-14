@@ -23,13 +23,14 @@ namespace Pacman2
             var playerInput = new PlayerInput();
             var playerMovement = new PlayerControlMovement();
             
+            var display = new Display();
             var movingSprites = new List<IMovingSprite>
             {
                 new MovingSprite(maze.GetTilePosition(4, 1), randomMovement, ghostDisplay),
                 new MovingSprite(maze.GetTilePosition(2, 1), playerMovement, pacmanDisplay)
             };
             
-            var game = new Game(movingSprites, maze, playerInput);
+            var game = new Game(movingSprites, maze, playerInput, display);
 
            game.Play();
             

@@ -27,7 +27,7 @@ namespace PacmanTest
                 new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
             };
 
-             var game = new Game(sprites, maze, playerInput.Object);
+             var game = new Game(sprites, maze, playerInput.Object, new Display());
              Assert.True(game.PacmanIsAlive);
 
              foreach (var sprite in sprites)

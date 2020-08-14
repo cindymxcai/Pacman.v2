@@ -6,5 +6,6 @@ namespace Pacman2.Interfaces
     {
         ConsoleKey TakeInput();
         bool HasPressedQuit();
+        bool HasNewInput();
     }
 }

@@ -2,16 +2,16 @@ using System;
 
 namespace Pacman2
 {
-    public static class Display
+    public class Display : IDisplay
     {
-        public static void LostPrompt()
+        public void LostPrompt()
         {
             Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("\nPress enter to keep playing, or Q to quit"); 
             Console.ResetColor();
         }
 
-        public static void GameEnd()
+        public void GameEnd()
         {
             Console.Clear();
             Console.WriteLine(@" ___  _              _         ___                 _            _            _ ");

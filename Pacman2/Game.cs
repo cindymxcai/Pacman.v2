@@ -10,14 +10,16 @@ namespace Pacman2
         private readonly IList<IMovingSprite> _sprites;
         private readonly Maze _maze;
         private readonly IPlayerInput _playerInput;
+        private readonly IDisplay _display;
         public bool PacmanIsAlive = true;
 
-        public Game(IList<IMovingSprite> sprites, Maze maze, IPlayerInput playerInput)
+        public Game(IList<IMovingSprite> sprites, Maze maze, IPlayerInput playerInput, IDisplay display)
         {
             _sprites = sprites;
             _maze = maze;
             _playerInput = playerInput;
-            
+            _display = display;
+
             foreach (var sprite in _sprites)
             {
                 _maze.UpdateSpritePosition(sprite);
@@ -30,7 +32,7 @@ namespace Pacman2
             {
                 var input = _playerInput.TakeInput();
 
-                while (!Console.KeyAvailable)
+                while (!_playerInput.HasNewInput())
                 {
                     MoveSprites(input);
 
@@ -62,10 +64,10 @@ namespace Pacman2
 
         private void HandlePacmanDeath()
         {
-            Display.LostPrompt();
+            _display.LostPrompt();
             
             if (_playerInput.HasPressedQuit())
-                Display.GameEnd();
+                _display.GameEnd();
             else
                 PacmanIsAlive = true;
         }

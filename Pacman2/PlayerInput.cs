@@ -14,5 +14,10 @@ namespace Pacman2
         {
             return Console.ReadKey().Key == ConsoleKey.Q;
         }
+
+        public bool HasNewInput()
+        {
+            return Console.KeyAvailable;
+        }
     }
 }
