@@ -128,5 +128,20 @@ namespace PacmanTest
 
             Assert.True(maze.PacmanHasCollisionWithGhost(pacman));
         }
+
+        [Fact]
+        public void GivenSpriteMovesShouldKeepTrackOfPreviousPosition()
+        {
+            var parser = new Parser();
+
+            var mazeData = new []{". *"};
+            var maze = new Maze(mazeData, parser);
+            var sprite = new MovingSprite(new Position(0,0), new RandomMovement(new Rng()), new GhostSpriteDisplay());
+
+            maze.UpdateSpritePosition(sprite);
+            Assert.Equal(0, sprite.PreviousPosition.Row);
+            Assert.Equal(0, sprite.PreviousPosition.Col);
+        }
     }
+    
 }
