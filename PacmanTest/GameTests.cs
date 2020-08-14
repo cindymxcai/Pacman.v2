@@ -28,7 +28,7 @@ namespace PacmanTest
             };
 
              var game = new Game(sprites, maze, playerInput.Object);
-             Assert.True(game.IsPlaying);
+             Assert.True(game.PacmanIsAlive);
 
              foreach (var sprite in sprites)
              {
@@ -36,7 +36,7 @@ namespace PacmanTest
                  game.IsPacmanEaten(sprite);
              }
             
-             Assert.False(game.IsPlaying);
+             Assert.False(game.PacmanIsAlive);
         }
     }
 }

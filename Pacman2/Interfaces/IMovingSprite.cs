@@ -7,6 +7,7 @@ namespace Pacman2.Interfaces
     {
         IPosition CurrentPosition { get; }
         Direction CurrentDirection { get; }
+        IPosition PreviousPosition { get; set; }
         void UpdateDirection(ConsoleKey consoleKey);
         void UpdatePosition(IPosition newPosition);
     }

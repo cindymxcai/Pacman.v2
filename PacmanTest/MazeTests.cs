@@ -93,7 +93,7 @@ namespace PacmanTest
         }
 
         [Fact]
-        public void GivenPacmanAndGhostCollideShouldReturnTrue()
+        public void GivenPacmanAndGhostAreOnSameTileShouldHaveCollision()
         {
             var parser = new Parser();
 
@@ -104,6 +104,28 @@ namespace PacmanTest
 
             maze.UpdateSpritePosition(ghost);
             maze.UpdateSpritePosition(pacman);
+            Assert.True(maze.PacmanHasCollisionWithGhost(pacman));
+        }
+        
+        [Fact]
+        public void GivenPacmanAndGhostPassEachOtherShouldHaveCollision()
+        {
+            var parser = new Parser();
+
+            var mazeData = new []{". *"};
+            var maze = new Maze(mazeData, parser);
+            var ghost = new MovingSprite(new Position(0,0), new RandomMovement(new Rng()), new GhostSpriteDisplay());
+            var pacman = new MovingSprite(new Position(0,1), new PlayerControlMovement(), new PacmanSpriteDisplay());
+         
+            maze.UpdateSpritePosition(ghost);
+            maze.UpdateSpritePosition(pacman);
+            
+            ghost.PreviousPosition.Col = 1;
+            ghost.PreviousPosition.Row = 0;
+            
+            pacman.PreviousPosition.Col = 0;
+            pacman.PreviousPosition.Row = 0;
+
             Assert.True(maze.PacmanHasCollisionWithGhost(pacman));
         }
     }

@@ -2,7 +2,7 @@ namespace Pacman2.Interfaces
 {
     public interface IPosition
     {
-        int Row { get; }
-        int Col { get; }
+        int Row { get; set; }
+        int Col { get; set; }
     }
 }

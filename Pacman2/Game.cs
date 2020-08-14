@@ -10,7 +10,7 @@ namespace Pacman2
         private readonly IList<IMovingSprite> _sprites;
         private readonly Maze _maze;
         private readonly IPlayerInput _playerInput;
-        public bool IsPlaying = true;
+        public bool PacmanIsAlive = true;
 
         public Game(IList<IMovingSprite> sprites, Maze maze, IPlayerInput playerInput)
         {
@@ -26,44 +26,54 @@ namespace Pacman2
         
         public void Play()
         {
-            while (IsPlaying)
+            while (PacmanIsAlive)
             {
                 var input = _playerInput.TakeInput();
-                
+
                 while (!Console.KeyAvailable)
                 {
+                    MoveSprites(input);
 
-                    foreach (var sprite in _sprites)
+                    if (!PacmanIsAlive)
                     {
-                        sprite.UpdateDirection(input);
-                        _maze.UpdateSpritePosition(sprite);
-                        IsPacmanEaten(sprite);
-                    }
-
-                    if (!IsPlaying)
+                        HandlePacmanDeath();
                         break;
+                    }
                     
                     _maze.Render();
 
                     Task.Delay(200).Wait();
                     Console.Clear();
                 }
-                if (IsPlaying) continue;
-                break;
+
+                if (!PacmanIsAlive) break;
             }
+        }
+
+        private void MoveSprites(ConsoleKey input)
+        {
+            foreach (var sprite in _sprites)
+            {
+                sprite.UpdateDirection(input);
+                _maze.UpdateSpritePosition(sprite);
+                IsPacmanEaten(sprite);
+            }
+        }
+
+        private void HandlePacmanDeath()
+        {
+            Display.LostPrompt();
+            
+            if (_playerInput.HasPressedQuit())
+                Display.GameEnd();
+            else
+                PacmanIsAlive = true;
         }
 
         public void IsPacmanEaten(IMovingSprite sprite)
         {
             if (!_maze.PacmanHasCollisionWithGhost(sprite)) return;
-            IsPlaying = false;
-            
-            Display.LostPrompt();
-
-            if (_playerInput.HasPressedQuit())
-                Display.GameEnd();
-            else
-                IsPlaying = true;
+            PacmanIsAlive = false;
         }
     }
 }
