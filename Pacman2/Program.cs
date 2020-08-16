@@ -27,6 +27,7 @@ namespace Pacman2
             var movingSprites = new List<IMovingSprite>
             {
                 new MovingSprite(maze.GetTilePosition(4, 1), randomMovement, ghostDisplay),
+                new MovingSprite(maze.GetTilePosition(9, 9), randomMovement, ghostDisplay),
                 new MovingSprite(maze.GetTilePosition(2, 1), playerMovement, pacmanDisplay)
             };
             

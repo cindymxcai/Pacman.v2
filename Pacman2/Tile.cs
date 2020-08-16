@@ -2,13 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Pacman2.Interfaces;
-using Pacman2.SpriteDisplays;
 
 namespace Pacman2
 {
     public class Tile : ITile
     {
-    
         public List<ISprite> SpritesOnTile { get; } = new List<ISprite>();
         public Position Position { get; set; }
 
@@ -25,7 +23,6 @@ namespace Pacman2
         {
             return SpritesOnTile.Any(s => s.Display.Icon == spriteDisplay.Icon);
         }
-        
 
         public ISprite GetFirstSprite()
         {

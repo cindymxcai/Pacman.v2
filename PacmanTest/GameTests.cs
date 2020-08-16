@@ -32,7 +32,7 @@ namespace PacmanTest
 
              foreach (var sprite in sprites)
              {
-                 maze.UpdateSpritePosition(sprite);
+                 game.UpdateSpritePosition(sprite);
                  game.IsPacmanEaten(sprite);
              }
             

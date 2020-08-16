@@ -22,7 +22,7 @@ namespace Pacman2
 
             foreach (var sprite in _sprites)
             {
-                _maze.UpdateSpritePosition(sprite);
+               UpdateSpritePosition(sprite);
             }
         }
         
@@ -55,10 +55,10 @@ namespace Pacman2
         private void MoveSprites(ConsoleKey input)
         {
             foreach (var sprite in _sprites)
-            {
+            { 
                 sprite.UpdateDirection(input);
-                _maze.UpdateSpritePosition(sprite);
-                IsPacmanEaten(sprite);
+               UpdateSpritePosition(sprite);
+               IsPacmanEaten(sprite);
             }
         }
 
@@ -76,6 +76,15 @@ namespace Pacman2
         {
             if (!_maze.PacmanHasCollisionWithGhost(sprite)) return;
             PacmanIsAlive = false;
+        }
+
+        public void UpdateSpritePosition(IMovingSprite sprite)
+        {
+            var newPosition = _maze.GetNewPosition(sprite.CurrentDirection,  sprite.CurrentPosition);
+            
+            if (_maze.SpriteHasCollisionWithWall(newPosition)) return;
+            _maze.MoveSpriteToNewPosition(sprite, newPosition);
+            sprite.UpdatePosition(newPosition);
         }
     }
 }

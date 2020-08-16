@@ -6,7 +6,7 @@ namespace Pacman2.Interfaces
         int Columns { get; }
         int Rows { get; }
         void Render();
-        void UpdateSpritePosition(IMovingSprite sprite);
+      //  void UpdateSpritePosition(IMovingSprite sprite);
 
         ITile GetTileAtPosition(int row, int col);
     }

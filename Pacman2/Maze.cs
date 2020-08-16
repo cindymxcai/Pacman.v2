@@ -61,22 +61,18 @@ namespace Pacman2
             return Tiles[rowIndex, colIndex].Position;
         }
 
-        public void UpdateSpritePosition(IMovingSprite sprite)
-        {
-            var newPosition = GetNewPosition(sprite.CurrentDirection,  sprite.CurrentPosition);
-            
-            if (SpriteHasCollisionWithWall(newPosition)) return;
-            MoveSpriteToNewPosition(sprite, newPosition);
-            sprite.UpdatePosition(newPosition);
-        }
-
-        private void MoveSpriteToNewPosition(IMovingSprite sprite, IPosition newPosition)
+        public void MoveSpriteToNewPosition(IMovingSprite sprite, IPosition newPosition)
         {
             Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].RemoveSprite(sprite);
             Tiles[newPosition.Row, newPosition.Col].AddSprite(sprite);
         }
+        
+        public ITile GetTileAtPosition(int row, int col)
+        {
+            return Tiles[row, col];
+        }
 
-        private IPosition GetNewPosition(Direction currentDirection, IPosition currentPosition)
+        public IPosition GetNewPosition(Direction currentDirection, IPosition currentPosition)
         {
             return currentDirection switch
             {
@@ -84,7 +80,7 @@ namespace Pacman2
                 => GetTilePosition(Rows-1, currentPosition.Col),
                 Direction.Down when IsOutOfUpperBounds(currentPosition.Row + 1, Rows) 
                 => GetTilePosition(0, currentPosition.Col),
-                Direction.Left when IsOutOfLowerBounds(currentPosition.Col - 1) 
+                Direction.Left when IsOutOfLowerBounds(currentPosition.Col -1 ) 
                 => GetTilePosition(currentPosition.Row, Columns - 1),
                 Direction.Right when IsOutOfUpperBounds(currentPosition.Col + 1, Columns) 
                 => GetTilePosition(currentPosition.Row, 0), 
@@ -96,7 +92,7 @@ namespace Pacman2
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
-
+        
         private static bool IsOutOfLowerBounds(int newPosition)
         {
             return newPosition < 0;
@@ -107,18 +103,13 @@ namespace Pacman2
             return newPosition > boundary -1 ;
         }
 
-        public ITile GetTileAtPosition(int row, int col)
-        {
-            return Tiles[row, col];
-        }
-
         public bool PacmanHasCollisionWithGhost(IMovingSprite sprite)
         {
             return sprite.Display.Icon != _ghostSpriteDisplay.Icon 
                 && Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].HasGivenSprite(_ghostSpriteDisplay) || sprite.Display.Icon != _ghostSpriteDisplay.Icon && Tiles[sprite.PreviousPosition.Row, sprite.PreviousPosition.Col].HasGivenSprite(_ghostSpriteDisplay);
         }
-        
-        private bool SpriteHasCollisionWithWall(IPosition newPosition)
+
+        public bool SpriteHasCollisionWithWall(IPosition newPosition)
         {
             return Tiles[newPosition.Row, newPosition.Col].HasGivenSprite(_wallSpriteDisplay); 
         }
