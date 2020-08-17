@@ -4,6 +4,7 @@ using Moq;
 using Pacman2;
 using Pacman2.Interfaces;
 using Pacman2.SpriteDisplays;
+using Pacman2.Sprites;
 using Xunit;
 
 namespace PacmanTest
@@ -38,5 +39,6 @@ namespace PacmanTest
             
              Assert.False(game.PacmanIsAlive);
         }
+        
     }
 }

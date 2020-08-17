@@ -14,6 +14,7 @@ namespace Pacman2
         public ITile[,] Tiles { get; private set; }
         public int Columns { get; private set; }
         public int Rows { get; private set; }
+        public int PelletsEaten { get; private set; }
 
         public Maze(IReadOnlyList<string> mazeData, IParser parser)
         {
@@ -71,8 +72,11 @@ namespace Pacman2
         {
             if (!sprite.IsPacman()) return;
             var pelletSprite = Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].GetPelletSprite();
+            if (pelletSprite == null) return;
             Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].RemoveSprite(pelletSprite);
+            PelletsEaten++;
         }
+
 
         public ITile GetTileAtPosition(int row, int col)
         {
@@ -123,7 +127,7 @@ namespace Pacman2
             foreach (var sprite in sprites)
             {
                 Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].RemoveSprite(sprite);
-                sprite.CurrentPosition = !sprite.IsPacman() ? ghostPosition : pacmanPosition;
+                sprite.UpdatePosition(!sprite.IsPacman() ? ghostPosition : pacmanPosition);
                 MoveSpriteToNewPosition(sprite, sprite.CurrentPosition);
             }
         }

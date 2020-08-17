@@ -1,7 +1,6 @@
-using System;
 using Pacman2.Interfaces;
 
-namespace Pacman2
+namespace Pacman2.Sprites
 {
     public class StaticSprite : ISprite
     {

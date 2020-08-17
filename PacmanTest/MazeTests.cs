@@ -5,6 +5,7 @@ using Moq;
 using Pacman2;
 using Pacman2.Interfaces;
 using Pacman2.SpriteDisplays;
+using Pacman2.Sprites;
 using Xunit;
 
 namespace PacmanTest
@@ -158,10 +159,29 @@ namespace PacmanTest
          
             maze.ResetSpritePositions(movingSprites, new Position(0,1), new Position(0,3) );
             
-            Assert.Equal(maze.GetTilePosition(0, 1), ghost.CurrentPosition);
-            Assert.Equal(maze.GetTilePosition(0,3), pacman.CurrentPosition);
+            Assert.Equal(0, ghost.CurrentPosition.Row);
+            Assert.Equal(1, ghost.CurrentPosition.Col);
+            Assert.Equal(0, pacman.CurrentPosition.Row);
+            Assert.Equal(3, pacman.CurrentPosition.Col);
+        }
+        
+        [Fact]
+        public void GivenPacmanIsEatingPelletsMazeShouldCountPelletsEaten()
+        {
+            var playerInput = new Mock<IPlayerInput>();
+            playerInput.Setup(p => p.TakeInput()).Returns(ConsoleKey.RightArrow);
+            playerInput.Setup(p => p.HasPressedQuit()).Returns(true);
 
+            var parser = new Parser();
 
+            var mazeData = new []{". *"};
+            var maze = new Maze(mazeData, parser);
+
+            var pacman = new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay());
+
+            maze.MoveSpriteToNewPosition(pacman, pacman.CurrentPosition);
+            
+            Assert.Equal(1,maze.PelletsEaten);
         }
     }
 }

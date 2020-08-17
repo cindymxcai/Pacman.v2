@@ -2,15 +2,15 @@ using System;
 using Pacman2.Interfaces;
 using Pacman2.SpriteDisplays;
 
-namespace Pacman2
+namespace Pacman2.Sprites
 {
     public class MovingSprite : IMovingSprite
     {
-        public IMovementBehaviour MovementBehaviour { get; }
-        public IPosition CurrentPosition { get; set; }
+        private IMovementBehaviour MovementBehaviour { get; }
+        public IPosition CurrentPosition { get; private set; }
         public Direction CurrentDirection { get; private set; }
         public ISpriteDisplay Display { get; }
-        public IPosition PreviousPosition { get; set; }
+        public IPosition PreviousPosition { get; private set; }
         
         private readonly GhostSpriteDisplay _ghostSpriteDisplay = new GhostSpriteDisplay();
 

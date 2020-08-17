@@ -26,7 +26,6 @@ namespace Pacman2
                UpdateSpritePosition(sprite);
             }
         }
-        
         public void Play()
         {
             while (PacmanIsAlive)
@@ -44,7 +43,7 @@ namespace Pacman2
                     }
                     
                     _maze.Render();
-
+                    Console.Write($"Score: {_maze.PelletsEaten}");
                     Task.Delay(200).Wait();
                     Console.Clear();
                 }
@@ -66,14 +65,14 @@ namespace Pacman2
         private void HandlePacmanDeath()
         {
             _display.LostPrompt();
-            
-            if (_playerInput.HasPressedQuit())
-                _display.GameEnd();
-            else
+
+            if (!_playerInput.HasPressedQuit())
             {
                 PacmanIsAlive = true;
-                _maze.ResetSpritePositions(_sprites, _maze.GetTilePosition(9,9), _maze.GetTilePosition(1,1));
+                _maze.ResetSpritePositions(_sprites, _maze.GetTilePosition(9, 9), _maze.GetTilePosition(1, 1));
             }
+            else
+                _display.GameEnd();
         }
 
         public void IsPacmanEaten(IMovingSprite sprite)
