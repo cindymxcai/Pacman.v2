@@ -4,6 +4,7 @@ namespace Pacman2.Interfaces
     {
         void LostPrompt();
         void GameEnd();
-        void Score(int mazePelletsEaten);
+        void Score(int pelletsEaten);
+        void Win();
     }
 }

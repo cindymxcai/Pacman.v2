@@ -60,8 +60,7 @@ namespace PacmanTest
                 new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
             };
             var game = new Game(sprites, maze, new PlayerInput(), new Display());
-            Assert.True(game.HasWon);
+            Assert.True(game.HasWon());
         }
-        
     }
 }

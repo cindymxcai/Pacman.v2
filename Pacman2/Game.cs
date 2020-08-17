@@ -26,11 +26,10 @@ namespace Pacman2
             }
         }
 
-        public bool HasWon { get; set; }
 
         public void Play()
         {
-            while (PacmanIsAlive)
+            while (PacmanIsAlive && !HasWon())
             {
                 var input = _playerInput.TakeInput();
                 if (_playerInput.HasPressedQuit(input)) PacmanIsAlive = false;
@@ -40,19 +39,23 @@ namespace Pacman2
                     MoveSprites(input);
 
                     if (!PacmanIsAlive)
-                    {
-                        HandlePacmanDeath();
                         break;
-                    }
 
                     _maze.Render();
                     _display.Score(_maze.PelletsEaten);
-                    
+
                     Task.Delay(200).Wait();
                     Console.Clear();
                 }
-                if (!PacmanIsAlive) break;
+
+                if (PacmanIsAlive && !HasWon()) continue;
+                if (!PacmanIsAlive) HandlePacmanDeath();
+                if (!HasWon()) continue;
+                _display.Win();
+                break;
+
             }
+            
         }
 
         private void MoveSprites(ConsoleKey input)
@@ -91,6 +94,11 @@ namespace Pacman2
             if (_maze.SpriteHasCollisionWithWall(newPosition)) return;
             _maze.MoveSpriteToNewPosition(sprite, newPosition);
             sprite.UpdatePosition(newPosition);
+        }
+
+        public bool HasWon()
+        {
+            return _maze.HasNoPelletsRemaining() ;
         }
     }
 }

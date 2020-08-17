@@ -10,6 +10,8 @@ namespace Pacman2
     {
         private readonly WallSpriteDisplay _wallSpriteDisplay = new WallSpriteDisplay();
         private readonly GhostSpriteDisplay _ghostSpriteDisplay = new GhostSpriteDisplay();
+        private readonly PelletSpriteDisplay _pelletSpriteDisplay = new PelletSpriteDisplay();
+
         private readonly IParser _parser;
         public ITile[,] Tiles { get; private set; }
         public int Columns { get; private set; }
@@ -37,9 +39,14 @@ namespace Pacman2
                     tile.Position = new Position(rowIndex, colIndex);
                     colIndex++;
                 }
-
                 rowIndex++;
             }
+        }
+
+        public bool HasNoPelletsRemaining()
+        {
+            var count = Tiles.Cast<ITile>().Count(tile => tile.SpritesOnTile.Any(s => s.Display.Icon == _pelletSpriteDisplay.Icon));
+            return count == 0;
         }
 
         public void Render()

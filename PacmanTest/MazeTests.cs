@@ -183,5 +183,31 @@ namespace PacmanTest
             
             Assert.Equal(1,maze.PelletsEaten);
         }
+        
+        [Fact]
+        public void GivenPelletsAreOnMazePelletsRemainingShouldCountPellets()
+        {
+            var parser = new Parser();
+
+            var mazeData = new []{". *.."};
+            var maze = new Maze(mazeData, parser);
+
+            Assert.False( maze.HasNoPelletsRemaining());
+        }
+
+        [Fact]
+        public void GivenNoPelletsAreOnMazePelletsRemainingShouldBeZero()
+        {
+            var parser = new Parser();
+
+            var mazeData = new []{". *"};
+            var maze = new Maze(mazeData, parser);
+            
+            var pelletTile = new PelletSpriteDisplay();
+            var pelletSprite =   maze.GetTileAtPosition(0, 0).SpritesOnTile.First(s => s.Display.Icon == pelletTile.Icon);
+            maze.Tiles[0, 0].SpritesOnTile.Remove(pelletSprite);
+            
+            Assert.True(maze.HasNoPelletsRemaining());
+        }
     }
 }

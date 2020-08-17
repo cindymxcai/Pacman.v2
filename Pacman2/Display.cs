@@ -30,6 +30,16 @@ namespace Pacman2
             Console.ResetColor();
         }
 
+        public void Win()
+        {
+            Console.Clear();
+            Console.WriteLine(@" ___  ___  _ _  ___   ___  ___  ___  _ _  _    ___  ___  _  ___  _ _  ___");
+            Console.WriteLine(@"|  _>| . || \ |/  _> | . \| . ||_ _|| | || |  | . ||_ _|| || . || \ |/ __>");
+            Console.WriteLine(@"| <__| | ||   || <_/\|   /|   | | | | ' || |_ |   | | | | || | ||   |\__ \");
+            Console.WriteLine(@"`___/`___'|_\_|`____/|_\_\|_|_| |_| `___'|___||_|_| |_| |_|`___'|_\_|<___/");
+                
+        }
+
         public void Welcome()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;
