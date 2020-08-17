@@ -5,7 +5,7 @@ namespace Pacman2.Interfaces
     public interface IPlayerInput
     {
         ConsoleKey TakeInput();
-        bool HasPressedQuit();
+        bool HasPressedQuit(ConsoleKey input);
         bool HasNewInput();
     }
 }

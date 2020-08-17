@@ -10,9 +10,9 @@ namespace Pacman2
             return Console.ReadKey().Key;
         }
 
-        public bool HasPressedQuit()
+        public bool HasPressedQuit(ConsoleKey input)
         {
-            return Console.ReadKey().Key == ConsoleKey.Q;
+            return input == ConsoleKey.Q;
         }
 
         public bool HasNewInput()

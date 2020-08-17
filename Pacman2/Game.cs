@@ -22,15 +22,16 @@ namespace Pacman2
 
             foreach (var sprite in _sprites)
             {
-               UpdateSpritePosition(sprite);
+                UpdateSpritePosition(sprite);
             }
         }
-        
+
         public void Play()
         {
             while (PacmanIsAlive)
             {
                 var input = _playerInput.TakeInput();
+                if (_playerInput.HasPressedQuit(input)) PacmanIsAlive = false;
 
                 while (!_playerInput.HasNewInput())
                 {
@@ -41,13 +42,13 @@ namespace Pacman2
                         HandlePacmanDeath();
                         break;
                     }
-                    
+
                     _maze.Render();
                     _display.Score(_maze.PelletsEaten);
+                    
                     Task.Delay(200).Wait();
                     Console.Clear();
                 }
-
                 if (!PacmanIsAlive) break;
             }
         }
@@ -55,7 +56,7 @@ namespace Pacman2
         private void MoveSprites(ConsoleKey input)
         {
             foreach (var sprite in _sprites)
-            { 
+            {
                 sprite.UpdateDirection(input);
                 UpdateSpritePosition(sprite);
                 IsPacmanEaten(sprite);
@@ -66,7 +67,7 @@ namespace Pacman2
         {
             _display.LostPrompt();
 
-            if (!_playerInput.HasPressedQuit())
+            if (!_playerInput.HasPressedQuit(_playerInput.TakeInput()))
             {
                 PacmanIsAlive = true;
                 _maze.ResetSpritePositions(_sprites, _maze.GetTilePosition(9, 9), _maze.GetTilePosition(1, 1));
@@ -83,8 +84,8 @@ namespace Pacman2
 
         public void UpdateSpritePosition(IMovingSprite sprite)
         {
-            var newPosition = _maze.GetNewPosition(sprite.CurrentDirection,  sprite.CurrentPosition);
-            
+            var newPosition = _maze.GetNewPosition(sprite.CurrentDirection, sprite.CurrentPosition);
+
             if (_maze.SpriteHasCollisionWithWall(newPosition)) return;
             _maze.MoveSpriteToNewPosition(sprite, newPosition);
             sprite.UpdatePosition(newPosition);

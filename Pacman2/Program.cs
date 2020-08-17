@@ -33,7 +33,9 @@ namespace Pacman2
                 new MovingSprite(maze.GetTilePosition(2, 1), playerMovement, pacmanDisplay)
             };
             
+
             var game = new Game(movingSprites, maze, playerInput, display);
+            display.Welcome();
 
            game.Play();
             
