@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using Moq;
 using Pacman2;
@@ -12,13 +11,6 @@ namespace PacmanTest
 {
     public class MazeTests
     {
-        private readonly ITestOutputHelper _testOutputHelper;
-
-        public MazeTests(ITestOutputHelper testOutputHelper)
-        {
-            _testOutputHelper = testOutputHelper;
-        }
-
         [Fact]
         public void GivenMazeDataShouldGetSizeOfMaze()
         {
@@ -75,10 +67,9 @@ namespace PacmanTest
             pacman.UpdatePosition(new Position(0, 1));
 
             maze.MoveSpriteToNewPosition(pacman, pacman.CurrentPosition);
-            Assert.Equal(pacman.Display.Icon, maze.Tiles[0, 1].SpritesOnTile[1].Display.Icon);
-            Assert.Equal(pacman.Display.Colour, maze.Tiles[0, 1].SpritesOnTile[1].Display.Colour);
-            Assert.Equal(pacman.Display.Icon, maze.Tiles[0, 1].SpritesOnTile[1].Display.Icon);
-            Assert.Equal(pacman.Display.Priority, maze.Tiles[0, 1].SpritesOnTile[1].Display.Priority);
+            Assert.Equal(pacman.Display.Icon, maze.Tiles[0, 1].SpritesOnTile[0].Display.Icon);
+            Assert.Equal(pacman.Display.Colour, maze.Tiles[0, 1].SpritesOnTile[0].Display.Colour);
+            Assert.Equal(pacman.Display.Priority, maze.Tiles[0, 1].SpritesOnTile[0].Display.Priority);
         }
 
         [Fact]

@@ -9,8 +9,8 @@ namespace Pacman2
     public class Maze : IMaze
     {
         
-        private readonly GhostSpriteDisplay _ghostSpriteDisplay = new GhostSpriteDisplay();
         private readonly WallSpriteDisplay _wallSpriteDisplay = new WallSpriteDisplay();
+        private readonly GhostSpriteDisplay _ghostSpriteDisplay = new GhostSpriteDisplay();
 
         private readonly IParser _parser;
         public ITile[,] Tiles { get; private set; }
@@ -64,9 +64,17 @@ namespace Pacman2
         public void MoveSpriteToNewPosition(IMovingSprite sprite, IPosition newPosition)
         {
             Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].RemoveSprite(sprite);
+            EatPellet(sprite);
             Tiles[newPosition.Row, newPosition.Col].AddSprite(sprite);
         }
-        
+
+        private void EatPellet(IMovingSprite sprite)
+        {
+            if (!sprite.IsPacman()) return;
+            var pelletSprite = Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].GetPelletSprite();
+            Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].RemoveSprite(pelletSprite);
+        }
+
         public ITile GetTileAtPosition(int row, int col)
         {
             return Tiles[row, col];
@@ -105,7 +113,7 @@ namespace Pacman2
 
         public bool PacmanHasCollisionWithGhost(IMovingSprite sprite)
         {
-            return sprite.Display.Icon != _ghostSpriteDisplay.Icon 
+            return sprite.IsPacman()
                 && Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].HasGivenSprite(_ghostSpriteDisplay) || sprite.Display.Icon != _ghostSpriteDisplay.Icon && Tiles[sprite.PreviousPosition.Row, sprite.PreviousPosition.Col].HasGivenSprite(_ghostSpriteDisplay);
         }
 

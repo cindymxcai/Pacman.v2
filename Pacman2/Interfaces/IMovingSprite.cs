@@ -8,7 +8,9 @@ namespace Pacman2.Interfaces
         IPosition CurrentPosition { get; }
         Direction CurrentDirection { get; }
         IPosition PreviousPosition { get; set; }
+        IMovementBehaviour MovementBehaviour { get; }
         void UpdateDirection(ConsoleKey consoleKey);
         void UpdatePosition(IPosition newPosition);
+        bool IsPacman();
     }
 }

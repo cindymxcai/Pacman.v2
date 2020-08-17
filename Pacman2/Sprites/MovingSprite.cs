@@ -1,15 +1,19 @@
 using System;
 using Pacman2.Interfaces;
+using Pacman2.SpriteDisplays;
 
 namespace Pacman2
 {
     public class MovingSprite : IMovingSprite
     {
-        private IMovementBehaviour MovementBehaviour { get; }
+        public IMovementBehaviour MovementBehaviour { get; }
         public IPosition CurrentPosition { get; private set; }
         public Direction CurrentDirection { get; private set; }
         public ISpriteDisplay Display { get; }
         public IPosition PreviousPosition { get; set; }
+        
+        private readonly GhostSpriteDisplay _ghostSpriteDisplay = new GhostSpriteDisplay();
+
 
         public MovingSprite(IPosition position, IMovementBehaviour movementBehaviour, ISpriteDisplay display)
         {
@@ -30,6 +34,11 @@ namespace Pacman2
         {
             PreviousPosition = CurrentPosition;
             CurrentPosition = newPosition;
+        }
+
+        public bool IsPacman()
+        {
+            return Display.Icon != _ghostSpriteDisplay.Icon;
         }
     }
 }
