@@ -7,7 +7,7 @@ namespace Pacman2
     public class MovingSprite : IMovingSprite
     {
         public IMovementBehaviour MovementBehaviour { get; }
-        public IPosition CurrentPosition { get; private set; }
+        public IPosition CurrentPosition { get; set; }
         public Direction CurrentDirection { get; private set; }
         public ISpriteDisplay Display { get; }
         public IPosition PreviousPosition { get; set; }

@@ -1,11 +1,11 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Moq;
 using Pacman2;
 using Pacman2.Interfaces;
 using Pacman2.SpriteDisplays;
 using Xunit;
-using Xunit.Abstractions;
 
 namespace PacmanTest
 {
@@ -140,6 +140,28 @@ namespace PacmanTest
             var pacman = new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay());
             maze.MoveSpriteToNewPosition(pacman, pacman.CurrentPosition);
             Assert.DoesNotContain(maze.Tiles[0, 0].SpritesOnTile, s => s.Display.Icon == new PelletSpriteDisplay().Icon);
+        }
+
+        [Fact]
+        public void GivenGameRestartsMazeShouldMoveSpritesToDefaultPosition()
+        {
+            var parser = new Parser();
+            var mazeData = new[] {"....*"};
+            var maze = new Maze(mazeData, parser);
+            
+            var ghost = new MovingSprite(new Position(0, 0), new RandomMovement(new Rng()), new GhostSpriteDisplay());
+            var pacman = new MovingSprite(new Position(0, 1), new PlayerControlMovement(), new PacmanSpriteDisplay());
+
+            var movingSprites = new List<IMovingSprite> {ghost, pacman};
+            maze.MoveSpriteToNewPosition(ghost, ghost.CurrentPosition);
+            maze.MoveSpriteToNewPosition(pacman, pacman.CurrentPosition);
+         
+            maze.ResetSpritePositions(movingSprites, new Position(0,1), new Position(0,3) );
+            
+            Assert.Equal(maze.GetTilePosition(0, 1), ghost.CurrentPosition);
+            Assert.Equal(maze.GetTilePosition(0,3), pacman.CurrentPosition);
+
+
         }
     }
 }

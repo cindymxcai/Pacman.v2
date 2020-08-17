@@ -8,10 +8,8 @@ namespace Pacman2
 {
     public class Maze : IMaze
     {
-        
         private readonly WallSpriteDisplay _wallSpriteDisplay = new WallSpriteDisplay();
         private readonly GhostSpriteDisplay _ghostSpriteDisplay = new GhostSpriteDisplay();
-
         private readonly IParser _parser;
         public ITile[,] Tiles { get; private set; }
         public int Columns { get; private set; }
@@ -28,7 +26,6 @@ namespace Pacman2
             Rows = rows.Count;
             Columns = rows[0].Length;
             Tiles = new ITile[Rows, Columns];
-
             var rowIndex = 0;
             foreach (var row in rows)
             {
@@ -39,6 +36,7 @@ namespace Pacman2
                     tile.Position = new Position(rowIndex, colIndex);
                     colIndex++;
                 }
+
                 rowIndex++;
             }
         }
@@ -52,11 +50,12 @@ namespace Pacman2
                     var tile = GetTileAtPosition(rowIndex, colIndex);
                     tile.Render();
                 }
+
                 Console.WriteLine();
             }
         }
-        
-        public IPosition GetTilePosition( int rowIndex, int colIndex)
+
+        public IPosition GetTilePosition(int rowIndex, int colIndex)
         {
             return Tiles[rowIndex, colIndex].Position;
         }
@@ -84,42 +83,49 @@ namespace Pacman2
         {
             return currentDirection switch
             {
-                Direction.Up when IsOutOfLowerBounds(currentPosition.Row - 1) 
-                => GetTilePosition(Rows-1, currentPosition.Col),
-                Direction.Down when IsOutOfUpperBounds(currentPosition.Row + 1, Rows) 
-                => GetTilePosition(0, currentPosition.Col),
-                Direction.Left when IsOutOfLowerBounds(currentPosition.Col -1 ) 
-                => GetTilePosition(currentPosition.Row, Columns - 1),
-                Direction.Right when IsOutOfUpperBounds(currentPosition.Col + 1, Columns) 
-                => GetTilePosition(currentPosition.Row, 0), 
-                
+                Direction.Up when IsOutOfLowerBounds(currentPosition.Row - 1) => GetTilePosition(Rows - 1, currentPosition.Col),
+                Direction.Down when IsOutOfUpperBounds(currentPosition.Row + 1, Rows) => GetTilePosition(0, currentPosition.Col),
+                Direction.Left when IsOutOfLowerBounds(currentPosition.Col - 1) => GetTilePosition(currentPosition.Row, Columns - 1),
+                Direction.Right when IsOutOfUpperBounds(currentPosition.Col + 1, Columns) => GetTilePosition(currentPosition.Row, 0),
+               
                 Direction.Up => GetTilePosition(currentPosition.Row - 1, currentPosition.Col),
                 Direction.Down => GetTilePosition(currentPosition.Row + 1, currentPosition.Col),
-                Direction.Left =>GetTilePosition(currentPosition.Row, currentPosition.Col - 1),
+                Direction.Left => GetTilePosition(currentPosition.Row, currentPosition.Col - 1),
                 Direction.Right => GetTilePosition(currentPosition.Row, currentPosition.Col + 1),
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
-        
+
         private static bool IsOutOfLowerBounds(int newPosition)
         {
             return newPosition < 0;
         }
-        
+
         private static bool IsOutOfUpperBounds(int newPosition, int boundary)
         {
-            return newPosition > boundary -1 ;
+            return newPosition > boundary - 1;
         }
 
         public bool PacmanHasCollisionWithGhost(IMovingSprite sprite)
         {
-            return sprite.IsPacman()
-                && Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].HasGivenSprite(_ghostSpriteDisplay) || sprite.Display.Icon != _ghostSpriteDisplay.Icon && Tiles[sprite.PreviousPosition.Row, sprite.PreviousPosition.Col].HasGivenSprite(_ghostSpriteDisplay);
+            return sprite.IsPacman() && Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col]
+                    .HasGivenSprite(_ghostSpriteDisplay) || sprite.Display.Icon != _ghostSpriteDisplay.Icon &&
+                Tiles[sprite.PreviousPosition.Row, sprite.PreviousPosition.Col].HasGivenSprite(_ghostSpriteDisplay);
         }
 
         public bool SpriteHasCollisionWithWall(IPosition newPosition)
         {
-            return Tiles[newPosition.Row, newPosition.Col].HasGivenSprite(_wallSpriteDisplay); 
+            return Tiles[newPosition.Row, newPosition.Col].HasGivenSprite(_wallSpriteDisplay);
+        }
+
+        public void ResetSpritePositions(IEnumerable<IMovingSprite> sprites, IPosition ghostPosition, IPosition pacmanPosition)
+        {
+            foreach (var sprite in sprites)
+            {
+                Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].RemoveSprite(sprite);
+                sprite.CurrentPosition = !sprite.IsPacman() ? ghostPosition : pacmanPosition;
+                MoveSpriteToNewPosition(sprite, sprite.CurrentPosition);
+            }
         }
     }
 }

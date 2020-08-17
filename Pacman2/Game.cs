@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Pacman2.Interfaces;
 
@@ -69,7 +70,10 @@ namespace Pacman2
             if (_playerInput.HasPressedQuit())
                 _display.GameEnd();
             else
+            {
                 PacmanIsAlive = true;
+                _maze.ResetSpritePositions(_sprites, _maze.GetTilePosition(9,9), _maze.GetTilePosition(1,1));
+            }
         }
 
         public void IsPacmanEaten(IMovingSprite sprite)
