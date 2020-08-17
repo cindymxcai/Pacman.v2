@@ -57,8 +57,8 @@ namespace Pacman2
             foreach (var sprite in _sprites)
             { 
                 sprite.UpdateDirection(input);
-               UpdateSpritePosition(sprite);
-               IsPacmanEaten(sprite);
+                UpdateSpritePosition(sprite);
+                IsPacmanEaten(sprite);
             }
         }
 
