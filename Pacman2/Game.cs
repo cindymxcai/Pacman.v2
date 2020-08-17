@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Pacman2.Interfaces;
 
@@ -26,6 +25,7 @@ namespace Pacman2
                UpdateSpritePosition(sprite);
             }
         }
+        
         public void Play()
         {
             while (PacmanIsAlive)
@@ -43,7 +43,7 @@ namespace Pacman2
                     }
                     
                     _maze.Render();
-                    Console.Write($"Score: {_maze.PelletsEaten}");
+                    _display.Score(_maze.PelletsEaten);
                     Task.Delay(200).Wait();
                     Console.Clear();
                 }

@@ -21,5 +21,12 @@ namespace Pacman2
             Console.WriteLine(@" |_| |_|_|<___||_|_||_\_\/__/ |_| \___/|_|   |  _/|_|<___|`_. ||_||_|_|\_. |<_>");
             Console.WriteLine(@"                                             |_|          <___'        <___'   ");
          }
+
+        public void Score(int mazePelletsEaten)
+        {
+            Console.ForegroundColor = ConsoleColor.DarkMagenta;
+            Console.Write($"Score: {mazePelletsEaten}");
+            Console.ResetColor();
+        }
     }
 }
