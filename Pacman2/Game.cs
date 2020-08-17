@@ -26,6 +26,8 @@ namespace Pacman2
             }
         }
 
+        public bool HasWon { get; set; }
+
         public void Play()
         {
             while (PacmanIsAlive)

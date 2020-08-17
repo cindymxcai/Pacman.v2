@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using Moq;
 using Pacman2;
 using Pacman2.Interfaces;
@@ -38,6 +39,28 @@ namespace PacmanTest
              }
             
              Assert.False(game.PacmanIsAlive);
+        }
+
+        [Fact]
+        public void GivenAllPelletSpritesOnMazeAreEatenGameShouldFinish()
+        {
+            var parser = new Parser();
+
+            var mazeData = new []{". *"};
+            var maze = new Maze(mazeData, parser);
+            var pelletTile = new PelletSpriteDisplay();
+            var pelletSprite =   maze.GetTileAtPosition(0, 0).SpritesOnTile.First(s => s.Display.Icon == pelletTile.Icon);
+            maze.Tiles[0, 0].SpritesOnTile.Remove(pelletSprite);
+            
+            Assert.Empty(maze.Tiles[0,0].SpritesOnTile);
+            
+            var sprites = new List<IMovingSprite>()
+            {
+                new MovingSprite(new Position(0, 0), new RandomMovement(new Rng()), new GhostSpriteDisplay()),
+                new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
+            };
+            var game = new Game(sprites, maze, new PlayerInput(), new Display());
+            Assert.True(game.HasWon);
         }
         
     }
