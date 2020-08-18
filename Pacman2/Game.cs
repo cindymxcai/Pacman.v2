@@ -4,11 +4,12 @@ namespace Pacman2
 {
     public class Game
     {
-        private int CurrentLevelNumber { get; set; }
 
         private readonly GameSettingLoader _gameSettingLoader;
         private readonly LevelFactory _levelFactory;
         private readonly IDisplay _display;
+        public int CurrentLevelNumber { get; set; } = 1;
+        public bool IsPlaying { get; set; } = true;
 
         public Game(GameSettingLoader gameSettingLoader, LevelFactory levelFactory, IDisplay display)
         {
@@ -19,12 +20,21 @@ namespace Pacman2
         
         public void Play()
         {
-            CurrentLevelNumber = 1;
             _display.Welcome();
             var mazeData = _gameSettingLoader.GetMazeData();
-            
-            var level = _levelFactory.CreateLevel(mazeData, CurrentLevelNumber); 
-            level.Play();
+
+            while (IsPlaying)
+            {
+                var level = _levelFactory.CreateLevel(mazeData, CurrentLevelNumber); 
+                level.Play();
+                HandleNextLevel(mazeData);
+            }
+        }
+
+        public void HandleNextLevel(IGameSettings mazeData)
+        {
+            CurrentLevelNumber++;
+            if (CurrentLevelNumber >= mazeData.MaxLevels) IsPlaying = false;
         }
     }
 }

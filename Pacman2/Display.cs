@@ -23,8 +23,6 @@ namespace Pacman2
             Console.WriteLine(@"                                             |_|          <___'        <___'   ");
          }
 
-      
-
         public void Score(int mazePelletsEaten, int livesRemaining)
         {
             Console.ForegroundColor = ConsoleColor.DarkMagenta;

@@ -40,7 +40,6 @@ namespace PacmanTest
         public void GivenANewLevelShouldStartWith3Lives()
         {
             var parser = new Parser();
-
             var mazeData = new []
             {
                 ". *.......",". *.......",". *.......",
@@ -50,7 +49,6 @@ namespace PacmanTest
             };        
             var maze = new Maze(mazeData, parser);
             
-            
             var level = new Level(maze, new PlayerInput(), new Display(), new RandomMovement(new Rng()), new PlayerControlMovement(), new GhostSpriteDisplay(), new PacmanSpriteDisplay()  );
             Assert.Equal(3, level.LivesRemaining);
         }
@@ -59,7 +57,6 @@ namespace PacmanTest
         public void GivenPacmanGetsEatenLevelShouldLoseALife()
         {
             var parser = new Parser();
-
             var mazeData = new []
             {
                 ". *.......",". *.......",". *.......",
@@ -68,9 +65,6 @@ namespace PacmanTest
                 ". *.......",". *.......",". *......."
             };           
             var maze = new Maze(mazeData, parser);
-
-
-
 
             var level = new Level(maze, new PlayerInput(), new Display(), new RandomMovement(new Rng()),
                 new PlayerControlMovement(), new GhostSpriteDisplay(), new PacmanSpriteDisplay())
@@ -99,7 +93,6 @@ namespace PacmanTest
             playerInput.Setup(p => p.HasPressedQuit(ConsoleKey.LeftArrow)).Returns(true);
 
             var parser = new Parser();
-
             var mazeData = new []
             {
                 ". *.......",". *.......",". *.......",
