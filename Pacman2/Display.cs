@@ -23,10 +23,12 @@ namespace Pacman2
             Console.WriteLine(@"                                             |_|          <___'        <___'   ");
          }
 
-        public void Score(int mazePelletsEaten)
+      
+
+        public void Score(int mazePelletsEaten, int livesRemaining)
         {
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            Console.Write($"Score: {mazePelletsEaten}");
+            Console.Write($"Score: {mazePelletsEaten}                             Lives Remaining: {livesRemaining}");
             Console.ResetColor();
         }
 
@@ -43,21 +45,14 @@ namespace Pacman2
 
         public void LifeLost(int livesRemaining)
         {
-           
-                Console.Clear();
-                Console.ForegroundColor = ConsoleColor.Red;
-                Console.WriteLine(@" .-. ");
-                Console.WriteLine(@"| OO|  ╭⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼╮");
-                Console.WriteLine(@"|   | <  Lives left: " + livesRemaining + " |");
-                Console.WriteLine(@"'^^^'  ╰⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼╯");
-                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
-                Console.ResetColor();
-            
-        }
-
-        public void GameOver()
-        {
-            throw new NotImplementedException();
+            Console.Clear();
+            Console.ForegroundColor = ConsoleColor.Red;
+            Console.WriteLine(@" .-. ");
+            Console.WriteLine(@"| OO|  ╭⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼╮");
+            Console.WriteLine(@"|   | <  Lives left: " + livesRemaining + " |");
+            Console.WriteLine(@"'^^^'  ╰⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼╯");
+            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+            Console.ResetColor();
         }
 
         public void Welcome()

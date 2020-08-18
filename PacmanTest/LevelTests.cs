@@ -9,10 +9,10 @@ using Xunit;
 
 namespace PacmanTest
 {
-    public class GameTests
+    public class LevelTests
     {
         [Fact]
-        public void GivenAllPelletSpritesOnMazeAreEatenGameShouldFinish()
+        public void GivenAllPelletSpritesOnMazeAreEatenLevelShouldFinish()
         {
             var parser = new Parser();
 
@@ -29,12 +29,12 @@ namespace PacmanTest
                 new MovingSprite(new Position(0, 0), new RandomMovement(new Rng()), new GhostSpriteDisplay()),
                 new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
             };
-            var game = new Game(sprites, maze, new PlayerInput(), new Display());
-            Assert.True(game.HasWon());
+            var level = new Level(sprites, maze, new PlayerInput(), new Display());
+            Assert.True(level.HasWon());
         }
 
         [Fact]
-        public void GivenANewGameShouldStartWith3Lives()
+        public void GivenANewLevelShouldStartWith3Lives()
         {
             var parser = new Parser();
 
@@ -47,12 +47,12 @@ namespace PacmanTest
                 new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
             };
             
-            var game = new Game(sprites, maze, new PlayerInput(), new Display());
-            Assert.Equal(3, game.LivesRemaining);
+            var level = new Level(sprites, maze, new PlayerInput(), new Display());
+            Assert.Equal(3, level.LivesRemaining);
         }
         
         [Fact]
-        public void GivenPacmanGetsEatenGameShouldLoseALife()
+        public void GivenPacmanGetsEatenLevelShouldLoseALife()
         {
             var parser = new Parser();
 
@@ -71,15 +71,15 @@ namespace PacmanTest
                 new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
             };
             
-            var game = new Game(sprites, maze, new PlayerInput(), new Display());
+            var level = new Level(sprites, maze, new PlayerInput(), new Display());
             
             foreach (var sprite in sprites)
             {
-                game.UpdateSpritePosition(sprite);
-                game.IsPacmanEaten(sprite);
+                level.UpdateSpritePosition(sprite);
+                level.IsPacmanEaten(sprite);
             }
             
-            Assert.Equal(2, game.LivesRemaining);
+            Assert.Equal(2, level.LivesRemaining);
         }
         
         [Fact]
@@ -107,19 +107,19 @@ namespace PacmanTest
                 new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
             };
 
-            var game = new Game(sprites, maze, playerInput.Object, new Display());
-            Assert.True(game.PacmanIsAlive);
+            var level = new Level(sprites, maze, playerInput.Object, new Display());
+            Assert.True(level.PacmanIsAlive);
 
             for (var i = 0; i < 3; i++)
             {
                 foreach (var sprite in sprites)
                 { 
                     sprite.UpdatePosition( new Position(0,0));
-                    game.UpdateSpritePosition(sprite);
-                    game.IsPacmanEaten(sprite);
+                    level.UpdateSpritePosition(sprite);
+                    level.IsPacmanEaten(sprite);
                 }
             }
-            Assert.False(game.PacmanIsAlive);
+            Assert.False(level.PacmanIsAlive);
         }
     }
 }
