@@ -41,6 +41,25 @@ namespace Pacman2
             Console.ResetColor();
         }
 
+        public void LifeLost(int livesRemaining)
+        {
+           
+                Console.Clear();
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.WriteLine(@" .-. ");
+                Console.WriteLine(@"| OO|  ╭⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼╮");
+                Console.WriteLine(@"|   | <  Lives left: " + livesRemaining + " |");
+                Console.WriteLine(@"'^^^'  ╰⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼╯");
+                System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+                Console.ResetColor();
+            
+        }
+
+        public void GameOver()
+        {
+            throw new NotImplementedException();
+        }
+
         public void Welcome()
         {
             Console.ForegroundColor = ConsoleColor.Yellow;

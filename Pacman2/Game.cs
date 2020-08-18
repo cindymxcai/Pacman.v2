@@ -12,7 +12,7 @@ namespace Pacman2
         private readonly IPlayerInput _playerInput;
         private readonly IDisplay _display;
         public bool PacmanIsAlive = true;
-        public int LivesRemaining { get; set; } = 3;
+        public int LivesRemaining { get; private set; } = 3;
 
         public Game(IList<IMovingSprite> sprites, Maze maze, IPlayerInput playerInput, IDisplay display)
         {
@@ -26,9 +26,7 @@ namespace Pacman2
                 UpdateSpritePosition(sprite);
             }
         }
-
-
-
+        
         public void Play()
         {
             while (PacmanIsAlive && !HasWon())
@@ -39,7 +37,7 @@ namespace Pacman2
                 while (!_playerInput.HasNewInput())
                 {
                     MoveSprites(input);
-
+                    
                     if (!PacmanIsAlive)
                         break;
 
@@ -59,6 +57,7 @@ namespace Pacman2
             }
             
         }
+        
 
         private void MoveSprites(ConsoleKey input)
         {
@@ -86,7 +85,10 @@ namespace Pacman2
         public void IsPacmanEaten(IMovingSprite sprite)
         {
             if (!_maze.PacmanHasCollisionWithGhost(sprite)) return;
-            PacmanIsAlive = false;
+            LivesRemaining--;
+            _display.LifeLost(LivesRemaining);
+            _maze.ResetSpritePositions(_sprites, _maze.GetTilePosition(9, 9), _maze.GetTilePosition(1, 1));
+            if (LivesRemaining == 0) PacmanIsAlive = false;
         }
 
         public void UpdateSpritePosition(IMovingSprite sprite)
