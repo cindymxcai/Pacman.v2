@@ -16,20 +16,23 @@ namespace PacmanTest
         {
             var parser = new Parser();
 
-            var mazeData = new []{". *"};
+            var mazeData = new []
+            {
+                ". *.......",". *.......",". *.......",
+                ". *.......",". *.......",". *.......",
+                ". *.......",". *.......",". *.......",
+                ". *.......",". *.......",". *......."
+            };                 
             var maze = new Maze(mazeData, parser);
             var pelletTile = new PelletSpriteDisplay();
-            var pelletSprite =  maze.GetTileAtPosition(0, 0).GetGivenSprite(pelletTile);
-            maze.Tiles[0, 0].SpritesOnTile.Remove(pelletSprite);
-            
-            Assert.Empty(maze.Tiles[0,0].SpritesOnTile);
-            
-            var sprites = new List<IMovingSprite>()
+            foreach (var tile in maze.Tiles)
             {
-                new MovingSprite(new Position(0, 0), new RandomMovement(new Rng()), new GhostSpriteDisplay()),
-                new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
-            };
-            var level = new Level(sprites, maze, new PlayerInput(), new Display());
+                var pelletSprite =  tile.GetGivenSprite(pelletTile);
+                tile.SpritesOnTile.Remove(pelletSprite);
+               Assert.DoesNotContain(tile.SpritesOnTile, s=> s.Display == pelletTile);
+            }
+            Assert.True(maze.HasNoPelletsRemaining());
+            var level = new Level(maze, new PlayerInput(), new Display(), new RandomMovement(new Rng()), new PlayerControlMovement(), new GhostSpriteDisplay(), new PacmanSpriteDisplay() );
             Assert.True(level.HasWon());
         }
 
@@ -38,16 +41,17 @@ namespace PacmanTest
         {
             var parser = new Parser();
 
-            var mazeData = new []{". *"};
+            var mazeData = new []
+            {
+                ". *.......",". *.......",". *.......",
+                ". *.......",". *.......",". *.......",
+                ". *.......",". *.......",". *.......",
+                ". *.......",". *.......",". *......."
+            };        
             var maze = new Maze(mazeData, parser);
             
-            var sprites = new List<IMovingSprite>()
-            {
-                new MovingSprite(new Position(0, 0), new RandomMovement(new Rng()), new GhostSpriteDisplay()),
-                new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
-            };
             
-            var level = new Level(sprites, maze, new PlayerInput(), new Display());
+            var level = new Level(maze, new PlayerInput(), new Display(), new RandomMovement(new Rng()), new PlayerControlMovement(), new GhostSpriteDisplay(), new PacmanSpriteDisplay()  );
             Assert.Equal(3, level.LivesRemaining);
         }
         
@@ -64,16 +68,21 @@ namespace PacmanTest
                 ". *.......",". *.......",". *......."
             };           
             var maze = new Maze(mazeData, parser);
-            
-            var sprites = new List<IMovingSprite>()
+
+
+
+
+            var level = new Level(maze, new PlayerInput(), new Display(), new RandomMovement(new Rng()),
+                new PlayerControlMovement(), new GhostSpriteDisplay(), new PacmanSpriteDisplay())
             {
-                new MovingSprite(new Position(0, 0), new RandomMovement(new Rng()), new GhostSpriteDisplay()),
-                new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
+                Sprites = new List<IMovingSprite>()
+                {
+                    new MovingSprite(new Position(0, 0), new RandomMovement(new Rng()), new GhostSpriteDisplay()),
+                    new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
+                }
             };
-            
-            var level = new Level(sprites, maze, new PlayerInput(), new Display());
-            
-            foreach (var sprite in sprites)
+
+            foreach (var sprite in level.Sprites)
             {
                 level.UpdateSpritePosition(sprite);
                 level.IsPacmanEaten(sprite);
@@ -107,7 +116,7 @@ namespace PacmanTest
                 new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
             };
 
-            var level = new Level(sprites, maze, playerInput.Object, new Display());
+            var level = new Level(maze, new PlayerInput(), new Display(), new RandomMovement(new Rng()), new PlayerControlMovement(), new GhostSpriteDisplay(), new PacmanSpriteDisplay()  );
             Assert.True(level.PacmanIsAlive);
 
             for (var i = 0; i < 3; i++)

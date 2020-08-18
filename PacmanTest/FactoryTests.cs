@@ -1,11 +1,30 @@
-﻿using Pacman2.SpriteDisplays;
+using Pacman2;
+using Pacman2.SpriteDisplays;
+using Xunit;
 
-namespace Pacman2
+namespace PacmanTest
 {
-    public static class Program
+    public class FactoryTests
     {
-        private static void Main()
+        
+        [Fact]
+        public void MazeFactoryMakesMaze()
         {
+            
+            var fileReader = new FileReader();
+            var parser = new Parser();
+            var mazeFactory = new MazeFactory(fileReader, parser);
+            
+
+            var gameSettingLoader = new GameSettingLoader(fileReader);
+            
+            Assert.Equal(19, mazeFactory.CreateMaze(gameSettingLoader.GetMazeData().LevelSettings[0]).Columns);
+        }
+        
+        [Fact]
+        public void LevelFactoryMakesLevel()
+        {
+            
             var fileReader = new FileReader();
             var parser = new Parser();
             var mazeFactory = new MazeFactory(fileReader, parser);
@@ -18,11 +37,10 @@ namespace Pacman2
             var ghostDisplay = new GhostSpriteDisplay();
             var pacmanDisplay = new PacmanSpriteDisplay();
             var levelFactory = new LevelFactory(mazeFactory, display, playerInput, randomMovement, playerMovement, ghostDisplay, pacmanDisplay);
-            
+
             var gameSettingLoader = new GameSettingLoader(fileReader);
-            var game = new Game(gameSettingLoader, levelFactory, display);
             
-            game.Play();
+            Assert.Equal(3, levelFactory.CreateLevel(gameSettingLoader.GetMazeData(), 1).LivesRemaining);
         }
     }
 }

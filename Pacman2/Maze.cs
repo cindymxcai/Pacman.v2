@@ -91,7 +91,7 @@ namespace Pacman2
         {
             return Tiles[row, col];
         }
-
+        
         public IPosition GetNewPosition(Direction currentDirection, IPosition currentPosition)
         {
             return currentDirection switch

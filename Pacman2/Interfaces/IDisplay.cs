@@ -7,5 +7,6 @@ namespace Pacman2.Interfaces
         void Score(int pelletsEaten, int livesRemaining);
         void Win(); 
         void LifeLost(int livesRemaining);
+        void Welcome();
     }
 }

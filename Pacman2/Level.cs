@@ -2,26 +2,33 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Pacman2.Interfaces;
+using Pacman2.Sprites;
 
 namespace Pacman2
 {
-    public class Level
+    public class Level : ILevel
     {
-        private readonly IList<IMovingSprite> _sprites;
-        private readonly Maze _maze;
+        public IList<IMovingSprite> Sprites;
+        private readonly IMaze _maze;
         private readonly IPlayerInput _playerInput;
         private readonly IDisplay _display;
         public bool PacmanIsAlive = true;
         public int LivesRemaining { get; private set; } = 3;
 
-        public Level(IList<IMovingSprite> sprites, Maze maze, IPlayerInput playerInput, IDisplay display)
-        {
-            _sprites = sprites;
+        public Level(IMaze maze, IPlayerInput playerInput, IDisplay display, IMovementBehaviour randomMovement, IMovementBehaviour playerMovement, ISpriteDisplay ghostDisplay, ISpriteDisplay pacmanDisplay)
+        {  
+            Sprites = new List<IMovingSprite>
+            {
+                new MovingSprite(maze.GetTilePosition(9, 9), randomMovement, ghostDisplay),
+                new MovingSprite(maze.GetTilePosition(9, 9), randomMovement, ghostDisplay),
+                new MovingSprite(maze.GetTilePosition(2, 1), playerMovement, pacmanDisplay)
+            };
+            
             _maze = maze;
             _playerInput = playerInput;
             _display = display;
 
-            foreach (var sprite in _sprites)
+            foreach (var sprite in Sprites)
             {
                 UpdateSpritePosition(sprite);
             }
@@ -54,15 +61,12 @@ namespace Pacman2
                 if (!HasWon()) continue;
                 _display.Win();
                 break;
-
             }
-            
         }
         
-
         private void MoveSprites(ConsoleKey input)
         {
-            foreach (var sprite in _sprites)
+            foreach (var sprite in Sprites)
             {
                 sprite.UpdateDirection(input);
                 UpdateSpritePosition(sprite);
@@ -77,7 +81,7 @@ namespace Pacman2
             if (!_playerInput.HasPressedQuit(_playerInput.TakeInput()))
             {
                 PacmanIsAlive = true;
-                _maze.ResetSpritePositions(_sprites, _maze.GetTilePosition(9, 9), _maze.GetTilePosition(1, 1));
+                _maze.ResetSpritePositions(Sprites, _maze.GetTilePosition(9, 9), _maze.GetTilePosition(1, 1));
             }
             else
                 _display.GameEnd();
@@ -88,7 +92,7 @@ namespace Pacman2
             if (!_maze.PacmanHasCollisionWithGhost(sprite)) return;
             LivesRemaining--;
             _display.LifeLost(LivesRemaining);
-            _maze.ResetSpritePositions(_sprites, _maze.GetTilePosition(9, 9), _maze.GetTilePosition(1, 1));
+            _maze.ResetSpritePositions(Sprites, _maze.GetTilePosition(9, 9), _maze.GetTilePosition(1, 1));
             if (LivesRemaining == 0) PacmanIsAlive = false;
         }
 

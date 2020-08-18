@@ -8,9 +8,24 @@
 
     <ItemGroup>
       <None Remove="mazeData.txt" />
-      <Content Include="mazeData.txt">
+    </ItemGroup>
+
+    <ItemGroup>
+      <Content Include="levelOneMazeData.txt">
         <CopyToOutputDirectory>Always</CopyToOutputDirectory>
       </Content>
+      <None Remove="GameSettings.json" />
+      <Content Include="GameSettings.json">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+      <None Remove="levelTwoMazeDataa.txt" />
+      <Content Include="levelTwoMazeData.txt">
+        <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      </Content>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Newtonsoft.Json" Version="9.0.1" />
     </ItemGroup>
 
 </Project>
