@@ -45,7 +45,8 @@ namespace Pacman2
 
         public bool HasNoPelletsRemaining()
         {
-            var count = Tiles.Cast<ITile>().Count(tile => tile.SpritesOnTile.Any(s => s.Display.Icon == _pelletSpriteDisplay.Icon));
+            var count = Tiles.Cast<ITile>().Count(tile => tile.HasGivenSprite(_pelletSpriteDisplay));
+
             return count == 0;
         }
 
@@ -78,8 +79,9 @@ namespace Pacman2
         private void EatPellet(IMovingSprite sprite)
         {
             if (!sprite.IsPacman()) return;
-            var pelletSprite = Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].GetPelletSprite();
-            if (pelletSprite == null) return;
+            if (!Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].HasGivenSprite(_pelletSpriteDisplay)) return;
+           
+            var pelletSprite = Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].GetGivenSprite(_pelletSpriteDisplay);
             Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].RemoveSprite(pelletSprite);
             PelletsEaten++;
         }

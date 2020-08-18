@@ -11,7 +11,7 @@ namespace Pacman2
         public List<ISprite> SpritesOnTile { get; } = new List<ISprite>();
         public Position Position { get; set; }
         
-        private PelletSpriteDisplay _pelletSpriteDisplay = new PelletSpriteDisplay();
+        private readonly PelletSpriteDisplay _pelletSpriteDisplay = new PelletSpriteDisplay();
 
         public void AddSprite(ISprite sprite)
         {
@@ -27,10 +27,10 @@ namespace Pacman2
             return SpritesOnTile.Any(s => s.Display.Icon == spriteDisplay.Icon);
         }
 
-        public ISprite GetPelletSprite()
+        public ISprite GetGivenSprite(ISpriteDisplay spriteDisplay)
         {
            return SpritesOnTile
-                .FirstOrDefault(s => s.Display.Icon == _pelletSpriteDisplay.Icon);
+                .FirstOrDefault(s => s.Display.Icon == spriteDisplay.Icon);
         }
 
         public ISprite GetFirstSprite()

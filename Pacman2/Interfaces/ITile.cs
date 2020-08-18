@@ -11,6 +11,6 @@ namespace Pacman2.Interfaces
         void Render();
         void RemoveSprite(ISprite sprite);
         bool HasGivenSprite(ISpriteDisplay spriteDisplay);
-        ISprite GetPelletSprite();
+        ISprite GetGivenSprite(ISpriteDisplay spriteDisplay);
     }
 }
