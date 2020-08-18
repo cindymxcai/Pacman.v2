@@ -12,6 +12,7 @@ namespace Pacman2
         private readonly IPlayerInput _playerInput;
         private readonly IDisplay _display;
         public bool PacmanIsAlive = true;
+        public int LivesRemaining { get; set; } = 3;
 
         public Game(IList<IMovingSprite> sprites, Maze maze, IPlayerInput playerInput, IDisplay display)
         {
@@ -25,6 +26,7 @@ namespace Pacman2
                 UpdateSpritePosition(sprite);
             }
         }
+
 
 
         public void Play()
