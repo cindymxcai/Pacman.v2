@@ -17,7 +17,6 @@ namespace Pacman2
 
         public Level(IList<IMovingSprite> sprites, IMaze maze, IPlayerInput playerInput, IDisplay display)
         {
-
             _sprites = sprites;
             _maze = maze;
             _playerInput = playerInput;
@@ -42,7 +41,7 @@ namespace Pacman2
                         break;
 
                     _maze.Render();
-                    _display.Score(Score, LivesRemaining);
+                    _display.LevelStats(Score, LivesRemaining);
 
                     Task.Delay(200).Wait();
                     Console.Clear();

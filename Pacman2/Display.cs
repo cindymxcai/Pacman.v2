@@ -28,10 +28,10 @@ namespace Pacman2
             Console.WriteLine($"Total Score: {totalScore}");
         }
         
-        public void Score(int mazePelletsEaten, int livesRemaining)
+        public void LevelStats(int score, int livesRemaining)
         {
             Console.ForegroundColor = ConsoleColor.DarkMagenta;
-            Console.Write($"Score: {mazePelletsEaten}                             Lives Remaining: {livesRemaining}");
+            Console.Write($"Score: {score}                             Lives Remaining: {livesRemaining}");
             Console.ResetColor();
         }
 

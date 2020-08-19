@@ -15,7 +15,7 @@ namespace Pacman2
         private readonly IParser _parser;
         private ITile[,] Tiles { get; set; }
         public int Columns { get; private set; }
-        public int Rows { get; private set; }
+        public int Rows { get;  private set; }
         public int PelletsEaten { get; set; }
 
         public Maze(IReadOnlyList<string> mazeData, IParser parser)

@@ -11,10 +11,12 @@ namespace Pacman2
             var parser = new Parser();
             var mazeFactory = new MazeFactory(fileReader, parser);
             
-            var display = new Display();
             var playerInput = new PlayerInput();
+
+            var display = new Display();
             var rng = new Rng();
             var randomMovement = new RandomMovement(rng);
+            
             var playerMovement = new PlayerControlMovement();
             var ghostDisplay = new GhostSpriteDisplay();
             var pacmanDisplay = new PacmanSpriteDisplay();

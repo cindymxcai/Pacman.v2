@@ -25,7 +25,7 @@ namespace Pacman2.Factories
             _pacmanDisplay = pacmanDisplay;
         }
 
-        public ILevel CreateLevel(GameSettings mazeData, int levelNumber)
+        public ILevel CreateLevel(IGameSettings mazeData, int levelNumber)
         {
             var maze = _mazeFactory.CreateMaze(mazeData.LevelSettings[levelNumber - 1]);
             
