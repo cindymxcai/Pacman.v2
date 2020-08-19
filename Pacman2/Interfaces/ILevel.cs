@@ -4,7 +4,7 @@ namespace Pacman2.Interfaces
     {
         int LivesRemaining { get; }
         void Play();
-        void IsPacmanEaten(IMovingSprite sprite);
+        void HandleLostLife();
         void UpdateSpritePosition(IMovingSprite sprite);
         bool HasWon();
     }

@@ -1,6 +1,6 @@
 using Pacman2.Interfaces;
 
-namespace Pacman2
+namespace Pacman2.Factories
 {
     public class MazeFactory
     {

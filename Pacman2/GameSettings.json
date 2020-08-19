@@ -1,4 +1,4 @@
 {
-   "LevelSettings" : ["levelOneMazeData.txt", "levelTwoMazeData.txt"],
+   "LevelSettings" : ["MazeData/levelOneMazeData.txt", "MazeData/levelTwoMazeData.txt"],
    "MaxLevels" : "3"
 }

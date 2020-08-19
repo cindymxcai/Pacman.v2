@@ -147,8 +147,13 @@ namespace PacmanTest
         public void GivenGameRestartsMazeShouldMoveSpritesToDefaultPosition()
         {
             var parser = new Parser();
-            var mazeData = new[] {"....*"};
-            var maze = new Maze(mazeData, parser);
+            var mazeData = new []
+            {
+                ". *.......",". *.......",". *.......",
+                ". *.......",". *.......",". *.......",
+                ". *.......",". *.......",". *.......",
+                ". *.......",". *.......",". *......."
+            };                   var maze = new Maze(mazeData, parser);
             
             var ghost = new MovingSprite(new Position(0, 0), new RandomMovement(new Rng()), new GhostSpriteDisplay());
             var pacman = new MovingSprite(new Position(0, 1), new PlayerControlMovement(), new PacmanSpriteDisplay());
@@ -157,12 +162,12 @@ namespace PacmanTest
             maze.MoveSpriteToNewPosition(ghost, ghost.CurrentPosition);
             maze.MoveSpriteToNewPosition(pacman, pacman.CurrentPosition);
          
-            maze.ResetSpritePositions(movingSprites, new Position(0,1), new Position(0,3) );
+            maze.ResetSpritePositions(movingSprites);
             
-            Assert.Equal(0, ghost.CurrentPosition.Row);
-            Assert.Equal(1, ghost.CurrentPosition.Col);
-            Assert.Equal(0, pacman.CurrentPosition.Row);
-            Assert.Equal(3, pacman.CurrentPosition.Col);
+            Assert.Equal(9, ghost.CurrentPosition.Row);
+            Assert.Equal(9, ghost.CurrentPosition.Col);
+            Assert.Equal(1, pacman.CurrentPosition.Row);
+            Assert.Equal(1, pacman.CurrentPosition.Col);
         }
         
         [Fact]

@@ -1,4 +1,5 @@
 using Pacman2;
+using Pacman2.Factories;
 using Pacman2.SpriteDisplays;
 using Xunit;
 

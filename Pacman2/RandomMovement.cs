@@ -12,9 +12,9 @@ namespace Pacman2
             _rng = random;
         }
 
-        public Direction GetNewDirection(Direction currentDirection, ConsoleKey consoleKey)
+        public Direction GetNewDirection(Direction currentDirection, ConsoleKey consoleKey = (ConsoleKey) 0)
         {
-             currentDirection = _rng.Next(0, 4) switch
+            currentDirection = _rng.Next(0, 4) switch
             {
                 0 => Direction.Up,
                 1 => Direction.Down,

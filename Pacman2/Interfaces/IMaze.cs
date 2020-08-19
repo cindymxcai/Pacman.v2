@@ -16,6 +16,6 @@ namespace Pacman2.Interfaces
         IPosition GetNewPosition(Direction currentDirection, IPosition currentPosition);
         bool PacmanHasCollisionWithGhost(IMovingSprite sprite);
         bool SpriteHasCollisionWithWall(IPosition newPosition);
-        void ResetSpritePositions(IEnumerable<IMovingSprite> sprites, IPosition ghostPosition, IPosition pacmanPosition);
+        void ResetSpritePositions(IEnumerable<IMovingSprite> sprites);
     }
 }

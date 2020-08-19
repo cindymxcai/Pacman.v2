@@ -12,7 +12,7 @@ namespace PacmanTest
         public void GivenFileFileReaderShouldReadAllLines()
         {
             var fileReader = new FileReader();
-            var file = fileReader.ReadFile(Path.Combine(Environment.CurrentDirectory, "levelOneMazeData.txt"));
+            var file = fileReader.ReadFile(Path.Combine(Environment.CurrentDirectory, "MazeData/levelOneMazeData.txt"));
             Assert.Equal(21, file.Length);
             Assert.Equal( '*',file[0][0]);
         }

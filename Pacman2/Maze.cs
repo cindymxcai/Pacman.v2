@@ -22,15 +22,20 @@ namespace Pacman2
         {
             _parser = parser;
             CreateMaze(mazeData);
+            PopulateMaze(mazeData);
         }
 
-        private void CreateMaze(IReadOnlyList<string> rows)
+        private void CreateMaze(IReadOnlyList<string> dataRows)
         {
-            Rows = rows.Count;
-            Columns = rows[0].Length;
+            Rows = dataRows.Count;
+            Columns = dataRows[0].Length;
             Tiles = new ITile[Rows, Columns];
+        }
+
+        private void PopulateMaze(IEnumerable<string> dataRows)
+        {
             var rowIndex = 0;
-            foreach (var row in rows)
+            foreach (var row in dataRows)
             {
                 var colIndex = 0;
                 foreach (var tile in row.Select(_parser.GetTile))
@@ -45,9 +50,7 @@ namespace Pacman2
 
         public bool HasNoPelletsRemaining()
         {
-            var count = Tiles.Cast<ITile>().Count(tile => tile.HasGivenSprite(_pelletSpriteDisplay));
-
-            return count == 0;
+            return  Tiles.Cast<ITile>().Count(tile => tile.HasGivenSprite(_pelletSpriteDisplay)) == 0;
         }
 
         public void Render()
@@ -59,7 +62,6 @@ namespace Pacman2
                     var tile = GetTileAtPosition(rowIndex, colIndex);
                     tile.Render();
                 }
-
                 Console.WriteLine();
             }
         }
@@ -72,21 +74,23 @@ namespace Pacman2
         public void MoveSpriteToNewPosition(IMovingSprite sprite, IPosition newPosition)
         {
             Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].RemoveSprite(sprite);
-            EatPellet(sprite);
+            if (sprite.IsPacman())
+                EatPellet(sprite);
             Tiles[newPosition.Row, newPosition.Col].AddSprite(sprite);
         }
 
         private void EatPellet(IMovingSprite sprite)
         {
-            if (!sprite.IsPacman()) return;
-            if (!Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].HasGivenSprite(_pelletSpriteDisplay)) return;
-           
-            var pelletSprite = Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].GetGivenSprite(_pelletSpriteDisplay);
+            if (!Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col]
+                .HasGivenSprite(_pelletSpriteDisplay)) return;
+
+            var pelletSprite = Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col]
+                .GetGivenSprite(_pelletSpriteDisplay);
+            
             Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].RemoveSprite(pelletSprite);
             PelletsEaten++;
         }
-
-
+        
         public ITile GetTileAtPosition(int row, int col)
         {
             return Tiles[row, col];
@@ -121,9 +125,8 @@ namespace Pacman2
 
         public bool PacmanHasCollisionWithGhost(IMovingSprite sprite)
         {
-            return sprite.IsPacman() && Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col]
-                    .HasGivenSprite(_ghostSpriteDisplay) || sprite.Display.Icon != _ghostSpriteDisplay.Icon &&
-                Tiles[sprite.PreviousPosition.Row, sprite.PreviousPosition.Col].HasGivenSprite(_ghostSpriteDisplay);
+            return sprite.IsPacman() && Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].HasGivenSprite(_ghostSpriteDisplay)
+                   || sprite.IsPacman() && Tiles[sprite.PreviousPosition.Row, sprite.PreviousPosition.Col].HasGivenSprite(_ghostSpriteDisplay);
         }
 
         public bool SpriteHasCollisionWithWall(IPosition newPosition)
@@ -131,8 +134,10 @@ namespace Pacman2
             return Tiles[newPosition.Row, newPosition.Col].HasGivenSprite(_wallSpriteDisplay);
         }
 
-        public void ResetSpritePositions(IEnumerable<IMovingSprite> sprites, IPosition ghostPosition, IPosition pacmanPosition)
+        public void ResetSpritePositions(IEnumerable<IMovingSprite> sprites)
         {
+            var ghostPosition = GetTilePosition(9, 9);
+            var pacmanPosition = GetTilePosition(1, 1);
             foreach (var sprite in sprites)
             {
                 Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].RemoveSprite(sprite);

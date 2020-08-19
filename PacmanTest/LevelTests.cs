@@ -27,12 +27,18 @@ namespace PacmanTest
             var pelletTile = new PelletSpriteDisplay();
             foreach (var tile in maze.Tiles)
             {
-                var pelletSprite =  tile.GetGivenSprite(pelletTile);
+                var pelletSprite = tile.GetGivenSprite(pelletTile);
                 tile.SpritesOnTile.Remove(pelletSprite);
-               Assert.DoesNotContain(tile.SpritesOnTile, s=> s.Display == pelletTile);
+                Assert.DoesNotContain(tile.SpritesOnTile, s => s.Display == pelletTile);
             }
+
+            var sprites = new List<IMovingSprite>()
+            {
+                new MovingSprite(new Position(0, 0), new RandomMovement(new Rng()), new GhostSpriteDisplay()),
+                new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
+            };
             Assert.True(maze.HasNoPelletsRemaining());
-            var level = new Level(maze, new PlayerInput(), new Display(), new RandomMovement(new Rng()), new PlayerControlMovement(), new GhostSpriteDisplay(), new PacmanSpriteDisplay() );
+            var level = new Level(sprites, maze, new PlayerInput(), new Display() );
             Assert.True(level.HasWon());
         }
 
@@ -48,8 +54,13 @@ namespace PacmanTest
                 ". *.......",". *.......",". *......."
             };        
             var maze = new Maze(mazeData, parser);
+            var sprites = new List<IMovingSprite>()
+            {
+                new MovingSprite(new Position(0, 0), new RandomMovement(new Rng()), new GhostSpriteDisplay()),
+                new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
+            };
             
-            var level = new Level(maze, new PlayerInput(), new Display(), new RandomMovement(new Rng()), new PlayerControlMovement(), new GhostSpriteDisplay(), new PacmanSpriteDisplay()  );
+            var level = new Level(sprites, maze, new PlayerInput(), new Display() );
             Assert.Equal(3, level.LivesRemaining);
         }
         
@@ -66,22 +77,15 @@ namespace PacmanTest
             };           
             var maze = new Maze(mazeData, parser);
 
-            var level = new Level(maze, new PlayerInput(), new Display(), new RandomMovement(new Rng()),
-                new PlayerControlMovement(), new GhostSpriteDisplay(), new PacmanSpriteDisplay())
+            var sprites = new List<IMovingSprite>()
             {
-                Sprites = new List<IMovingSprite>()
-                {
-                    new MovingSprite(new Position(0, 0), new RandomMovement(new Rng()), new GhostSpriteDisplay()),
-                    new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
-                }
+                new MovingSprite(new Position(0, 0), new RandomMovement(new Rng()), new GhostSpriteDisplay()),
+                new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
             };
+            var level = new Level(sprites, maze, new PlayerInput(), new Display());
 
-            foreach (var sprite in level.Sprites)
-            {
-                level.UpdateSpritePosition(sprite);
-                level.IsPacmanEaten(sprite);
-            }
-            
+            Assert.Equal(3, level.LivesRemaining);
+            level.HandleLostLife();
             Assert.Equal(2, level.LivesRemaining);
         }
         
@@ -109,7 +113,7 @@ namespace PacmanTest
                 new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay())
             };
 
-            var level = new Level(maze, new PlayerInput(), new Display(), new RandomMovement(new Rng()), new PlayerControlMovement(), new GhostSpriteDisplay(), new PacmanSpriteDisplay()  );
+            var level = new Level(sprites, maze, new PlayerInput(), new Display());
             Assert.True(level.PacmanIsAlive);
 
             for (var i = 0; i < 3; i++)
@@ -118,7 +122,7 @@ namespace PacmanTest
                 { 
                     sprite.UpdatePosition( new Position(0,0));
                     level.UpdateSpritePosition(sprite);
-                    level.IsPacmanEaten(sprite);
+                    level.HandleLostLife();
                 }
             }
             Assert.False(level.PacmanIsAlive);

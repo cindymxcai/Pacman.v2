@@ -14,7 +14,6 @@ namespace Pacman2.Sprites
         
         private readonly GhostSpriteDisplay _ghostSpriteDisplay = new GhostSpriteDisplay();
 
-
         public MovingSprite(IPosition position, IMovementBehaviour movementBehaviour, ISpriteDisplay display)
         {
             CurrentPosition = position;
@@ -40,5 +39,6 @@ namespace Pacman2.Sprites
         {
             return Display.Icon != _ghostSpriteDisplay.Icon;
         }
+        
     }
 }
