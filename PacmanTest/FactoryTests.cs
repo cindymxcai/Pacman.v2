@@ -16,7 +16,6 @@ namespace PacmanTest
             var parser = new Parser();
             var mazeFactory = new MazeFactory(fileReader, parser);
             
-
             var gameSettingLoader = new GameSettingLoader(fileReader);
             
             Assert.Equal(19, mazeFactory.CreateMaze(gameSettingLoader.GetMazeData().LevelSettings[0]).Columns);

@@ -24,7 +24,7 @@ namespace PacmanTest
             var levelFactory = new LevelFactory(mazeFactory, display, playerInput, randomMovement, playerMovement, ghostDisplay, pacmanDisplay);
             
             var gameSettingLoader = new GameSettingLoader(fileReader);
-            var game = new Game(gameSettingLoader, levelFactory, display);
+            var game = new Game(playerInput,gameSettingLoader, levelFactory, display);
             Assert.Equal(1, game.CurrentLevelNumber);
             Assert.True(game.IsPlaying);
         }
@@ -46,7 +46,7 @@ namespace PacmanTest
             var levelFactory = new LevelFactory(mazeFactory, display, playerInput, randomMovement, playerMovement, ghostDisplay, pacmanDisplay);
             
             var gameSettingLoader = new GameSettingLoader(fileReader);
-            var game = new Game(gameSettingLoader, levelFactory, display);
+            var game = new Game(playerInput, gameSettingLoader, levelFactory, display);
             game.HandleNextLevel(gameSettingLoader.GetMazeData());
             Assert.Equal(2, game.CurrentLevelNumber);
             game.HandleNextLevel(gameSettingLoader.GetMazeData());

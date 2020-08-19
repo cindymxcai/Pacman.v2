@@ -23,23 +23,14 @@ namespace PacmanTest
         }
 
         [Fact]
-        public void GivenMazeDataShouldCreateArrayOfTiles()
-        {
-            var parser = new Parser();
-            var mazeData = new[] {"...", "..."};
-            var maze = new Maze(mazeData, parser);
-            Assert.Equal(6, maze.Tiles.Length);
-        }
-
-        [Fact]
         public void GivenSizeAndDataShouldPopulateMazeArray()
         {
             var parser = new Parser();
             var mazeData = new[] {".* "};
             var maze = new Maze(mazeData, parser);
-            Assert.Equal(" \u2022 ", maze.Tiles[0, 0].SpritesOnTile.First().Display.Icon);
-            Assert.Equal("\u2588\u2588\u2588", maze.Tiles[0, 1].SpritesOnTile.First().Display.Icon);
-            Assert.Empty(maze.Tiles[0, 2].SpritesOnTile);
+            Assert.Equal(" \u2022 ", maze.GetTileAtPosition(0,0).SpritesOnTile.First().Display.Icon);
+            Assert.Equal("\u2588\u2588\u2588", maze.GetTileAtPosition(0,1).SpritesOnTile.First().Display.Icon);
+            Assert.Empty(maze.GetTileAtPosition(0,2).SpritesOnTile);
         }
 
         [Fact]
@@ -53,9 +44,9 @@ namespace PacmanTest
             ghost.UpdatePosition(new Position(0, 1));
 
             maze.MoveSpriteToNewPosition(ghost, ghost.CurrentPosition);
-            Assert.Equal(ghost.Display.Icon, maze.Tiles[0, 1].SpritesOnTile[1].Display.Icon);
-            Assert.Equal(ghost.Display.Colour, maze.Tiles[0, 1].SpritesOnTile[1].Display.Colour);
-            Assert.Equal(ghost.Display.Icon, maze.Tiles[0, 1].SpritesOnTile[1].Display.Icon);
+            Assert.Equal(ghost.Display.Icon, maze.GetTileAtPosition(0,1).SpritesOnTile[1].Display.Icon);
+            Assert.Equal(ghost.Display.Colour, maze.GetTileAtPosition(0,1).SpritesOnTile[1].Display.Colour);
+            Assert.Equal(ghost.Display.Icon,  maze.GetTileAtPosition(0,1).SpritesOnTile[1].Display.Icon);
         }
 
         [Fact]
@@ -68,9 +59,9 @@ namespace PacmanTest
             pacman.UpdatePosition(new Position(0, 1));
 
             maze.MoveSpriteToNewPosition(pacman, pacman.CurrentPosition);
-            Assert.Equal(pacman.Display.Icon, maze.Tiles[0, 1].SpritesOnTile[0].Display.Icon);
-            Assert.Equal(pacman.Display.Colour, maze.Tiles[0, 1].SpritesOnTile[0].Display.Colour);
-            Assert.Equal(pacman.Display.Priority, maze.Tiles[0, 1].SpritesOnTile[0].Display.Priority);
+            Assert.Equal(pacman.Display.Icon, maze.GetTileAtPosition(pacman.CurrentPosition).SpritesOnTile[0].Display.Icon);
+            Assert.Equal(pacman.Display.Colour, maze.GetTileAtPosition(pacman.CurrentPosition).SpritesOnTile[0].Display.Colour);
+            Assert.Equal(pacman.Display.Priority, maze.GetTileAtPosition(pacman.CurrentPosition).SpritesOnTile[0].Display.Priority);
         }
 
         [Fact]
@@ -136,11 +127,11 @@ namespace PacmanTest
             var mazeData = new[] {"....*"};
             var maze = new Maze(mazeData, parser);
      
-            Assert.Contains(maze.Tiles[0, 0].SpritesOnTile, s => s.Display.Icon == new PelletSpriteDisplay().Icon);
+            Assert.Contains(maze.GetTileAtPosition(0,0).SpritesOnTile, s => s.Display.Icon == new PelletSpriteDisplay().Icon);
 
             var pacman = new MovingSprite(new Position(0, 0), new PlayerControlMovement(), new PacmanSpriteDisplay());
             maze.MoveSpriteToNewPosition(pacman, pacman.CurrentPosition);
-            Assert.DoesNotContain(maze.Tiles[0, 0].SpritesOnTile, s => s.Display.Icon == new PelletSpriteDisplay().Icon);
+            Assert.DoesNotContain(maze.GetTileAtPosition(pacman.CurrentPosition).SpritesOnTile, s => s.Display.Icon == new PelletSpriteDisplay().Icon);
         }
 
         [Fact]
@@ -153,7 +144,8 @@ namespace PacmanTest
                 ". *.......",". *.......",". *.......",
                 ". *.......",". *.......",". *.......",
                 ". *.......",". *.......",". *......."
-            };                   var maze = new Maze(mazeData, parser);
+            };                   
+            var maze = new Maze(mazeData, parser);
             
             var ghost = new MovingSprite(new Position(0, 0), new RandomMovement(new Rng()), new GhostSpriteDisplay());
             var pacman = new MovingSprite(new Position(0, 1), new PlayerControlMovement(), new PacmanSpriteDisplay());
@@ -210,7 +202,7 @@ namespace PacmanTest
             
             var pelletTile = new PelletSpriteDisplay();
             var pelletSprite =   maze.GetTileAtPosition(0, 0).SpritesOnTile.First(s => s.Display.Icon == pelletTile.Icon);
-            maze.Tiles[0, 0].SpritesOnTile.Remove(pelletSprite);
+            maze.GetTileAtPosition(0,0).SpritesOnTile.Remove(pelletSprite);
             
             Assert.True(maze.HasNoPelletsRemaining());
         }

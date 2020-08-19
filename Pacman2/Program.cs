@@ -21,7 +21,7 @@ namespace Pacman2
             var levelFactory = new LevelFactory(mazeFactory, display, playerInput, randomMovement, playerMovement, ghostDisplay, pacmanDisplay);
             
             var gameSettingLoader = new GameSettingLoader(fileReader);
-            var game = new Game(gameSettingLoader, levelFactory, display);
+            var game = new Game(playerInput,gameSettingLoader, levelFactory, display);
             
             game.Play();
         }

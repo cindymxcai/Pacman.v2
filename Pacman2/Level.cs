@@ -11,8 +11,9 @@ namespace Pacman2
         private readonly IMaze _maze;
         private readonly IPlayerInput _playerInput;
         private readonly IDisplay _display;
-        public bool PacmanIsAlive = true;
+        public bool PacmanIsAlive { get; private set; } = true;
         public int LivesRemaining { get; private set; } = 3;
+        public int Score { get; set; }
 
         public Level(IList<IMovingSprite> sprites, IMaze maze, IPlayerInput playerInput, IDisplay display)
         {
@@ -21,7 +22,7 @@ namespace Pacman2
             _maze = maze;
             _playerInput = playerInput;
             _display = display;
-            foreach (var sprite in _sprites) UpdateSpritePosition(sprite);
+            _maze.ResetSpritePositions(_sprites);
         }
         
         public void Play()
@@ -29,26 +30,26 @@ namespace Pacman2
             while (PacmanIsAlive && !HasWon())
             {
                 var input = _playerInput.TakeInput();
-                if (_playerInput.HasPressedQuit(input)) PacmanIsAlive = false;
+                if (_playerInput.HasPressedQuit(input)) 
+                    PacmanIsAlive = false;
 
                 while (!_playerInput.HasNewInput())
                 {
+                    Score = _maze.PelletsEaten;
                     MoveSprites(input);
 
                     if (!PacmanIsAlive)
                         break;
 
                     _maze.Render();
-                    _display.Score(_maze.PelletsEaten, LivesRemaining);
+                    _display.Score(Score, LivesRemaining);
 
                     Task.Delay(200).Wait();
                     Console.Clear();
                 }
-
-                if (PacmanIsAlive && !HasWon()) continue;
-                if (!PacmanIsAlive) HandlePacmanDeath();
-                if (!HasWon()) continue;
-                _display.Win();
+                
+                if (PacmanIsAlive && !HasWon())
+                    continue;
                 break;
             }
         }
@@ -62,23 +63,11 @@ namespace Pacman2
                 if (_maze.PacmanHasCollisionWithGhost(sprite)) HandleLostLife();
             }
         }
-
-        private void HandlePacmanDeath()
-        {
-            _display.LostPrompt();
-            var input = _playerInput.TakeInput();
-            if (!_playerInput.HasPressedQuit(input))
-            {
-                PacmanIsAlive = true;
-                _maze.ResetSpritePositions(_sprites);
-            }
-            else
-                _display.GameEnd();
-        }
-
+        
         public void HandleLostLife()
         {
             LivesRemaining--;
+            _maze.PelletsEaten -= 10;
             _display.LifeLost(LivesRemaining);
             _maze.ResetSpritePositions(_sprites);
             if (LivesRemaining == 0) PacmanIsAlive = false;
@@ -95,7 +84,7 @@ namespace Pacman2
 
         public bool HasWon()
         {
-            return _maze.HasNoPelletsRemaining() ;
+            return _maze.HasNoPelletsRemaining();
         }
     }
 }

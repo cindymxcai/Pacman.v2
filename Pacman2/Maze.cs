@@ -13,10 +13,10 @@ namespace Pacman2
         private readonly PelletSpriteDisplay _pelletSpriteDisplay = new PelletSpriteDisplay();
 
         private readonly IParser _parser;
-        public ITile[,] Tiles { get; private set; }
+        private ITile[,] Tiles { get; set; }
         public int Columns { get; private set; }
         public int Rows { get; private set; }
-        public int PelletsEaten { get; private set; }
+        public int PelletsEaten { get; set; }
 
         public Maze(IReadOnlyList<string> mazeData, IParser parser)
         {
@@ -41,7 +41,7 @@ namespace Pacman2
                 foreach (var tile in row.Select(_parser.GetTile))
                 {
                     Tiles[rowIndex, colIndex] = tile;
-                    tile.Position = new Position(rowIndex, colIndex);
+                    GetTileAtPosition(rowIndex, colIndex).Position = new Position(rowIndex, colIndex);
                     colIndex++;
                 }
                 rowIndex++;
@@ -59,9 +59,9 @@ namespace Pacman2
             {
                 for (var colIndex = 0; colIndex < Columns; colIndex++)
                 {
-                    var tile = GetTileAtPosition(rowIndex, colIndex);
-                    tile.Render();
+                    GetTileAtPosition(rowIndex, colIndex).Render();
                 }
+                
                 Console.WriteLine();
             }
         }
@@ -73,27 +73,28 @@ namespace Pacman2
 
         public void MoveSpriteToNewPosition(IMovingSprite sprite, IPosition newPosition)
         {
-            Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].RemoveSprite(sprite);
-            if (sprite.IsPacman())
-                EatPellet(sprite);
-            Tiles[newPosition.Row, newPosition.Col].AddSprite(sprite);
+            GetTileAtPosition(sprite.CurrentPosition).RemoveSprite(sprite);
+            if (sprite.IsPacman()) EatPellet(sprite);
+            GetTileAtPosition(newPosition).AddSprite(sprite);
         }
 
         private void EatPellet(IMovingSprite sprite)
         {
-            if (!Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col]
-                .HasGivenSprite(_pelletSpriteDisplay)) return;
+            if (!GetTileAtPosition(sprite.CurrentPosition).HasGivenSprite(_pelletSpriteDisplay)) return;
 
-            var pelletSprite = Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col]
-                .GetGivenSprite(_pelletSpriteDisplay);
-            
-            Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].RemoveSprite(pelletSprite);
+            var pelletSprite = GetTileAtPosition(sprite.CurrentPosition).GetGivenSprite(_pelletSpriteDisplay);
+            GetTileAtPosition(sprite.CurrentPosition).RemoveSprite(pelletSprite);
             PelletsEaten++;
         }
         
         public ITile GetTileAtPosition(int row, int col)
         {
             return Tiles[row, col];
+        }
+
+        public ITile GetTileAtPosition(IPosition position)
+        {
+            return Tiles[position.Row, position.Col];
         }
         
         public IPosition GetNewPosition(Direction currentDirection, IPosition currentPosition)
@@ -125,13 +126,13 @@ namespace Pacman2
 
         public bool PacmanHasCollisionWithGhost(IMovingSprite sprite)
         {
-            return sprite.IsPacman() && Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].HasGivenSprite(_ghostSpriteDisplay)
-                   || sprite.IsPacman() && Tiles[sprite.PreviousPosition.Row, sprite.PreviousPosition.Col].HasGivenSprite(_ghostSpriteDisplay);
+            return sprite.IsPacman() && GetTileAtPosition(sprite.CurrentPosition).HasGivenSprite(_ghostSpriteDisplay)
+                   || sprite.IsPacman() && GetTileAtPosition(sprite.PreviousPosition).HasGivenSprite(_ghostSpriteDisplay);
         }
 
         public bool SpriteHasCollisionWithWall(IPosition newPosition)
         {
-            return Tiles[newPosition.Row, newPosition.Col].HasGivenSprite(_wallSpriteDisplay);
+            return GetTileAtPosition(newPosition).HasGivenSprite(_wallSpriteDisplay);
         }
 
         public void ResetSpritePositions(IEnumerable<IMovingSprite> sprites)
@@ -140,7 +141,7 @@ namespace Pacman2
             var pacmanPosition = GetTilePosition(1, 1);
             foreach (var sprite in sprites)
             {
-                Tiles[sprite.CurrentPosition.Row, sprite.CurrentPosition.Col].RemoveSprite(sprite);
+                GetTileAtPosition(sprite.CurrentPosition).RemoveSprite(sprite);
                 sprite.UpdatePosition(!sprite.IsPacman() ? ghostPosition : pacmanPosition);
                 MoveSpriteToNewPosition(sprite, sprite.CurrentPosition);
             }

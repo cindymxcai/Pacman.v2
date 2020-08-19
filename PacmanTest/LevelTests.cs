@@ -25,12 +25,17 @@ namespace PacmanTest
             };                 
             var maze = new Maze(mazeData, parser);
             var pelletTile = new PelletSpriteDisplay();
-            foreach (var tile in maze.Tiles)
+            for (var i = 0; i < maze.Rows; i++)
             {
-                var pelletSprite = tile.GetGivenSprite(pelletTile);
-                tile.SpritesOnTile.Remove(pelletSprite);
-                Assert.DoesNotContain(tile.SpritesOnTile, s => s.Display == pelletTile);
+                for (var j = 0; j < maze.Columns; j++)
+                {
+                  var tile =  maze.GetTileAtPosition(i, j);
+                  var pelletSprite = tile.GetGivenSprite(pelletTile);
+                  tile.SpritesOnTile.Remove(pelletSprite);
+                  Assert.DoesNotContain(tile.SpritesOnTile, s => s.Display == pelletTile);
+                }
             }
+        
 
             var sprites = new List<IMovingSprite>()
             {
@@ -90,7 +95,7 @@ namespace PacmanTest
         }
         
         [Fact]
-        public void GivenAllLivesLostShouldStopPlaying()
+        public void GivenAllLivesLostPacmanIsNotAlive()
         { 
             var playerInput = new Mock<IPlayerInput>();
             playerInput.Setup(p => p.TakeInput()).Returns(ConsoleKey.RightArrow);
