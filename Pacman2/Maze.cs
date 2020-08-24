@@ -8,9 +8,10 @@ namespace Pacman2
 {
     public class Maze : IMaze
     {
-        private readonly WallSpriteDisplay _wallSpriteDisplay = new WallSpriteDisplay();
-        private readonly GhostSpriteDisplay _ghostSpriteDisplay = new GhostSpriteDisplay();
-        private readonly PelletSpriteDisplay _pelletSpriteDisplay = new PelletSpriteDisplay();
+        private readonly string _wallSpriteDisplay = new WallSpriteDisplay().Icon;
+        private readonly string _ghostSpriteDisplay = new GhostSpriteDisplay().Icon;
+        private readonly string _pelletSpriteDisplay = new PelletSpriteDisplay().Icon;
+
 
         private readonly IParser _parser;
         private ITile[,] Tiles { get; set; }
@@ -50,7 +51,7 @@ namespace Pacman2
 
         public bool HasNoPelletsRemaining()
         {
-            return  Tiles.Cast<ITile>().Count(tile => tile.HasGivenSprite(_pelletSpriteDisplay)) == 0;
+            return Tiles.Cast<ITile>().Count(tile => tile.HasGivenSprite(_pelletSpriteDisplay)) == 0;
         }
 
         public void Render()
@@ -113,7 +114,7 @@ namespace Pacman2
                 _ => throw new ArgumentOutOfRangeException()
             };
         }
-
+        
         private static bool IsOutOfLowerBounds(int newPosition)
         {
             return newPosition < 0;
@@ -124,10 +125,24 @@ namespace Pacman2
             return newPosition > boundary - 1;
         }
 
-        public bool PacmanHasCollisionWithGhost(IMovingSprite sprite)
+        public bool PacmanHasCollisionWithGhost(IList<IMovingSprite> sprites) 
         {
-            return sprite.IsPacman() && GetTileAtPosition(sprite.CurrentPosition).HasGivenSprite(_ghostSpriteDisplay)
-                   || sprite.IsPacman() && GetTileAtPosition(sprite.PreviousPosition).HasGivenSprite(_ghostSpriteDisplay);
+            var pacman = sprites.First(s => s.IsPacman());
+            var ghosts = sprites.Where(s => !s.IsPacman());
+            
+            return GetTileAtPosition(pacman.CurrentPosition).HasGivenSprite(_ghostSpriteDisplay) || HasSpritesPassedEachOther(pacman, ghosts);
+        }
+
+        private bool HasSpritesPassedEachOther(IMovingSprite pacman, IEnumerable<IMovingSprite> ghosts)
+        {
+            var pacmanIsInGhostsPreviousPosition = false;
+            foreach (var ghost in ghosts)
+                if (GetTileAtPosition(ghost.PreviousPosition).HasGivenSprite(pacman.Icon))
+                    pacmanIsInGhostsPreviousPosition = true;
+
+            var ghostIsInPacmansPreviousPosition = GetTileAtPosition(pacman.PreviousPosition).HasGivenSprite(_ghostSpriteDisplay);
+            
+            return ghostIsInPacmansPreviousPosition && pacmanIsInGhostsPreviousPosition;
         }
 
         public bool SpriteHasCollisionWithWall(IPosition newPosition)
@@ -139,6 +154,7 @@ namespace Pacman2
         {
             var ghostPosition = GetTilePosition(9, 9);
             var pacmanPosition = GetTilePosition(1, 1);
+            
             foreach (var sprite in sprites)
             {
                 GetTileAtPosition(sprite.CurrentPosition).RemoveSprite(sprite);

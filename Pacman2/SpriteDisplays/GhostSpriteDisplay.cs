@@ -14,6 +14,5 @@ namespace Pacman2.SpriteDisplays
             Colour  = ConsoleColor.Red;
             Priority = 1;        
         }
-        
     }
 }

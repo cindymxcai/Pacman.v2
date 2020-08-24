@@ -3,7 +3,7 @@ using Pacman2.Interfaces;
 
 namespace Pacman2
 {
-    public class Game
+    public class Game 
     {
         private readonly IPlayerInput _playerInput;
         private readonly IGameSettingLoader _gameSettingLoader;
@@ -43,7 +43,10 @@ namespace Pacman2
         {
             _display.LostPrompt(TotalScore);
             var input = _playerInput.TakeInput();
-            if (!_playerInput.HasPressedQuit(input)) CurrentLevelNumber = 1;
+            if (_playerInput.HasPressedQuit(input))
+                IsPlaying = false;
+            else
+                CurrentLevelNumber = 1;
         }
 
         public void HandleNextLevel(IGameSettings mazeData)

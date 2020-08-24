@@ -15,10 +15,9 @@ namespace PacmanTest
         {
             var parser = new Parser();
             var inputData = parser.GetTile(input);
-            inputData.SpritesOnTile.First().Display.SetSpriteDisplay();
             tileDisplay.SetSpriteDisplay();
-            Assert.Equal(tileDisplay.Icon, inputData.SpritesOnTile.First().Display.Icon);
-            Assert.Equal(tileDisplay.Colour, inputData.SpritesOnTile.First().Display.Colour);
+            Assert.Equal(tileDisplay.Icon, inputData.SpritesOnTile.First().Icon);
+            Assert.Equal(tileDisplay.Colour, inputData.SpritesOnTile.First().Colour);
         }
 
         public static IEnumerable<object[]> TestData()

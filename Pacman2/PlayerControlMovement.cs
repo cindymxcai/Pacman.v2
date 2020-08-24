@@ -16,9 +16,9 @@ namespace Pacman2
                 ConsoleKey.RightArrow => Direction.Right,
                 _ => currentDirection
             };
-            
+
             return newDirection;
         }
-        
+
     }
 }

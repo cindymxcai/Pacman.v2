@@ -29,6 +29,7 @@ namespace Pacman2
             while (PacmanIsAlive && !HasWon())
             {
                 var input = _playerInput.TakeInput();
+                
                 if (_playerInput.HasPressedQuit(input)) 
                     PacmanIsAlive = false;
 
@@ -38,6 +39,9 @@ namespace Pacman2
                     MoveSprites(input);
 
                     if (!PacmanIsAlive)
+                        break;
+                    
+                    if (HasWon())
                         break;
 
                     _maze.Render();
@@ -59,8 +63,9 @@ namespace Pacman2
             {
                 sprite.UpdateDirection(input);
                 UpdateSpritePosition(sprite);
-                if (_maze.PacmanHasCollisionWithGhost(sprite)) HandleLostLife();
             }
+            if (_maze.PacmanHasCollisionWithGhost(_sprites)) HandleLostLife();
+
         }
         
         public void HandleLostLife()

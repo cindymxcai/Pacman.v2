@@ -1,7 +1,12 @@
+using System;
+
 namespace Pacman2.Interfaces
 {
     public interface ISprite
     {
-        ISpriteDisplay Display { get; }
+        int Priority { get; }
+        string Icon { get; }
+        ConsoleColor Colour { get; }
+        ISpriteDisplay Display { get; set; }
     }
 }

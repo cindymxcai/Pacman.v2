@@ -11,7 +11,7 @@ namespace Pacman2.Interfaces
         IPosition GetTilePosition(int rowIndex, int colIndex);
         void MoveSpriteToNewPosition(IMovingSprite sprite, IPosition newPosition);
         IPosition GetNewPosition(Direction currentDirection, IPosition currentPosition);
-        bool PacmanHasCollisionWithGhost(IMovingSprite sprite);
+        bool PacmanHasCollisionWithGhost(IList<IMovingSprite> sprite);
         bool SpriteHasCollisionWithWall(IPosition newPosition);
         void ResetSpritePositions(IEnumerable<IMovingSprite> sprites);
     }

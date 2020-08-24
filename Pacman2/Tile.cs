@@ -19,19 +19,19 @@ namespace Pacman2
             SpritesOnTile.Remove(sprite);
         }
 
-        public bool HasGivenSprite(ISpriteDisplay spriteDisplay)
+        public bool HasGivenSprite(string spriteDisplay)
         {
-            return SpritesOnTile.Any(s => s.Display.Icon == spriteDisplay.Icon);
+            return SpritesOnTile.Any(s => s.Icon == spriteDisplay);
         }
 
-        public ISprite GetGivenSprite(ISpriteDisplay spriteDisplay)
+        public ISprite GetGivenSprite(string spriteDisplay)
         {
-           return SpritesOnTile.FirstOrDefault(s => s.Display.Icon == spriteDisplay.Icon);
+           return SpritesOnTile.FirstOrDefault(s => s.Icon == spriteDisplay);
         }
 
         public ISprite GetFirstSprite()
         {
-           return SpritesOnTile.OrderBy(t => t.Display.Priority).First();
+           return SpritesOnTile.OrderBy(s => s.Priority).First();
         }
 
         public void Render()
@@ -43,7 +43,7 @@ namespace Pacman2
             else
             {
                 var sprite = GetFirstSprite();
-                Console.ForegroundColor = sprite.Display.Colour;
+                Console.ForegroundColor = sprite.Colour;
                 Console.Write(sprite.Display.Icon);
                 Console.ResetColor();
             }

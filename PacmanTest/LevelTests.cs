@@ -24,7 +24,7 @@ namespace PacmanTest
                 ". *.......",". *.......",". *......."
             };                 
             var maze = new Maze(mazeData, parser);
-            var pelletTile = new PelletSpriteDisplay();
+            var pelletTile = new PelletSpriteDisplay().Icon;
             for (var i = 0; i < maze.Rows; i++)
             {
                 for (var j = 0; j < maze.Columns; j++)
@@ -32,7 +32,7 @@ namespace PacmanTest
                   var tile =  maze.GetTileAtPosition(i, j);
                   var pelletSprite = tile.GetGivenSprite(pelletTile);
                   tile.SpritesOnTile.Remove(pelletSprite);
-                  Assert.DoesNotContain(tile.SpritesOnTile, s => s.Display == pelletTile);
+                  Assert.DoesNotContain(tile.SpritesOnTile, s => s.Icon == pelletTile);
                 }
             }
         

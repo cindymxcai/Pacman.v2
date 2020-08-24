@@ -9,18 +9,24 @@ namespace Pacman2.Sprites
         private IMovementBehaviour MovementBehaviour { get; }
         public IPosition CurrentPosition { get; private set; }
         public Direction CurrentDirection { get; private set; }
-        public ISpriteDisplay Display { get; }
+        public int Priority { get; }
+        public string Icon { get; }
+        public ConsoleColor Colour { get; }
+        public ISpriteDisplay Display { get; set; }
         public IPosition PreviousPosition { get; private set; }
         
-        private readonly GhostSpriteDisplay _ghostSpriteDisplay = new GhostSpriteDisplay();
-
-        public MovingSprite(IPosition position, IMovementBehaviour movementBehaviour, ISpriteDisplay display)
+        private readonly string _ghostSpriteDisplay = new GhostSpriteDisplay().Icon;
+        
+        public MovingSprite(IPosition position, IMovementBehaviour movementBehaviour, ISpriteDisplay spriteDisplay)
         {
             CurrentPosition = position;
             MovementBehaviour = movementBehaviour;
             CurrentDirection = Direction.Up;
-            display.SetSpriteDisplay(CurrentDirection);
-            Display = display; 
+            spriteDisplay.SetSpriteDisplay(CurrentDirection);
+            Display = spriteDisplay;
+            Priority = spriteDisplay.Priority;
+            Icon = spriteDisplay.Icon;
+            Colour = spriteDisplay.Colour;
         }
 
         public void UpdateDirection(ConsoleKey consoleKey)
@@ -37,8 +43,7 @@ namespace Pacman2.Sprites
 
         public bool IsPacman()
         {
-            return Display.Icon != _ghostSpriteDisplay.Icon;
+            return Icon != _ghostSpriteDisplay;
         }
-        
     }
 }
