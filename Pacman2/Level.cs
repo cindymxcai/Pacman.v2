@@ -13,7 +13,7 @@ namespace Pacman2
         private readonly IDisplay _display;
         public bool PacmanIsAlive { get; private set; } = true;
         public int LivesRemaining { get; private set; } = 3;
-        public int Score { get; set; }
+        public int Score { get; private set; }
 
         public Level(IList<IMovingSprite> sprites, IMaze maze, IPlayerInput playerInput, IDisplay display)
         {

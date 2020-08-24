@@ -12,7 +12,7 @@ namespace Pacman2.Sprites
         public int Priority { get; }
         public string Icon { get; }
         public ConsoleColor Colour { get; }
-        public ISpriteDisplay Display { get; set; }
+        public ISpriteDisplay Display { get; }
         public IPosition PreviousPosition { get; private set; }
         
         private readonly string _ghostSpriteDisplay = new GhostSpriteDisplay().Icon;

@@ -7,6 +7,6 @@ namespace Pacman2.Interfaces
         int Priority { get; }
         string Icon { get; }
         ConsoleColor Colour { get; }
-        ISpriteDisplay Display { get; set; }
+        ISpriteDisplay Display { get; }
     }
 }

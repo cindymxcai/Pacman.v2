@@ -4,10 +4,7 @@ namespace Pacman2.Interfaces
     {
         int LivesRemaining { get; }
         bool PacmanIsAlive { get; }
-        int Score { get; set; }
+        int Score { get; }
         void Play();
-        void HandleLostLife();
-        void UpdateSpritePosition(IMovingSprite sprite);
-        bool HasWon();
     }
 }

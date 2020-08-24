@@ -8,7 +8,7 @@ namespace Pacman2.Sprites
         public int Priority { get; }
         public string Icon { get; }
         public ConsoleColor Colour { get; }
-        public ISpriteDisplay Display { get; set; }
+        public ISpriteDisplay Display { get; }
 
 
         public StaticSprite(ISpriteDisplay spriteDisplay)
