@@ -3,6 +3,7 @@ using Pacman2.Interfaces;
 
 namespace Pacman2
 {
+    //TODO ADD CLASS LEVEL COMMENTS
     public class Game 
     {
         private readonly IPlayerInput _playerInput;
