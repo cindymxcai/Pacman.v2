@@ -5,6 +5,10 @@ using Pacman2.Interfaces;
 
 namespace Pacman2
 {
+    /// <summary>
+    /// The Level class handles playing one level by simulating a tick every .2 seconds,
+    /// taking in player control, updating the model and view in return and checking for win/lose conditions
+    /// </summary>
     public class Level : ILevel
     {
         private readonly IList<IMovingSprite> _sprites;

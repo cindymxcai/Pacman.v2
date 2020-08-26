@@ -5,6 +5,10 @@ namespace Pacman2.Sprites
 {
     public class StaticSprite : ISprite
     {
+        /// <summary>
+        /// For Non - Moving Sprites (Pellets and Walls)
+        /// For context, Sprite refers to an object that can occupy a tile on the maze
+        /// </summary>
         public int Priority { get; }
         public string Icon { get; }
         public ConsoleColor Colour { get; }

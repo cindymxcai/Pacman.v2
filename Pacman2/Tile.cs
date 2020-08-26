@@ -5,6 +5,9 @@ using Pacman2.Interfaces;
 
 namespace Pacman2
 {
+    /// <summary>
+    /// The Maze is made up of a tile on each position, where a tile holds a list of sprites that may exist on the position
+    /// </summary>
     public class Tile : ITile
     {
         public List<ISprite> SpritesOnTile { get; } = new List<ISprite>();

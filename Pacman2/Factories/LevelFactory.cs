@@ -4,6 +4,9 @@ using Pacman2.Sprites;
 
 namespace Pacman2.Factories
 {
+    /// <summary>
+    /// This is a Factory Design Pattern that takes in the dependencies needed by a level and initializes a maze and a list of sprites for the new level
+    /// </summary>
     public class LevelFactory
     {
         private readonly MazeFactory _mazeFactory;

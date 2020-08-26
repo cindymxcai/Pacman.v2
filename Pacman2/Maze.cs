@@ -6,12 +6,15 @@ using Pacman2.SpriteDisplays;
 
 namespace Pacman2
 {
+    /// <summary>
+    /// This class is responsible for operations on the maze such as the creation, rendering and getting tiles of maze
+    /// It also holds methods operating on the tiles that makes up the maze
+    /// </summary>
     public class Maze : IMaze
     {
         private readonly string _wallSpriteDisplay = new WallSpriteDisplay().Icon;
         private readonly string _ghostSpriteDisplay = new GhostSpriteDisplay().Icon;
         private readonly string _pelletSpriteDisplay = new PelletSpriteDisplay().Icon;
-
 
         private readonly IParser _parser;
         private ITile[,] Tiles { get; set; }

@@ -3,7 +3,10 @@ using Pacman2.Interfaces;
 
 namespace Pacman2
 {
-    //TODO ADD CLASS LEVEL COMMENTS
+    /// <summary>
+    /// The highest level object that handles wrapping up responsibility of flow before and after a level is played
+    /// as well as starting each new level
+    /// </summary>
     public class Game 
     {
         private readonly IPlayerInput _playerInput;

@@ -6,6 +6,9 @@ namespace Pacman2.Sprites
 {
     public class MovingSprite : IMovingSprite
     {
+        /// <summary>
+        /// For Moving Sprites (Pacman and Ghosts) 
+        /// </summary>
         private IMovementBehaviour MovementBehaviour { get; }
         public IPosition CurrentPosition { get; private set; }
         public Direction CurrentDirection { get; private set; }
