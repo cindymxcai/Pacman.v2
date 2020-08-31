@@ -11,12 +11,13 @@ namespace Pacman2.Sprites
         /// </summary>
         private IMovementBehaviour MovementBehaviour { get; }
         public IPosition CurrentPosition { get; private set; }
+        public IPosition PreviousPosition { get; private set; }
+
         public Direction CurrentDirection { get; private set; }
         public int Priority { get; }
         public string Icon { get; }
         public ConsoleColor Colour { get; }
         public ISpriteDisplay Display { get; }
-        public IPosition PreviousPosition { get; private set; }
         
         private readonly string _ghostSpriteDisplay = new GhostSpriteDisplay().Icon;
         
@@ -25,11 +26,11 @@ namespace Pacman2.Sprites
             CurrentPosition = position;
             MovementBehaviour = movementBehaviour;
             CurrentDirection = Direction.Up;
-            spriteDisplay.SetSpriteDisplay(CurrentDirection);
             Display = spriteDisplay;
-            Priority = spriteDisplay.Priority;
-            Icon = spriteDisplay.Icon;
-            Colour = spriteDisplay.Colour;
+            Display.SetSpriteDisplay(CurrentDirection);
+            Priority = Display.Priority;
+            Icon = Display.Icon;
+            Colour = Display.Colour;
         }
 
         public void UpdateDirection(ConsoleKey consoleKey)

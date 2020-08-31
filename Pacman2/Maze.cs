@@ -51,12 +51,7 @@ namespace Pacman2
                 rowIndex++;
             }
         }
-
-        public bool HasNoPelletsRemaining()
-        {
-            return Tiles.Cast<ITile>().Count(tile => tile.HasGivenSprite(_pelletSpriteDisplay)) == 0;
-        }
-
+        
         public void Render()
         {
             for (var rowIndex = 0; rowIndex < Rows; rowIndex++)
@@ -68,6 +63,11 @@ namespace Pacman2
                 
                 Console.WriteLine();
             }
+        }
+
+        public bool HasNoPelletsRemaining()
+        {
+            return Tiles.Cast<ITile>().Count(tile => tile.HasGivenSprite(_pelletSpriteDisplay)) == 0;
         }
 
         public IPosition GetTilePosition(int rowIndex, int colIndex)
@@ -90,7 +90,7 @@ namespace Pacman2
             GetTileAtPosition(sprite.CurrentPosition).RemoveSprite(pelletSprite);
             PelletsEaten++;
         }
-        
+
         public ITile GetTileAtPosition(int row, int col)
         {
             return Tiles[row, col];
@@ -133,19 +133,13 @@ namespace Pacman2
             var pacman = sprites.First(s => s.IsPacman());
             var ghosts = sprites.Where(s => !s.IsPacman());
             
-            return GetTileAtPosition(pacman.CurrentPosition).HasGivenSprite(_ghostSpriteDisplay) || HasSpritesPassedEachOther(pacman, ghosts);
+            return GetTileAtPosition(pacman.CurrentPosition).HasGivenSprite(_ghostSpriteDisplay) || SpritesHavePassedEachOther(pacman, ghosts);
         }
 
-        private bool HasSpritesPassedEachOther(IMovingSprite pacman, IEnumerable<IMovingSprite> ghosts)
+        private bool SpritesHavePassedEachOther(IMovingSprite pacman, IEnumerable<IMovingSprite> ghosts)
         {
-            var pacmanIsInGhostsPreviousPosition = false;
-            foreach (var ghost in ghosts)
-                if (GetTileAtPosition(ghost.PreviousPosition).HasGivenSprite(pacman.Icon))
-                    pacmanIsInGhostsPreviousPosition = true;
-
-            var ghostIsInPacmansPreviousPosition = GetTileAtPosition(pacman.PreviousPosition).HasGivenSprite(_ghostSpriteDisplay);
-            
-            return ghostIsInPacmansPreviousPosition && pacmanIsInGhostsPreviousPosition;
+            return ghosts.Any(ghost => GetTileAtPosition(ghost.PreviousPosition).HasGivenSprite(pacman.Icon)  
+                                       && GetTileAtPosition(pacman.PreviousPosition).HasGivenSprite(_ghostSpriteDisplay));
         }
 
         public bool SpriteHasCollisionWithWall(IPosition newPosition)

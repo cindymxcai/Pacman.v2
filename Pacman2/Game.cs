@@ -50,7 +50,10 @@ namespace Pacman2
             if (_playerInput.HasPressedQuit(input))
                 IsPlaying = false;
             else
-                CurrentLevelNumber = 1;
+            {
+                TotalScore = 0;
+                CurrentLevelNumber = 1;   
+            }
         }
 
         public void HandleNextLevel(IGameSettings mazeData)

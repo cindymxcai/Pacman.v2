@@ -1,4 +1,5 @@
 using System;
+using System.Threading;
 using Pacman2.Interfaces;
 
 namespace Pacman2
@@ -58,7 +59,7 @@ namespace Pacman2
             Console.WriteLine(@"| OO|  ╭⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼╮");
             Console.WriteLine(@"|   | <  Lives left: " + livesRemaining + " |");
             Console.WriteLine(@"'^^^'  ╰⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼⎼╯");
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(1));
+            Thread.Sleep(TimeSpan.FromSeconds(1));
             Console.ResetColor();
         }
 
@@ -74,12 +75,47 @@ namespace Pacman2
 ██╔═══╝  ██╔══██║ ██║      ██║╚██╔╝██║ ██╔══██║ ██║╚██╗██║
 ██║      ██║  ██║ ╚██████╗ ██║ ╚═╝ ██║ ██║  ██║ ██║ ╚████║
 ╚═╝      ╚═╝  ╚═╝  ╚═════╝ ╚═╝     ╚═╝ ╚═╝  ╚═╝ ╚═╝  ╚═══╝"
-            );          
-               
-            Console.WriteLine("\nUse the arrow keys to navigate Pacman! To quit at any time, press Q");
+            );
+            CountDown();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Use the arrow keys to navigate Pacman! To quit at any time, press Q");
+            Console.WriteLine("Press any key to start!");
+        }
+        
+
+        private void CountDown()
+        {
             Console.ForegroundColor = ConsoleColor.Green;
-            Console.WriteLine("\nPress any key to play!");
-            Console.ResetColor();        
+            Thread.Sleep(TimeSpan.FromSeconds(3));
+            Console.Clear();
+            Console.WriteLine(@"
+██████╗ 
+╚════██╗
+ █████╔╝
+ ╚═══██╗
+██████╔╝
+╚═════╝ ");
+            Thread.Sleep(TimeSpan.FromSeconds(1));
+            Console.Clear();
+            Console.WriteLine(@"
+██████╗ 
+╚════██╗
+ █████╔╝
+██╔═══╝ 
+███████╗
+╚══════╝");
+            Thread.Sleep(TimeSpan.FromSeconds(1));
+            Console.Clear();
+            Console.WriteLine(@"
+ ██╗
+███║
+╚██║
+ ██║
+ ██║
+ ╚═╝");
+           
+            Thread.Sleep(TimeSpan.FromSeconds(1));
+            Console.Clear();
         }
 
         public void NextLevel()
@@ -94,7 +130,7 @@ namespace Pacman2
 ██║╚██╗██║██╔══╝   ██╔██╗    ██║       ██║     ██╔══╝  ╚██╗ ██╔╝██╔══╝  ██║     ╚═╝    
 ██║ ╚████║███████╗██╔╝ ██╗   ██║       ███████╗███████╗ ╚████╔╝ ███████╗███████╗██╗    
 ╚═╝  ╚═══╝╚══════╝╚═╝  ╚═╝   ╚═╝       ╚══════╝╚══════╝  ╚═══╝  ╚══════╝╚══════╝╚═╝ ");
-            System.Threading.Thread.Sleep(TimeSpan.FromSeconds(2));
+            Thread.Sleep(TimeSpan.FromSeconds(2));
 
             Console.ResetColor();
         }

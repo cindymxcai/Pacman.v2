@@ -14,14 +14,13 @@ namespace Pacman2.Sprites
         public ConsoleColor Colour { get; }
         public ISpriteDisplay Display { get; }
 
-
         public StaticSprite(ISpriteDisplay spriteDisplay)
         {
-            spriteDisplay.SetSpriteDisplay();
             Display = spriteDisplay;
-            Priority = spriteDisplay.Priority;
-            Icon = spriteDisplay.Icon;
-            Colour = spriteDisplay.Colour;
+            Display.SetSpriteDisplay();
+            Priority = Display.Priority;
+            Icon = Display.Icon;
+            Colour = Display.Colour;
         }
     }
 }
